@@ -16,7 +16,7 @@ export const overridesPreferences = defineOverridesPreferences({
     companySiteLink: 'https://github.com',
   },
   theme: {
-    builtinType: 'pink',
+    builtinType: 'violet',
     mode: 'light',
     semiDarkSidebar: false,
   },
