@@ -10,9 +10,9 @@ export const MOCK_USERS: UserInfo[] = [
   {
     id: 0,
     password: '123456',
-    realName: 'Vben',
+    realName: 'Admin',
     roles: ['super'],
-    username: 'vben',
+    username: 'superAdmin',
   },
   {
     id: 1,

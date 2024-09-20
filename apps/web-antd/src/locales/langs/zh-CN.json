@@ -4,5 +4,9 @@
       "title": "演示",
       "antd": "Ant Design Vue"
     }
+  },
+  "authentication": {
+    "pageDesc": "基于nestjs实现的后台管理系统",
+    "pageTitle": "nest-admin-next"
   }
 }

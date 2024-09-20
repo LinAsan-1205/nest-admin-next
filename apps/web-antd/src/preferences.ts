@@ -7,6 +7,17 @@ import { defineOverridesPreferences } from '@vben/preferences';
 export const overridesPreferences = defineOverridesPreferences({
   // overrides
   app: {
+    authPageLayout: 'panel-center',
     name: import.meta.env.VITE_APP_TITLE,
+    watermark: false,
+  },
+  copyright: {
+    companyName: 'mine',
+    companySiteLink: 'https://github.com',
+  },
+  theme: {
+    builtinType: 'pink',
+    mode: 'light',
+    semiDarkSidebar: false,
   },
 });
