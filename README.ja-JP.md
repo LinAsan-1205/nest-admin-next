@@ -125,6 +125,10 @@ pnpm build
 
 [@Vben](https://github.com/anncwb)
 
+## スター歴史
+
+[![Star History Chart](https://api.star-history.com/svg?repos=vbenjs/vue-vben-admin&type=Date)](https://star-history.com/#vbenjs/vue-vben-admin&Date)
+
 ## 寄付
 
 このプロジェクトが役に立つと思われた場合、作者にコーヒーを一杯おごってサポートを示すことができます！

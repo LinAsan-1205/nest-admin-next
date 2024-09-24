@@ -1,6 +1,6 @@
 {
   "name": "vben-admin-pro",
-  "version": "5.3.0-beta.2",
+  "version": "5.3.0",
   "private": true,
   "keywords": [
     "monorepo",
@@ -25,11 +25,10 @@
   },
   "type": "module",
   "scripts": {
-    "bootstrap": "pnpm install",
     "build": "cross-env NODE_OPTIONS=--max-old-space-size=8192 turbo build",
     "build:analyze": "turbo build:analyze",
-    "build:docker": "./build-local-docker-image.sh",
     "build:antd": "pnpm run build --filter=@vben/web-antd",
+    "build:docker": "./build-local-docker-image.sh",
     "build:docs": "pnpm run build --filter=@vben/docs",
     "build:play": "pnpm run build --filter=@vben/playground",
     "changeset": "pnpm exec changeset",
@@ -51,15 +50,16 @@
     "prepare": "is-ci || husky",
     "preview": "turbo-run preview",
     "publint": "vsh publint",
-    "reinstall": "pnpm clean --del-lock && pnpm bootstrap",
-    "test:unit": "vitest",
+    "reinstall": "pnpm clean --del-lock && pnpm install",
+    "test:unit": "vitest run --dom",
+    "test:e2e": "turbo run test:e2e",
     "update:deps": "pnpm update --latest --recursive",
     "version": "pnpm exec changeset version && pnpm install --no-frozen-lockfile"
   },
   "devDependencies": {
     "@changesets/changelog-github": "catalog:",
     "@changesets/cli": "catalog:",
-    "@types/jsdom": "catalog:",
+    "@playwright/test": "catalog:",
     "@types/node": "catalog:",
     "@vben/commitlint-config": "workspace:*",
     "@vben/eslint-config": "workspace:*",
@@ -76,10 +76,11 @@
     "autoprefixer": "catalog:",
     "cross-env": "catalog:",
     "cspell": "catalog:",
+    "happy-dom": "catalog:",
     "husky": "catalog:",
     "is-ci": "catalog:",
-    "jsdom": "catalog:",
     "lint-staged": "catalog:",
+    "playwright": "catalog:",
     "rimraf": "catalog:",
     "tailwindcss": "catalog:",
     "turbo": "catalog:",
@@ -109,8 +110,7 @@
     },
     "neverBuiltDependencies": [
       "canvas",
-      "node-gyp",
-      "playwright"
+      "node-gyp"
     ]
   }
 }
