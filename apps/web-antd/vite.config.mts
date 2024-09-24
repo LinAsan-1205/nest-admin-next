@@ -1,9 +1,22 @@
 import { defineConfig } from '@vben/vite-config';
-
+import Components from 'unplugin-vue-components/vite'
+import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
 export default defineConfig(async () => {
   return {
     application: {},
     vite: {
+      plugins: [
+        Components({
+          extensions: ['vue'],
+          dts: 'types/components.d.ts',
+          include: [/\.vue$/, /\.vue\?vue/],
+          resolvers: [
+            AntDesignVueResolver({
+              importStyle: false, // css in js
+            }),
+          ],
+        }),
+      ],
       server: {
         proxy: {
           '/api': {
@@ -12,7 +25,7 @@ export default defineConfig(async () => {
             // mock代理目标地址
             target: 'http://localhost:5320/api',
             ws: true,
-          },
+          }
         },
       },
     },

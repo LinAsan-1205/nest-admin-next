@@ -2,12 +2,14 @@
 import type { VbenFormSchema } from '@vben/common-ui';
 import type { BasicOption } from '@vben/types';
 
-import { computed, markRaw } from 'vue';
+import { computed, markRaw, ref } from 'vue';
 
-import { AuthenticationLogin, SliderCaptcha, z } from '@vben/common-ui';
+import { AuthenticationLogin, z } from '@vben/common-ui';
 import { $t } from '@vben/locales';
 
 import { useAuthStore } from '#/store';
+
+import Captcha from './captcha.vue';
 
 defineOptions({ name: 'Login' });
 
@@ -27,6 +29,8 @@ const MOCK_USER_OPTIONS: BasicOption[] = [
     value: 'jack',
   },
 ];
+
+const captchaId = ref<string>('');
 
 const formSchema = computed((): VbenFormSchema[] => {
   return [
@@ -57,7 +61,7 @@ const formSchema = computed((): VbenFormSchema[] => {
             );
             if (findUser) {
               form.setValues({
-                password: '123456',
+                password: '123456A',
                 username: findUser.value,
               });
             }
@@ -79,20 +83,39 @@ const formSchema = computed((): VbenFormSchema[] => {
       rules: z.string().min(1, { message: $t('authentication.passwordTip') }),
     },
     {
-      component: markRaw(SliderCaptcha),
-      fieldName: 'captcha',
-      rules: z.boolean().refine((value) => value, {
-        message: $t('authentication.verifyRequiredTip'),
-      }),
+      component: markRaw(Captcha),
+      componentProps: {
+        onCaptchaId(value: string) {
+          captchaId.value = value;
+        },
+      },
+      fieldName: 'verifyCode',
+      rules: z.string().min(4, { message: $t('authentication.captchaTip') }),
     },
+    // {
+    //   component: markRaw(SliderCaptcha),
+    //   fieldName: 'captcha',
+    //   rules: z.boolean().refine((value) => value, {
+    //     message: $t('authentication.verifyRequiredTip'),
+    //   }),
+    // },
   ];
 });
+
+const authLogin = (params: any) => {
+  const { username: userName, ...restParams } = params;
+  authStore.authLogin({
+    ...restParams,
+    captchaId: captchaId.value,
+    userName,
+  });
+};
 </script>
 
 <template>
   <AuthenticationLogin
     :form-schema="formSchema"
     :loading="authStore.loginLoading"
-    @submit="authStore.authLogin"
+    @submit="authLogin"
   />
 </template>

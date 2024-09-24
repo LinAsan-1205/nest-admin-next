@@ -1,9 +1,10 @@
 import { defineConfig } from '@vben/vite-config';
-
 export default defineConfig(async () => {
   return {
     application: {},
     vite: {
+      plugins: [
+      ],
       server: {
         proxy: {
           '/api': {

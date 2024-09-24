@@ -1,5 +1,4 @@
-import type { LoginAndRegisterParams } from '@vben/common-ui';
-import type { UserInfo } from '@vben/types';
+import type { AuthApi } from '#/api/login/model';
 
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
@@ -10,7 +9,10 @@ import { resetAllStores, useAccessStore, useUserStore } from '@vben/stores';
 import { notification } from 'ant-design-vue';
 import { defineStore } from 'pinia';
 
-import { getAccessCodesApi, getUserInfoApi, loginApi, logoutApi } from '#/api';
+import { logoutApi } from '#/api';
+import { accountLogin } from '#/api/login';
+import { getProfile } from '#/api/system/user';
+import { type UserApi } from '#/api/system/user/model';
 import { $t } from '#/locales';
 
 export const useAuthStore = defineStore('auth', () => {
@@ -26,29 +28,24 @@ export const useAuthStore = defineStore('auth', () => {
    * @param params 登录表单数据
    */
   async function authLogin(
-    params: LoginAndRegisterParams,
+    params: AuthApi.AccountLoginParams,
     onSuccess?: () => Promise<void> | void,
   ) {
     // 异步处理用户登录操作并获取 accessToken
-    let userInfo: null | UserInfo = null;
+    let userInfo: null | UserApi.Profile = null;
     try {
       loginLoading.value = true;
-      const { accessToken } = await loginApi(params);
+      const { accessToken } = await accountLogin(params);
 
       // 如果成功获取到 accessToken
       if (accessToken) {
         accessStore.setAccessToken(accessToken);
 
         // 获取用户信息并存储到 accessStore 中
-        const [fetchUserInfoResult, accessCodes] = await Promise.all([
-          fetchUserInfo(),
-          getAccessCodesApi(),
-        ]);
+        userInfo = await fetchUserInfo();
 
-        userInfo = fetchUserInfoResult;
-
-        userStore.setUserInfo(userInfo);
-        accessStore.setAccessCodes(accessCodes);
+        userStore.setUserInfo(userInfo as any);
+        accessStore.setAccessCodes(['AC_100010', 'AC_100020', 'AC_100030']);
 
         if (accessStore.loginExpired) {
           accessStore.setLoginExpired(false);
@@ -58,9 +55,9 @@ export const useAuthStore = defineStore('auth', () => {
             : await router.push(userInfo.homePath || DEFAULT_HOME_PATH);
         }
 
-        if (userInfo?.realName) {
+        if (userInfo?.nickName) {
           notification.success({
-            description: `${$t('authentication.loginSuccessDesc')}:${userInfo?.realName}`,
+            description: `${$t('authentication.loginSuccessDesc')}:${userInfo?.nickName}`,
             duration: 3,
             message: $t('authentication.loginSuccess'),
           });
@@ -96,9 +93,9 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   async function fetchUserInfo() {
-    let userInfo: null | UserInfo = null;
-    userInfo = await getUserInfoApi();
-    userStore.setUserInfo(userInfo);
+    let userInfo: null | UserApi.Profile = null;
+    userInfo = await getProfile();
+    userStore.setUserInfo({ ...userInfo, roles: ['admin'] } as any);
     return userInfo;
   }
 
