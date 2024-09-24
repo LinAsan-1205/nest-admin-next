@@ -124,6 +124,10 @@ Support modern browsers, not IE
 
 [@Vben](https://github.com/anncwb)
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=vbenjs/vue-vben-admin&type=Date)](https://star-history.com/#vbenjs/vue-vben-admin&Date)
+
 ## Donate
 
 If you think this project is helpful to you, you can help the author buy a cup of coffee to show your support!
