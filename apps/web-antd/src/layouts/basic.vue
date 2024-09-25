@@ -45,8 +45,8 @@ async function handleLogout() {
         :avatar
         :description="userStore.userInfo?.phone"
         :menus
+        :tag-text="userStore.userInfo?.userTypeName"
         :text="userStore.userInfo?.nickName"
-        tag-text="Pro"
         @logout="handleLogout"
       />
     </template>

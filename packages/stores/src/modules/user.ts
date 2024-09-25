@@ -10,7 +10,7 @@ interface BasicUserInfo {
   sex: string;
   userId: number;
   userName: string;
-  userType: string;
+  userTypeName: string;
 }
 
 interface AccessState {

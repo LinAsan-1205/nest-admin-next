@@ -16,3 +16,10 @@ export async function accountLogin(data: AuthApi.AccountLoginParams) {
 export async function getCaptcha() {
   return requestClient.post<AuthApi.CaptchaResult>('/auth/captcha');
 }
+
+/**
+ * 退出登录
+ */
+export function logout() {
+  return requestClient.post('/auth/logout');
+}
