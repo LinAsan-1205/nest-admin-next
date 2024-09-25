@@ -3,6 +3,9 @@
     "demos": {
       "title": "演示",
       "antd": "Ant Design Vue"
+    },
+    "users": {
+      "profile": "个人信息"
     }
   },
   "authentication": {
