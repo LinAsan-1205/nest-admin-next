@@ -12,7 +12,7 @@ export const overridesPreferences = defineOverridesPreferences({
     watermark: false,
   },
   copyright: {
-    companyName: 'mine',
+    companyName: 'miniAdmin',
     companySiteLink: 'https://github.com',
   },
   theme: {
