@@ -91,7 +91,7 @@ function createRequestClient(baseURL: string) {
   client.addResponseInterceptor(
     errorMessageResponseInterceptor((_msg: string, _error) => {
       // 这里可以根据业务进行定制,你可以拿到 error 内的信息进行定制化处理，根据不同的 code 做不同的提示，而不是直接使用 message.error 提示 msg
-      message.error(_msg);
+      message.error(_error?.response?.data?.message ?? _msg);
     }),
   );
 
