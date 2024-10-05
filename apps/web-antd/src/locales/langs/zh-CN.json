@@ -15,7 +15,8 @@
       "loginIp": "最后登录IP",
       "loginDate": "最后登录时间",
       "createTime": "注册时间"
-    }
+    },
+    "apiSuccess": "修改成功"
   },
   "authentication": {
     "pageDesc": "基于nestjs实现的后台管理系统",

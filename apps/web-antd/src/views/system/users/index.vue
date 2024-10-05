@@ -1,17 +1,22 @@
 <script lang="ts" setup>
 import type { VbenFormProps, VxeGridProps } from '#/adapter';
 
+import { onMounted, ref } from 'vue';
+
 import { Page } from '@vben/common-ui';
 
+import { message } from 'ant-design-vue';
 import dayjs from 'dayjs';
 
 import { useVbenVxeGrid } from '#/adapter';
-import { getList } from '#/api/system/user';
+import { type DeptApi, getDeptList } from '#/api/system/dept';
+import { changeStatus, getList, type UserApi } from '#/api/system/user';
 import { $t } from '#/locales';
 
-interface RowType {
-  userType: string;
-}
+interface RowType extends UserApi.List {}
+
+const deptList = ref<DeptApi.List[]>([]);
+const deptId = ref<null | string>(null);
 
 const formOptions: VbenFormProps = {
   schema: [
@@ -70,7 +75,7 @@ const gridOptions: VxeGridProps<RowType> = {
   checkboxConfig: {
     highlight: true,
     checkMethod: ({ row }) => {
-      return row.userType !== '00';
+      return row.userTypeDisable;
     },
   },
   columns: [
@@ -105,8 +110,6 @@ const gridOptions: VxeGridProps<RowType> = {
       },
     },
   ],
-  height: 'auto',
-  keepSource: true,
   pagerConfig: {},
   proxyConfig: {
     ajax: {
@@ -115,28 +118,68 @@ const gridOptions: VxeGridProps<RowType> = {
           page: page.currentPage,
           pageSize: page.pageSize,
           ...formValues,
+          deptId: deptId.value,
         });
       },
     },
   },
 };
 
-const [Grid] = useVbenVxeGrid({ formOptions, gridOptions });
+const [Grid, gridApi] = useVbenVxeGrid({ formOptions, gridOptions });
+
+const onChangeStatus = async (checked: string, row: RowType) => {
+  try {
+    gridApi.setLoading(true);
+    await changeStatus({ status: checked, id: row.userId });
+    row.status = checked;
+    message.success($t('page.apiSuccess'));
+    await gridApi.grid?.reloadData([]);
+  } finally {
+    gridApi.setLoading(false);
+  }
+};
+
+const onTreeSelect = (selectedKeys: string[]) => {
+  deptId.value = selectedKeys[0] || null;
+  gridApi.reload();
+};
+
+onMounted(async () => {
+  await getDeptList({}).then((res) => {
+    deptList.value = res;
+  });
+});
 </script>
 
 <template>
   <Page auto-content-height>
-    <Grid>
-      <template #avatar="{ row }">
-        <a-avatar :src="row.avatar" />
-      </template>
-      <template #status="{ row }">
-        <a-switch
-          v-model:checked="row.status"
-          checked-value="0"
-          un-checked-value="1"
+    <div class="flex justify-between gap-4">
+      <a-card :bordered="false" class="w-[250px] flex-none">
+        <a-tree
+          :field-names="{
+            title: 'deptName',
+            key: 'deptId',
+            children: 'children',
+          }"
+          :tree-data="deptList"
+          block-node
+          @select="onTreeSelect"
         />
-      </template>
-    </Grid>
+      </a-card>
+      <Grid class="flex-1">
+        <template #avatar="{ row }">
+          <a-avatar :src="row.avatar" />
+        </template>
+        <template #status="{ row }">
+          <a-switch
+            v-model:checked="row.status"
+            :disabled="row.userTypeDisable"
+            checked-value="0"
+            un-checked-value="1"
+            @change="onChangeStatus($event, row)"
+          />
+        </template>
+      </Grid>
+    </div>
   </Page>
 </template>
