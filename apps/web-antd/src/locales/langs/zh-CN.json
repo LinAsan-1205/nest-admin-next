@@ -5,12 +5,29 @@
       "antd": "Ant Design Vue"
     },
     "users": {
-      "profile": "个人信息"
+      "profile": "个人信息",
+      "avatar": "头像",
+      "userName": "用户名",
+      "nickName": "昵称",
+      "phone": "手机号",
+      "email": "邮箱",
+      "status": "状态",
+      "loginIp": "最后登录IP",
+      "loginDate": "最后登录时间",
+      "createTime": "注册时间"
     }
   },
   "authentication": {
     "pageDesc": "基于nestjs实现的后台管理系统",
     "pageTitle": "nest-admin-next",
     "captchaTip": "请输入验证码"
+  },
+  "menu": {
+    "system": {
+      "title": "系统管理"
+    },
+    "users": {
+      "title": "用户管理"
+    }
   }
 }

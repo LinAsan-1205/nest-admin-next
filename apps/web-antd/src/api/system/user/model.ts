@@ -11,4 +11,7 @@ export declare namespace UserApi {
     homePath?: string;
     roles: string[];
   }
+  export type ListParams = object;
+
+  export type List = object;
 }

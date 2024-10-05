@@ -7,3 +7,7 @@ import { type UserApi } from './model';
 export async function getProfile() {
   return requestClient.get<UserApi.Profile>('/users/profile');
 }
+
+export async function getList(params: UserApi.ListParams) {
+  return requestClient.get<UserApi.List>('/users', { params });
+}
