@@ -1,13 +1,19 @@
 <script setup lang="ts">
 import type { ExtendedFormApi, VbenFormProps } from './types';
 
+// import { toRaw, watch } from 'vue';
+
 import { useForwardPriorityValues } from '@vben-core/composables';
+// import { isFunction } from '@vben-core/shared/utils';
 
 import FormActions from './components/form-actions.vue';
-import { COMPONENT_BIND_EVENT_MAP, COMPONENT_MAP } from './config';
+import {
+  COMPONENT_BIND_EVENT_MAP,
+  COMPONENT_MAP,
+  DEFAULT_FORM_COMMON_CONFIG,
+} from './config';
 import { Form } from './form-render';
 import { provideFormProps, useFormInitial } from './use-form-context';
-
 // 通过 extends 会导致热更新卡死，所以重复写了一遍
 interface Props extends VbenFormProps {
   formApi: ExtendedFormApi;
@@ -28,6 +34,18 @@ props.formApi?.mount?.(form);
 const handleUpdateCollapsed = (value: boolean) => {
   props.formApi?.setState({ collapsed: !!value });
 };
+// if (isFunction(forward.value.handleValuesChange)) {
+//   watch(
+//     () => form.values,
+//     (val) => {
+//       forward.value.handleValuesChange?.(toRaw(val));
+//     },
+//     {
+//       deep: true,
+//       immediate: true,
+//     },
+//   );
+// }
 </script>
 
 <template>
@@ -36,6 +54,7 @@ const handleUpdateCollapsed = (value: boolean) => {
     :component-bind-event-map="COMPONENT_BIND_EVENT_MAP"
     :component-map="COMPONENT_MAP"
     :form="form"
+    :global-common-config="DEFAULT_FORM_COMMON_CONFIG"
   >
     <template
       v-for="slotName in delegatedSlots"
