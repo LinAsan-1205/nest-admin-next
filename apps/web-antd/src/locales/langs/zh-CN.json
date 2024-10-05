@@ -14,7 +14,13 @@
       "status": "状态",
       "loginIp": "最后登录IP",
       "loginDate": "最后登录时间",
-      "createTime": "注册时间"
+      "createTime": "注册时间",
+      "password": "密码",
+      "remark": "备注",
+      "selectUser": "请选择用户",
+      "createUser": "创建用户",
+      "editUser": "编辑用户",
+      "dept": "所属部门"
     },
     "apiSuccess": "修改成功"
   },

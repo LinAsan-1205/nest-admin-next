@@ -10,6 +10,7 @@ export default defineConfig(async () => {
           extensions: ['vue'],
           dts: 'types/components.d.ts',
           include: [/\.vue$/, /\.vue\?vue/],
+          dirs: ['src/components'],
           resolvers: [
             AntDesignVueResolver({
               importStyle: false, // css in js

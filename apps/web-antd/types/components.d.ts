@@ -15,5 +15,7 @@ declare module 'vue' {
     ATree: typeof import('ant-design-vue/es')['Tree']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    UploadAvatar: typeof import('./../src/components/Upload/UploadAvatar.vue')['default']
+    UploadFile: typeof import('./../src/components/Upload/UploadFile.vue')['default']
   }
 }

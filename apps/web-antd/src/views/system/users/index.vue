@@ -3,15 +3,17 @@ import type { VbenFormProps, VxeGridProps } from '#/adapter';
 
 import { onMounted, ref } from 'vue';
 
-import { Page } from '@vben/common-ui';
+import { Page, useVbenModal } from '@vben/common-ui';
 
-import { message } from 'ant-design-vue';
+import { Button, message } from 'ant-design-vue';
 import dayjs from 'dayjs';
 
 import { useVbenVxeGrid } from '#/adapter';
 import { type DeptApi, getDeptList } from '#/api/system/dept';
 import { changeStatus, getList, type UserApi } from '#/api/system/user';
 import { $t } from '#/locales';
+
+import UserFormModel from './components/FormModel.vue';
 
 interface RowType extends UserApi.List {}
 
@@ -127,21 +129,37 @@ const gridOptions: VxeGridProps<RowType> = {
 
 const [Grid, gridApi] = useVbenVxeGrid({ formOptions, gridOptions });
 
+const [FormModal, formModalApi] = useVbenModal({
+  connectedComponent: UserFormModel,
+});
+
 const onChangeStatus = async (checked: string, row: RowType) => {
-  try {
-    gridApi.setLoading(true);
-    await changeStatus({ status: checked, id: row.userId });
-    row.status = checked;
-    message.success($t('page.apiSuccess'));
-    await gridApi.grid?.reloadData([]);
-  } finally {
-    gridApi.setLoading(false);
-  }
+  await changeStatus({ status: checked, id: row.userId });
+  row.status = checked;
+  message.success($t('page.apiSuccess'));
+  await gridApi.reload();
 };
 
 const onTreeSelect = (selectedKeys: string[]) => {
   deptId.value = selectedKeys[0] || null;
   gridApi.reload();
+};
+
+const onCreate = () => {
+  formModalApi.setState({ title: $t('page.users.createUser') });
+  formModalApi.open();
+};
+
+// const onUpdate = () => {
+//   formModalApi.setState({ title: $t('page.users.editUser') });
+//   formModalApi.open();
+// };
+
+const onRemove = () => {
+  const records = gridApi.grid?.getCheckboxRecords() as RowType[];
+  if (records.length === 0) {
+    message.error($t('page.users.selectUser'));
+  }
 };
 
 onMounted(async () => {
@@ -152,9 +170,9 @@ onMounted(async () => {
 </script>
 
 <template>
-  <Page auto-content-height>
-    <div class="flex justify-between gap-4">
-      <a-card :bordered="false" class="w-[250px] flex-none">
+  <Page>
+    <div class="md:flex md:justify-between md:gap-4">
+      <a-card :bordered="false" class="mb-4 flex-none md:mb-0 md:w-[250px]">
         <a-tree
           :field-names="{
             title: 'deptName',
@@ -167,6 +185,12 @@ onMounted(async () => {
         />
       </a-card>
       <Grid class="flex-1">
+        <template #toolbar-actions>
+          <a-space>
+            <Button type="primary" @click="onCreate">新增</Button>
+            <Button danger type="primary" @click="onRemove">删除</Button>
+          </a-space>
+        </template>
         <template #avatar="{ row }">
           <a-avatar :src="row.avatar" />
         </template>
@@ -181,5 +205,6 @@ onMounted(async () => {
         </template>
       </Grid>
     </div>
+    <FormModal />
   </Page>
 </template>
