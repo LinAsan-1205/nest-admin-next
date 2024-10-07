@@ -19,6 +19,7 @@ import {
 import { usePriorityValues } from '@vben/hooks';
 import { EmptyIcon } from '@vben/icons';
 import { $t } from '@vben/locales';
+import { usePreferences } from '@vben/preferences';
 import { cloneDeep, cn, mergeWithArrayOverride } from '@vben/utils';
 import { VbenLoading } from '@vben-core/shadcn-ui';
 
@@ -48,6 +49,8 @@ const {
   formOptions,
 } = usePriorityValues(props, state);
 
+const { isMobile } = usePreferences();
+
 const slots = useSlots();
 
 const [Form, formApi] = useTableForm({});
@@ -59,6 +62,8 @@ const showToolbar = computed(() => {
 const options = computed(() => {
   const slotActions = slots['toolbar-actions']?.();
   const slotTools = slots['toolbar-tools']?.();
+
+  const globalGridConfig = VxeUI?.getConfig()?.grid ?? {};
 
   const forceUseToolbarOptions = showToolbar.value
     ? {
@@ -76,6 +81,7 @@ const options = computed(() => {
       {},
       forceUseToolbarOptions,
       toRaw(gridOptions.value),
+      globalGridConfig,
     ),
   );
 
@@ -91,6 +97,20 @@ const options = computed(() => {
   }
 
   if (mergedOptions.pagerConfig) {
+    const mobileLayouts = [
+      'PrevJump',
+      'PrevPage',
+      'Number',
+      'NextPage',
+      'NextJump',
+    ] as any;
+    const layouts = [
+      'Total',
+      'Sizes',
+      'Home',
+      ...mobileLayouts,
+      'End',
+    ] as readonly string[];
     mergedOptions.pagerConfig = mergeWithArrayOverride(
       {},
       mergedOptions.pagerConfig,
@@ -99,18 +119,7 @@ const options = computed(() => {
         background: true,
         pageSizes: [10, 20, 30, 50, 100, 200],
         className: 'mt-2 w-full',
-        layouts: [
-          'Total',
-          'Sizes',
-          'Home',
-          'PrevJump',
-          'PrevPage',
-          'Number',
-          'NextPage',
-          'NextJump',
-          'End',
-          // 'FullJump',
-        ] as any[],
+        layouts: isMobile.value ? mobileLayouts : layouts,
         size: 'mini' as const,
       },
     );
@@ -134,11 +143,10 @@ const vbenFormOptions = computed(() => {
       props.api.reload(formValues);
     },
     handleReset: async () => {
-      formApi.resetForm();
+      await formApi.resetForm();
       const formValues = formApi.form.values;
       props.api.reload(formValues);
     },
-    collapseTriggerResize: true,
     commonConfig: {
       componentProps: {
         class: 'w-full',
@@ -146,12 +154,19 @@ const vbenFormOptions = computed(() => {
     },
     showCollapseButton: true,
     submitButtonOptions: {
-      text: $t('common.query'),
+      content: $t('common.query'),
     },
     wrapperClass: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
   };
+  const finalFormOptions: VbenFormProps = mergeWithArrayOverride(
+    {},
+    formOptions.value,
+    defaultFormProps,
+  );
+
   return {
-    ...mergeWithArrayOverride({}, formOptions.value, defaultFormProps),
+    ...finalFormOptions,
+    collapseTriggerResize: !!finalFormOptions.showCollapseButton,
   };
 });
 
@@ -193,16 +208,15 @@ async function init() {
   }
 
   // form 由 vben-form代替，所以不适配formConfig，这里给出警告
-  const formConfig = options.value.formConfig;
+  const formConfig = gridOptions.value?.formConfig;
   if (formConfig) {
     console.warn(
       '[Vben Vxe Table]: The formConfig in the grid is not supported, please use the `formOptions` props',
     );
   }
 }
-
 onMounted(() => {
-  props.api?.mount?.(gridRef.value);
+  props.api?.mount?.(gridRef.value, formApi);
   init();
 });
 </script>
@@ -231,7 +245,7 @@ onMounted(() => {
         <slot :name="slotName" v-bind="slotProps"></slot>
       </template>
       <template #form>
-        <div v-if="formOptions" class="relative rounded py-3 pb-6">
+        <div v-if="formOptions" class="relative rounded py-3 pb-4">
           <slot name="form">
             <Form v-bind="vbenFormOptions">
               <template
@@ -244,7 +258,7 @@ onMounted(() => {
             </Form>
           </slot>
           <div
-            class="bg-background-deep z-100 absolute -left-2 bottom-2 h-4 w-[calc(100%+1rem)] overflow-hidden"
+            class="bg-background-deep z-100 absolute -left-2 bottom-1 h-2 w-[calc(100%+1rem)] overflow-hidden md:bottom-2 md:h-3"
           ></div>
         </div>
       </template>
