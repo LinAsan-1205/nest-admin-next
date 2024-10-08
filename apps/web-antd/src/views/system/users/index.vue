@@ -88,19 +88,48 @@ const gridOptions: VxeGridProps<RowType> = {
       slots: { default: 'avatar' },
     },
     { field: 'userName', title: $t('page.users.userName') },
-    { field: 'nickName', title: $t('page.users.nickName') },
-    { field: 'phone', title: $t('page.users.phone') },
-    { field: 'email', title: $t('page.users.email') },
+    {
+      field: 'nickName',
+      title: $t('page.users.nickName'),
+      formatter: ({ cellValue }) => {
+        if (!cellValue) return '未设置';
+        return cellValue;
+      },
+    },
+    {
+      field: 'phone',
+      title: $t('page.users.phone'),
+      formatter: ({ cellValue }) => {
+        if (!cellValue) return '未绑定';
+        return cellValue;
+      },
+    },
+    {
+      field: 'email',
+      title: $t('page.users.email'),
+      formatter: ({ cellValue }) => {
+        if (!cellValue) return '未绑定';
+        return cellValue;
+      },
+    },
     {
       field: 'status',
       title: $t('page.users.status'),
       slots: { default: 'status' },
     },
-    { field: 'loginIp', title: $t('page.users.loginIp') },
+    {
+      field: 'loginIp',
+      title: $t('page.users.loginIp'),
+      formatter: ({ cellValue }) => {
+        if (!cellValue) return '未登陆';
+        return cellValue;
+      },
+    },
     {
       field: 'loginDate',
       title: $t('page.users.loginDate'),
       formatter: ({ cellValue }) => {
+        if (!cellValue) return '未登陆';
         return dayjs(cellValue).format('YYYY-MM-DD HH:mm:ss');
       },
     },
@@ -133,16 +162,20 @@ const [FormModal, formModalApi] = useVbenModal({
   connectedComponent: UserFormModel,
 });
 
+const refreshTable = () => {
+  gridApi.reload();
+};
+
 const onChangeStatus = async (checked: string, row: RowType) => {
   await changeStatus({ status: checked, id: row.userId });
   row.status = checked;
   message.success($t('page.apiSuccess'));
-  await gridApi.reload();
+  refreshTable();
 };
 
 const onTreeSelect = (selectedKeys: string[]) => {
   deptId.value = selectedKeys[0] || null;
-  gridApi.reload();
+  refreshTable();
 };
 
 const onCreate = () => {
@@ -205,6 +238,6 @@ onMounted(async () => {
         </template>
       </Grid>
     </div>
-    <FormModal />
+    <FormModal @refresh="refreshTable" />
   </Page>
 </template>

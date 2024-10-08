@@ -1,6 +1,7 @@
 import { requestClient } from '#/api/core/request';
 
 import { type UserApi } from './model';
+
 /**
  * 账号登录接口
  */
@@ -22,6 +23,10 @@ export async function getList(params: UserApi.ListParams) {
  */
 export async function changeStatus(data: UserApi.ChangeStatus) {
   return requestClient.post('/users/changeStatus', data);
+}
+
+export async function createUser(data: UserApi.CreateParams) {
+  return requestClient.post('/users', data);
 }
 
 export { type UserApi };

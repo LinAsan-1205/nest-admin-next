@@ -34,9 +34,6 @@ const { maxCount, helpText, accept, maxSize, name } = withDefaults(
     disabled: false,
   },
 );
-const emit = defineEmits<{
-  change: [UploadProps['fileList']];
-}>();
 
 const modelValue = defineModel<UploadProps['fileList']>({
   default: () => [],
@@ -64,7 +61,7 @@ const beforeUpload = (file: File) => {
 };
 
 const handlePreview = async (file: any) => {
-  openWindow(file.url, {
+  openWindow(file.url || file.response, {
     target: '_blank',
   });
 };
@@ -78,11 +75,16 @@ const handleChange = (info: any) => {
     loading.value = false;
   }
 
+  if (info.file.status === 'done') {
+    message.success(`${info.file.name} 文件上传成功`);
+  }
+
   if (info.file.status === 'error') {
     message.error(`${info.file.name} 文件上传失败`);
   }
 };
 
+// TODO 这个函数需要重新优化一下 还有点问题 不够完美
 const customRequest = async (file: UploadRequestOption<any>) => {
   const formData = new FormData();
   formData.append(name, file.file);
@@ -97,6 +99,7 @@ const customRequest = async (file: UploadRequestOption<any>) => {
       uid: (file.file as any).uid,
       name: file.file.name,
       status: 'uploading',
+      url: '',
     };
     fileList.push(fileItem);
   }
@@ -105,12 +108,17 @@ const customRequest = async (file: UploadRequestOption<any>) => {
     const data = await uploadASingleFile(formData);
     fileItem.status = 'done';
     fileItem.url = `${apiURL}/${data.url}`;
-    file.onSuccess?.(data.url);
+    file.onSuccess?.(fileItem.url);
+    modelValue.value = modelValue.value.map((item: any) => ({
+      url: fileItem.url,
+      uid: fileItem.uid,
+      response: fileItem.url,
+      status: file.file.name === item.name ? 'done' : item.status,
+      name: item.name,
+    }));
   } catch (error: any) {
     file.onError?.(error);
   }
-
-  emit('change', modelValue.value);
 };
 </script>
 

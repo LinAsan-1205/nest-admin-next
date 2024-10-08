@@ -4,27 +4,25 @@ import type { UploadProps } from 'ant-design-vue';
 import { onMounted, ref } from 'vue';
 
 import { useVbenModal, z } from '@vben/common-ui';
-import { useUserStore } from '@vben/stores';
 
 import { message } from 'ant-design-vue';
 
 import { useVbenForm } from '#/adapter';
 import { type DeptApi, getDeptList } from '#/api/system/dept';
+import { createUser, type UserApi } from '#/api/system/user';
 import { $t } from '#/locales';
 
 defineOptions({
   name: 'UserFormModel',
 });
 
-function onSubmit(values: Record<string, any>) {
-  message.info(JSON.stringify(values));
-}
+const emit = defineEmits<{
+  refresh: [];
+}>();
 
 const deptList = ref<DeptApi.List[]>([]);
 
 const avatar = ref<UploadProps['fileList']>([]);
-
-const userStore = useUserStore();
 
 const [Form, formApi] = useVbenForm({
   commonConfig: {
@@ -146,12 +144,13 @@ const [Form, formApi] = useVbenForm({
   showDefaultActions: false,
 });
 
-const setAvatar = () => {
+const setAvatar = (url: string) => {
+  if (!url) return;
   avatar.value = [
     {
       id: '-1',
-      name: userStore.userInfo?.nickName,
-      url: userStore.userInfo?.avatar,
+      name: 'avatar.png',
+      url,
     },
   ];
 };
@@ -163,11 +162,10 @@ const [Modal, modalApi] = useVbenModal({
     formApi.resetForm();
   },
   onConfirm: async () => {
-    if (avatar.value.length > 0) {
-      const [{ url }] = avatar.value;
-      await formApi.setValues({ avatar: url });
+    const { valid } = await formApi.validate();
+    if (valid) {
+      await formApi.submitForm();
     }
-    await formApi.submitForm();
     // modalApi.close();
   },
   onOpenChange(isOpen: boolean) {
@@ -175,13 +173,23 @@ const [Modal, modalApi] = useVbenModal({
       const { values } = modalApi.getData<Record<string, any>>();
       if (values) {
         formApi.setValues(values);
+        setAvatar(values.avatar);
       }
     }
   },
 });
 
+async function onSubmit(values: UserApi.CreateParams) {
+  await createUser({
+    ...values,
+    avatar: avatar.value[0]?.url,
+  });
+  message.success('添加成功');
+  modalApi.close();
+  emit('refresh');
+}
+
 onMounted(async () => {
-  setAvatar();
   await getDeptList({}).then((res) => {
     deptList.value = res;
     formApi.updateSchema([

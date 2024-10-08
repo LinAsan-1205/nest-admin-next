@@ -11,13 +11,15 @@ export declare namespace UserApi {
     homePath?: string;
     roles: string[];
   }
+
   export interface ChangeStatus {
     id: string;
     status: string;
   }
+
   export type ListParams = object;
 
-  export type List = {
+  export interface Item {
     avatar: string;
     createTime: string;
     deptId: string;
@@ -34,5 +36,21 @@ export declare namespace UserApi {
     userType: string;
     userTypeDisable: boolean;
     userTypeName: string;
-  };
+  }
+
+  export type List = Item;
+
+  export type CreateParams = Pick<
+    Item,
+    | 'avatar'
+    | 'deptId'
+    | 'email'
+    | 'nickName'
+    | 'password'
+    | 'phone'
+    | 'remark'
+    | 'sex'
+    | 'status'
+    | 'userName'
+  >;
 }
