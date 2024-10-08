@@ -11,6 +11,7 @@ declare module 'vue' {
     ACard: typeof import('ant-design-vue/es')['Card']
     AImage: typeof import('ant-design-vue/es')['Image']
     AInput: typeof import('ant-design-vue/es')['Input']
+    ASpace: typeof import('ant-design-vue/es')['Space']
     ASwitch: typeof import('ant-design-vue/es')['Switch']
     ATree: typeof import('ant-design-vue/es')['Tree']
     RouterLink: typeof import('vue-router')['RouterLink']
