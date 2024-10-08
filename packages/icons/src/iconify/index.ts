@@ -13,3 +13,5 @@ export const MdiGoogle = createIconifyIcon('mdi:google');
 export const MdiQqchat = createIconifyIcon('mdi:qqchat');
 
 export const UserProfile = createIconifyIcon('ant-design:user-outlined');
+
+export const LoadingOutlined = createIconifyIcon('ant-design:loading-outlined');

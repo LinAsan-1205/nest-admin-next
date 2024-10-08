@@ -8,7 +8,7 @@ export default defineConfig(async () => {
       plugins: [
         Components({
           extensions: ['vue'],
-          dts: 'types/components.d.ts',
+          dts: 'src/types/components.d.ts',
           include: [/\.vue$/, /\.vue\?vue/],
           dirs: ['src/components'],
           resolvers: [

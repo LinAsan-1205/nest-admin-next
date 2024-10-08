@@ -11,12 +11,14 @@ declare module 'vue' {
     ACard: typeof import('ant-design-vue/es')['Card']
     AImage: typeof import('ant-design-vue/es')['Image']
     AInput: typeof import('ant-design-vue/es')['Input']
+    AModal: typeof import('ant-design-vue/es')['Modal']
     ASpace: typeof import('ant-design-vue/es')['Space']
     ASwitch: typeof import('ant-design-vue/es')['Switch']
     ATree: typeof import('ant-design-vue/es')['Tree']
+    AUpload: typeof import('ant-design-vue/es')['Upload']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     UploadAvatar: typeof import('./../src/components/Upload/UploadAvatar.vue')['default']
-    UploadFile: typeof import('./../src/components/Upload/UploadFile.vue')['default']
+    UploadFile: typeof import('./../components/Upload/UploadFile.vue')['default']
   }
 }

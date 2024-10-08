@@ -1,15 +1,16 @@
 <script lang="ts" setup>
-import { h, onMounted, ref } from 'vue';
+import type { UploadProps } from 'ant-design-vue';
+
+import { onMounted, ref } from 'vue';
 
 import { useVbenModal, z } from '@vben/common-ui';
+import { useUserStore } from '@vben/stores';
 
 import { message } from 'ant-design-vue';
 
 import { useVbenForm } from '#/adapter';
 import { type DeptApi, getDeptList } from '#/api/system/dept';
 import { $t } from '#/locales';
-
-import UploadAvatar from './UploadAvatar.vue';
 
 defineOptions({
   name: 'UserFormModel',
@@ -20,6 +21,10 @@ function onSubmit(values: Record<string, any>) {
 }
 
 const deptList = ref<DeptApi.List[]>([]);
+
+const avatar = ref<UploadProps['fileList']>([]);
+
+const userStore = useUserStore();
 
 const [Form, formApi] = useVbenForm({
   commonConfig: {
@@ -34,18 +39,10 @@ const [Form, formApi] = useVbenForm({
       component: 'Upload',
       componentProps: {
         placeholder: '请输入',
-        name: 'avatar',
-        fileList: [],
-        listType: 'picture-card',
       },
       formItemClass: 'col-span-2',
       fieldName: 'avatar',
       label: $t('page.users.avatar'),
-      renderComponentContent: () => {
-        return {
-          default: () => [h(UploadAvatar)],
-        };
-      },
     },
     {
       component: 'Input',
@@ -149,6 +146,16 @@ const [Form, formApi] = useVbenForm({
   showDefaultActions: false,
 });
 
+const setAvatar = () => {
+  avatar.value = [
+    {
+      id: '-1',
+      name: userStore.userInfo?.nickName,
+      url: userStore.userInfo?.avatar,
+    },
+  ];
+};
+
 const [Modal, modalApi] = useVbenModal({
   fullscreenButton: false,
   onCancel() {
@@ -156,6 +163,10 @@ const [Modal, modalApi] = useVbenModal({
     formApi.resetForm();
   },
   onConfirm: async () => {
+    if (avatar.value.length > 0) {
+      const [{ url }] = avatar.value;
+      await formApi.setValues({ avatar: url });
+    }
     await formApi.submitForm();
     // modalApi.close();
   },
@@ -170,6 +181,7 @@ const [Modal, modalApi] = useVbenModal({
 });
 
 onMounted(async () => {
+  setAvatar();
   await getDeptList({}).then((res) => {
     deptList.value = res;
     formApi.updateSchema([
@@ -185,6 +197,10 @@ onMounted(async () => {
 </script>
 <template>
   <Modal class="md:w-[800px]">
-    <Form />
+    <Form>
+      <template #avatar>
+        <UploadFile v-model="avatar" :max-count="1" />
+      </template>
+    </Form>
   </Modal>
 </template>
