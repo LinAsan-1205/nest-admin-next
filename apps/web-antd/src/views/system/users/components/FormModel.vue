@@ -148,7 +148,7 @@ const setAvatar = (url: string) => {
   if (!url) return;
   avatar.value = [
     {
-      id: '-1',
+      uid: '-1',
       name: 'avatar.png',
       url,
     },
@@ -166,7 +166,6 @@ const [Modal, modalApi] = useVbenModal({
     if (valid) {
       await formApi.submitForm();
     }
-    // modalApi.close();
   },
   onOpenChange(isOpen: boolean) {
     if (isOpen) {
@@ -179,10 +178,11 @@ const [Modal, modalApi] = useVbenModal({
   },
 });
 
-async function onSubmit(values: UserApi.CreateParams) {
+async function onSubmit(values: Record<string, any>) {
+  const data = values as UserApi.CreateParams;
   await createUser({
-    ...values,
-    avatar: avatar.value[0]?.url,
+    ...data,
+    avatar: avatar.value?.[0]?.url,
   });
   message.success('添加成功');
   modalApi.close();

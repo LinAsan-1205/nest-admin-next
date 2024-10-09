@@ -20,7 +20,7 @@ export declare namespace UserApi {
   export type ListParams = object;
 
   export interface Item {
-    avatar: string;
+    avatar?: string;
     createTime: string;
     deptId: string;
     email: string;
