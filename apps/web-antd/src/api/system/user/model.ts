@@ -36,6 +36,7 @@ export declare namespace UserApi {
     userType: string;
     userTypeDisable: boolean;
     userTypeName: string;
+    password?: string;
   }
 
   export type List = Item;

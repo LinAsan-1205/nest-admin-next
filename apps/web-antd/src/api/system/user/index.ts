@@ -25,8 +25,20 @@ export async function changeStatus(data: UserApi.ChangeStatus) {
   return requestClient.post('/users/changeStatus', data);
 }
 
+/**
+ * 创建用户
+ * @param data
+ */
 export async function createUser(data: UserApi.CreateParams) {
   return requestClient.post('/users', data);
+}
+
+/**
+ * 删除用户
+ * @param ids
+ */
+export async function deleteUser(ids: string) {
+  return requestClient.delete(`/users/${ids}`);
 }
 
 export { type UserApi };

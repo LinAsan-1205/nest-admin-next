@@ -5,12 +5,17 @@ import { onMounted, ref } from 'vue';
 
 import { Page, useVbenModal } from '@vben/common-ui';
 
-import { Button, message } from 'ant-design-vue';
+import { message, Modal } from 'ant-design-vue';
 import dayjs from 'dayjs';
 
 import { useVbenVxeGrid } from '#/adapter';
 import { type DeptApi, getDeptList } from '#/api/system/dept';
-import { changeStatus, getList, type UserApi } from '#/api/system/user';
+import {
+  changeStatus,
+  deleteUser,
+  getList,
+  type UserApi,
+} from '#/api/system/user';
 import { $t } from '#/locales';
 
 import UserFormModel from './components/FormModel.vue';
@@ -77,7 +82,7 @@ const gridOptions: VxeGridProps<RowType> = {
   checkboxConfig: {
     highlight: true,
     checkMethod: ({ row }) => {
-      return row.userTypeDisable;
+      return !row.userTypeDisable;
     },
   },
   columns: [
@@ -140,6 +145,7 @@ const gridOptions: VxeGridProps<RowType> = {
         return dayjs(cellValue).format('YYYY-MM-DD HH:mm:ss');
       },
     },
+    { slots: { default: 'action' }, title: '操作' },
   ],
   pagerConfig: {},
   proxyConfig: {
@@ -188,11 +194,21 @@ const onCreate = () => {
 //   formModalApi.open();
 // };
 
-const onRemove = () => {
-  const records = gridApi.grid?.getCheckboxRecords() as RowType[];
+const onRemove = async (ids: RowType[]) => {
+  const records = ids || (gridApi.grid?.getCheckboxRecords() as RowType[]);
   if (records.length === 0) {
     message.error($t('page.users.selectUser'));
+    return;
   }
+  Modal.confirm({
+    title: $t('page.modal.confirmTitle'),
+    content: $t('page.modal.confirmContent'),
+    onOk: async () => {
+      await deleteUser(records.map((item) => item.userId).join(','));
+      message.success($t('page.apiRemove'));
+      refreshTable();
+    },
+  });
 };
 
 onMounted(async () => {
@@ -220,8 +236,10 @@ onMounted(async () => {
       <Grid class="flex-1">
         <template #toolbar-actions>
           <a-space>
-            <Button type="primary" @click="onCreate">新增</Button>
-            <Button danger type="primary" @click="onRemove">删除</Button>
+            <a-button type="primary" @click="onCreate">新增</a-button>
+            <a-button danger type="primary" @click="onRemove([])">
+              删除
+            </a-button>
           </a-space>
         </template>
         <template #avatar="{ row }">
@@ -235,6 +253,14 @@ onMounted(async () => {
             un-checked-value="1"
             @change="onChangeStatus($event, row)"
           />
+        </template>
+        <template #action="{ row }">
+          <template v-if="!row.userTypeDisable">
+            <a-button type="link"> 编辑 </a-button>
+            <a-button danger type="link" @click="onRemove([row])">
+              删除
+            </a-button>
+          </template>
         </template>
       </Grid>
     </div>

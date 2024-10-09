@@ -116,6 +116,7 @@ const authLogin = (params: any) => {
   <AuthenticationLogin
     :form-schema="formSchema"
     :loading="authStore.loginLoading"
+    :show-register="false"
     @submit="authLogin"
   />
 </template>
