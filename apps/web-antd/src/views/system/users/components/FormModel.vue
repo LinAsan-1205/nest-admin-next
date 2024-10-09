@@ -9,7 +9,7 @@ import { message } from 'ant-design-vue';
 
 import { useVbenForm } from '#/adapter';
 import { type DeptApi, getDeptList } from '#/api/system/dept';
-import { createUser, type UserApi } from '#/api/system/user';
+import { createUser, updateUser, type UserApi } from '#/api/system/user';
 import { $t } from '#/locales';
 
 defineOptions({
@@ -19,6 +19,10 @@ defineOptions({
 const emit = defineEmits<{
   refresh: [];
 }>();
+
+const updateTheStatus = ref<boolean>(false);
+
+const userId = ref<string>();
 
 const deptList = ref<DeptApi.List[]>([]);
 
@@ -73,7 +77,7 @@ const [Form, formApi] = useVbenForm({
       },
       fieldName: 'password',
       label: $t('page.users.password'),
-      rules: z.string().min(6, { message: '最少输入6个字符' }),
+      rules: z.string().min(6, { message: '密码长度不能小于6位' }),
     },
     {
       component: 'Input',
@@ -82,7 +86,11 @@ const [Form, formApi] = useVbenForm({
       },
       fieldName: 'nickName',
       label: $t('page.users.nickName'),
-      rules: z.string().min(2, { message: '最少输入2个字符' }).optional(),
+      rules: z
+        .string()
+        .min(2, { message: '最少输入2个字符' })
+        .nullable()
+        .optional(),
     },
     {
       component: 'Input',
@@ -98,6 +106,7 @@ const [Form, formApi] = useVbenForm({
         .refine((value) => /^1[3-9]\d{9}$/.test(value), {
           message: '手机号格式不正确',
         })
+        .nullable()
         .optional(),
     },
     {
@@ -107,7 +116,7 @@ const [Form, formApi] = useVbenForm({
       },
       fieldName: 'email',
       label: $t('page.users.email'),
-      rules: z.string().email('请输入正确的邮箱').optional(),
+      rules: z.string().email('请输入正确的邮箱').nullable().optional(),
     },
 
     {
@@ -169,10 +178,32 @@ const [Modal, modalApi] = useVbenModal({
   },
   onOpenChange(isOpen: boolean) {
     if (isOpen) {
-      const { values } = modalApi.getData<Record<string, any>>();
+      const {
+        values,
+        update,
+        userId: id,
+      } = modalApi.getData<Record<string, any>>();
+      updateTheStatus.value = update;
+      // 修改时设置表单值
       if (values) {
-        formApi.setValues(values);
+        formApi.setValues({
+          ...values,
+          password: null,
+        });
         setAvatar(values.avatar);
+      }
+      if (update) {
+        userId.value = id;
+        formApi.updateSchema([
+          {
+            fieldName: 'password',
+            rules: z
+              .string()
+              .min(6, { message: '密码长度不能小于6位' })
+              .nullable()
+              .optional(),
+          },
+        ]);
       }
     }
   },
@@ -180,11 +211,17 @@ const [Modal, modalApi] = useVbenModal({
 
 async function onSubmit(values: Record<string, any>) {
   const data = values as UserApi.CreateParams;
-  await createUser({
+  const params = {
     ...data,
     avatar: avatar.value?.[0]?.url,
-  });
-  message.success('添加成功');
+  };
+  const messageContent = updateTheStatus.value
+    ? $t('page.apiEditSuccess')
+    : $t('page.apiCreateSuccess');
+  await (updateTheStatus.value
+    ? updateUser(userId.value as string, params)
+    : createUser(params));
+  message.success(messageContent);
   modalApi.close();
   emit('refresh');
 }

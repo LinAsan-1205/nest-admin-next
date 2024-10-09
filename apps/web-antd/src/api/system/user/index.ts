@@ -34,6 +34,15 @@ export async function createUser(data: UserApi.CreateParams) {
 }
 
 /**
+ * 更新用户
+ * @param id
+ * @param data
+ */
+export async function updateUser(id: string, data: UserApi.UpdateParams) {
+  return requestClient.put(`/users/${id}`, data);
+}
+
+/**
  * 删除用户
  * @param ids
  */

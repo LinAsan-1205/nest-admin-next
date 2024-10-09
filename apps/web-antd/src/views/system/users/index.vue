@@ -186,13 +186,21 @@ const onTreeSelect = (selectedKeys: string[]) => {
 
 const onCreate = () => {
   formModalApi.setState({ title: $t('page.users.createUser') });
+  formModalApi.setData({
+    update: false,
+  });
   formModalApi.open();
 };
 
-// const onUpdate = () => {
-//   formModalApi.setState({ title: $t('page.users.editUser') });
-//   formModalApi.open();
-// };
+const onUpdate = (row: RowType) => {
+  formModalApi.setState({ title: $t('page.users.editUser') });
+  formModalApi.setData({
+    values: { ...row },
+    update: true,
+    userId: row.userId,
+  });
+  formModalApi.open();
+};
 
 const onRemove = async (ids: RowType[]) => {
   const records = ids || (gridApi.grid?.getCheckboxRecords() as RowType[]);
@@ -256,7 +264,7 @@ onMounted(async () => {
         </template>
         <template #action="{ row }">
           <template v-if="!row.userTypeDisable">
-            <a-button type="link"> 编辑 </a-button>
+            <a-button type="link" @click="onUpdate(row)"> 编辑</a-button>
             <a-button danger type="link" @click="onRemove([row])">
               删除
             </a-button>

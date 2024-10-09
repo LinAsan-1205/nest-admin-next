@@ -54,4 +54,6 @@ export declare namespace UserApi {
     | 'status'
     | 'userName'
   >;
+
+  export type UpdateParams = Partial<CreateParams>;
 }
