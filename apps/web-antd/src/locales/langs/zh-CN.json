@@ -20,7 +20,8 @@
       "selectUser": "请选择用户",
       "createUser": "创建用户",
       "editUser": "编辑用户",
-      "dept": "所属部门"
+      "dept": "所属部门",
+      "sex": "性别"
     },
     "modal": {
       "add": "新增",

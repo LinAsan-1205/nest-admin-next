@@ -118,7 +118,29 @@ const [Form, formApi] = useVbenForm({
       label: $t('page.users.email'),
       rules: z.string().email('请输入正确的邮箱').nullable().optional(),
     },
-
+    {
+      component: 'RadioGroup',
+      componentProps: {
+        options: [
+          {
+            label: '男',
+            value: '0',
+          },
+          {
+            label: '女',
+            value: '1',
+          },
+          {
+            label: '未知',
+            value: '2',
+          },
+        ],
+      },
+      defaultValue: '0',
+      fieldName: 'sex',
+      label: $t('page.users.sex'),
+      rules: 'selectRequired',
+    },
     {
       component: 'RadioGroup',
       componentProps: {
