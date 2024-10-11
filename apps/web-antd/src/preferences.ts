@@ -12,12 +12,16 @@ export const overridesPreferences = defineOverridesPreferences({
     watermark: false,
   },
   copyright: {
-    companyName: 'miniAdmin',
+    companyName: 'admin',
     companySiteLink: 'https://github.com',
   },
   theme: {
-    builtinType: 'violet',
+    builtinType: 'default',
     mode: 'light',
-    semiDarkSidebar: false,
+    semiDarkSidebar: true,
+    radius: '0.25',
+  },
+  breadcrumb: {
+    showHome: true,
   },
 });

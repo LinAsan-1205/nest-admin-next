@@ -2,7 +2,7 @@
 import type { UploadProps } from 'ant-design-vue';
 import type { UploadRequestOption } from 'ant-design-vue/lib/vc-upload/interface';
 
-import { computed, defineProps, ref } from 'vue';
+import { computed, ref } from 'vue';
 
 import { LoadingOutlined } from '@vben/icons';
 import { openWindow } from '@vben/utils';
@@ -23,17 +23,14 @@ interface UploadFileProps {
   disabled?: boolean;
 }
 
-const { maxCount, helpText, accept, maxSize, name } = withDefaults(
-  defineProps<UploadFileProps>(),
-  {
-    maxCount: 5,
-    helpText: '请上传',
-    accept: () => ['png', 'jpg', 'jpeg'],
-    maxSize: 5,
-    name: 'file',
-    disabled: false,
-  },
-);
+const {
+  maxCount = 5,
+  helpText = '请上传',
+  accept = ['png', 'jpg', 'jpeg'],
+  maxSize = 5,
+  name = 'file',
+  disabled = false,
+} = defineProps<UploadFileProps>();
 
 const modelValue = defineModel<UploadProps['fileList']>({
   default: () => [],
@@ -89,15 +86,17 @@ const customRequest = async (file: UploadRequestOption<any>) => {
   const formData = new FormData();
   formData.append(name, file.file);
 
-  const fileList: any[] = modelValue.value;
-  let fileItem = fileList.find((item) => item.uid === (file.file as any).uid);
+  const fileList: any = modelValue.value;
+  let fileItem = fileList.find(
+    (item: any) => item.uid === (file.file as any).uid,
+  );
 
   if (fileItem) {
     fileItem.status = 'uploading';
   } else {
     fileItem = {
       uid: (file.file as any).uid,
-      name: file.file.name,
+      name: (file.file as any).name,
       status: 'uploading',
       url: '',
     };
@@ -109,11 +108,11 @@ const customRequest = async (file: UploadRequestOption<any>) => {
     fileItem.status = 'done';
     fileItem.url = `${apiURL}/${data.url}`;
     file.onSuccess?.(fileItem.url);
-    modelValue.value = modelValue.value.map((item: any) => ({
+    modelValue.value = modelValue.value?.map((item: any) => ({
       url: fileItem.url,
       uid: fileItem.uid,
       response: fileItem.url,
-      status: file.file.name === item.name ? 'done' : item.status,
+      status: (file.file as any).name === item.name ? 'done' : item.status,
       name: item.name,
     }));
   } catch (error: any) {
@@ -128,6 +127,7 @@ const customRequest = async (file: UploadRequestOption<any>) => {
       v-model:file-list="modelValue"
       :before-upload="beforeUpload"
       :custom-request="customRequest"
+      :disabled="disabled"
       :max-count="maxCount"
       list-type="picture-card"
       @change="handleChange"

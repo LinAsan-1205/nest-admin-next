@@ -3,9 +3,8 @@
  * @param waitingMilliseconds
  * @returns {Promise<void>}
  */
-
 export function waitingDelayResolve(waitingMilliseconds = 500) {
-  return new Promise((resolve) => {
+  return new Promise<void>((resolve) => {
     setTimeout(() => {
       resolve();
     }, waitingMilliseconds);
