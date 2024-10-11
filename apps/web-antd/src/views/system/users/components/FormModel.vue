@@ -210,23 +210,23 @@ const [Modal, modalApi] = useVbenModal({
         });
         setAvatar(values.avatar);
       }
+      userId.value = update ? id : '';
+
+      const passwordRule = z
+        .string()
+        .min(6, { message: '密码长度不能小于6位' });
       if (update) {
-        userId.value = id;
         formApi.updateSchema([
           {
             fieldName: 'password',
-            rules: z
-              .string()
-              .min(6, { message: '密码长度不能小于6位' })
-              .nullable()
-              .optional(),
+            rules: passwordRule.nullable().optional(),
           },
         ]);
       } else {
         formApi.updateSchema([
           {
             fieldName: 'password',
-            rules: z.string().min(6, { message: '密码长度不能小于6位' }),
+            rules: passwordRule,
           },
         ]);
       }
