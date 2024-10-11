@@ -91,36 +91,43 @@ const gridOptions: VxeGridProps<RowType> = {
       field: 'avatar',
       title: $t('page.users.avatar'),
       slots: { default: 'avatar' },
+      minWidth: 100,
     },
-    { field: 'userName', title: $t('page.users.userName') },
+    { field: 'userName', title: $t('page.users.userName'), minWidth: 100 },
     {
       field: 'nickName',
       title: $t('page.users.nickName'),
       formatter: 'formatEmpty',
+      minWidth: 100,
     },
     {
       field: 'phone',
       title: $t('page.users.phone'),
       formatter: 'formatEmpty',
+      minWidth: 100,
     },
     {
       field: 'email',
       title: $t('page.users.email'),
       formatter: 'formatEmpty',
+      minWidth: 150,
     },
     {
       field: 'status',
       title: $t('page.users.status'),
       slots: { default: 'status' },
+      minWidth: 100,
     },
     {
       field: 'loginIp',
       title: $t('page.users.loginIp'),
       formatter: 'formatEmpty',
+      minWidth: 156,
     },
     {
       field: 'loginDate',
       title: $t('page.users.loginDate'),
+      minWidth: 156,
       formatter: ({ cellValue }) => {
         if (!cellValue) return '从未登录过';
         return dayjs(cellValue).format('YYYY-MM-DD HH:mm:ss');
@@ -130,8 +137,9 @@ const gridOptions: VxeGridProps<RowType> = {
       field: 'createTime',
       title: $t('page.users.createTime'),
       formatter: 'formatDateTime',
+      minWidth: 156,
     },
-    { slots: { default: 'action' }, title: '操作' },
+    { slots: { default: 'action' }, title: '操作', minWidth: 100 },
   ],
   pagerConfig: {},
   proxyConfig: {
@@ -213,6 +221,22 @@ const onRemove = async (ids: RowType[]) => {
   });
 };
 
+const actionList = [
+  {
+    title: '编辑',
+    onClick: (row: RowType) => {
+      onUpdate(row);
+    },
+  },
+  {
+    title: '删除',
+    danger: true,
+    onClick: (row: RowType) => {
+      onRemove([row]);
+    },
+  },
+];
+
 onMounted(async () => {
   await getDeptList({}).then((res) => {
     deptList.value = res;
@@ -258,10 +282,7 @@ onMounted(async () => {
         </template>
         <template #action="{ row }">
           <template v-if="!row.userTypeDisable">
-            <a-button type="link" @click="onUpdate(row)"> 编辑</a-button>
-            <a-button danger type="link" @click="onRemove([row])">
-              删除
-            </a-button>
+            <Action :list="actionList" :row="row" />
           </template>
         </template>
       </Grid>

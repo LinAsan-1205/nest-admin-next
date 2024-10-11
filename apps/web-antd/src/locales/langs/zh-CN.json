@@ -23,6 +23,12 @@
       "dept": "所属部门",
       "sex": "性别"
     },
+    "dept": {
+      "deptName": "部门名称",
+      "sort": "排序",
+      "remark": "备注",
+      "createTime": "创建时间"
+    },
     "modal": {
       "add": "新增",
       "edit": "编辑",
@@ -52,6 +58,9 @@
     },
     "users": {
       "title": "用户管理"
+    },
+    "dept": {
+      "title": "部门管理"
     }
   }
 }
