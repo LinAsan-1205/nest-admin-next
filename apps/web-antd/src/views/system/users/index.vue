@@ -71,8 +71,8 @@ const formOptions: VbenFormProps = {
       fieldName: 'registeredTime',
       label: $t('page.users.createTime'),
       componentProps: {
-        format: 'YYYY-MM-DD HH:mm',
-        valueFormat: 'YYYY-MM-DD HH:mm',
+        format: 'YYYY-MM-DD',
+        valueFormat: 'YYYY-MM-DD',
       },
     },
   ],
@@ -96,26 +96,17 @@ const gridOptions: VxeGridProps<RowType> = {
     {
       field: 'nickName',
       title: $t('page.users.nickName'),
-      formatter: ({ cellValue }) => {
-        if (!cellValue) return '未设置';
-        return cellValue;
-      },
+      formatter: 'formatEmpty',
     },
     {
       field: 'phone',
       title: $t('page.users.phone'),
-      formatter: ({ cellValue }) => {
-        if (!cellValue) return '未绑定';
-        return cellValue;
-      },
+      formatter: 'formatEmpty',
     },
     {
       field: 'email',
       title: $t('page.users.email'),
-      formatter: ({ cellValue }) => {
-        if (!cellValue) return '未绑定';
-        return cellValue;
-      },
+      formatter: 'formatEmpty',
     },
     {
       field: 'status',
@@ -125,25 +116,20 @@ const gridOptions: VxeGridProps<RowType> = {
     {
       field: 'loginIp',
       title: $t('page.users.loginIp'),
-      formatter: ({ cellValue }) => {
-        if (!cellValue) return '未登陆';
-        return cellValue;
-      },
+      formatter: 'formatEmpty',
     },
     {
       field: 'loginDate',
       title: $t('page.users.loginDate'),
       formatter: ({ cellValue }) => {
-        if (!cellValue) return '未登陆';
+        if (!cellValue) return '从未登录过';
         return dayjs(cellValue).format('YYYY-MM-DD HH:mm:ss');
       },
     },
     {
       field: 'createTime',
       title: $t('page.users.createTime'),
-      formatter: ({ cellValue }) => {
-        return dayjs(cellValue).format('YYYY-MM-DD HH:mm:ss');
-      },
+      formatter: 'formatDateTime',
     },
     { slots: { default: 'action' }, title: '操作' },
   ],
@@ -173,10 +159,18 @@ const refreshTable = () => {
 };
 
 const onChangeStatus = async (checked: string, row: RowType) => {
-  await changeStatus({ status: checked, id: row.userId });
-  row.status = checked;
-  message.success($t('page.apiSuccess'));
-  refreshTable();
+  if (row.userTypeDisable) {
+    message.error('该用户为系统内置用户，不允许操作');
+    return;
+  }
+  try {
+    await changeStatus({ status: checked, id: row.userId });
+    row.status = checked;
+    message.success($t('page.apiSuccess'));
+    refreshTable();
+  } catch {
+    row.status = checked === '0' ? '1' : '0';
+  }
 };
 
 const onTreeSelect = (selectedKeys: string[]) => {
