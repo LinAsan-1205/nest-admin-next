@@ -71,6 +71,15 @@ const [Form, formApi] = useVbenForm({
       rules: 'required',
     },
     {
+      component: 'Input',
+      componentProps: {
+        placeholder: '请输入',
+      },
+      fieldName: 'nickName',
+      label: $t('page.users.nickName'),
+      rules: z.string().min(2, { message: '最少输入2个字符' }),
+    },
+    {
       component: 'InputPassword',
       componentProps: {
         placeholder: '请输入',
@@ -78,19 +87,6 @@ const [Form, formApi] = useVbenForm({
       fieldName: 'password',
       label: $t('page.users.password'),
       rules: z.string().min(6, { message: '密码长度不能小于6位' }),
-    },
-    {
-      component: 'Input',
-      componentProps: {
-        placeholder: '请输入',
-      },
-      fieldName: 'nickName',
-      label: $t('page.users.nickName'),
-      rules: z
-        .string()
-        .min(2, { message: '最少输入2个字符' })
-        .nullable()
-        .optional(),
     },
     {
       component: 'Input',
@@ -224,6 +220,13 @@ const [Modal, modalApi] = useVbenModal({
               .min(6, { message: '密码长度不能小于6位' })
               .nullable()
               .optional(),
+          },
+        ]);
+      } else {
+        formApi.updateSchema([
+          {
+            fieldName: 'password',
+            rules: z.string().min(6, { message: '密码长度不能小于6位' }),
           },
         ]);
       }
