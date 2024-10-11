@@ -211,7 +211,6 @@ const [Modal, modalApi] = useVbenModal({
         setAvatar(values.avatar);
       }
       userId.value = update ? id : '';
-
       const passwordRule = z
         .string()
         .min(6, { message: '密码长度不能小于6位' });
