@@ -101,6 +101,12 @@ const gridOptions: VxeGridProps<RowType> = {
       minWidth: 100,
     },
     {
+      field: 'dept.deptName',
+      title: $t('page.users.deptName'),
+      formatter: 'formatEmpty',
+      minWidth: 100,
+    },
+    {
       field: 'phone',
       title: $t('page.users.phone'),
       formatter: 'formatEmpty',
@@ -249,6 +255,7 @@ onMounted(async () => {
     <div class="md:flex md:justify-between md:gap-4">
       <a-card :bordered="false" class="mb-4 flex-none md:mb-0 md:w-[250px]">
         <a-tree
+          v-if="deptList.length > 0"
           :field-names="{
             title: 'deptName',
             key: 'deptId',
@@ -256,6 +263,7 @@ onMounted(async () => {
           }"
           :tree-data="deptList"
           block-node
+          default-expand-all
           @select="onTreeSelect"
         />
       </a-card>
