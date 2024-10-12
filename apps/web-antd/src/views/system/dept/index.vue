@@ -144,6 +144,16 @@ const onCreate = (parentId?: string) => {
   formModalApi.open();
 };
 
+const toolbarActionList = [
+  {
+    title: '新增',
+    type: 'primary',
+    onClick: () => {
+      onCreate();
+    },
+  },
+];
+
 const actionList = [
   {
     title: '编辑',
@@ -180,6 +190,9 @@ const actionList = [
       </template>
       <template #action="{ row }">
         <Action :list="actionList" :row="row" />
+      </template>
+      <template #toolbar-actions>
+        <Action :list="toolbarActionList" type="toolbar" />
       </template>
     </Grid>
     <FormModal @refresh="refreshTable" />
