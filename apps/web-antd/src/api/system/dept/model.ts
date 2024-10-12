@@ -1,8 +1,9 @@
 export declare namespace DeptApi {
   export interface ListParams {
     deptName?: string;
+    status?: string;
   }
-  export interface List {
+  export interface Item {
     deptId: string;
     parentId: string;
     deptName: string;
@@ -10,6 +11,12 @@ export declare namespace DeptApi {
     leader: string;
     phone: null | string;
     email: null | string;
+    status: string;
+  }
+  export type List = Item[];
+
+  export interface ChangeStatus {
+    deptId: string;
     status: string;
   }
 }

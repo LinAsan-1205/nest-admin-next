@@ -238,7 +238,7 @@ const actionList = [
 ];
 
 onMounted(async () => {
-  await getDeptList({}).then((res) => {
+  await getDeptList({ status: '0' }).then((res) => {
     deptList.value = res;
   });
 });
