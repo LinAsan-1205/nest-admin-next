@@ -227,7 +227,7 @@ watch(dictType, () => {
 
 <template>
   <Page auto-content-height>
-    <div class="h-full md:flex md:justify-between md:gap-4">
+    <div class="md:flex md:h-full md:justify-between md:gap-4">
       <DictType v-model="dictType" />
       <Grid class="flex-1">
         <template #status="{ row }">
