@@ -28,7 +28,7 @@
       "deptName": "部门名称",
       "orderNum": "排序",
       "email": "邮箱",
-      "leader":"负责人",
+      "leader": "负责人",
       "phone": "手机",
       "status": "状态",
       "remark": "备注",
@@ -36,6 +36,14 @@
       "createTime": "创建时间",
       "parentName": "上级部门",
       "selectDept": "请选择部门"
+    },
+    "dictType": {
+      "dictName": "字典名称",
+      "dictType": "字典类型",
+      "status": "状态",
+      "remark": "备注",
+      "createType": "创建字典类型",
+      "updateType": "编辑字典类型"
     },
     "modal": {
       "add": "新增",
@@ -69,6 +77,9 @@
     },
     "dept": {
       "title": "部门管理"
+    },
+    "dict": {
+      "title": "字典管理"
     }
   }
 }

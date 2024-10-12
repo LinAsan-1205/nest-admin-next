@@ -32,6 +32,16 @@ const routes: RouteRecordRaw[] = [
           title: $t('menu.dept.title'),
         },
       },
+
+      {
+        name: 'Dict',
+        path: '/system/dict',
+        component: () => import('#/views/system/dict/index.vue'),
+        meta: {
+          icon: 'ant-design:database-outlined',
+          title: $t('menu.dict.title'),
+        },
+      },
     ],
   },
 ];

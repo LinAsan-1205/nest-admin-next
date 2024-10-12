@@ -148,6 +148,7 @@ const gridOptions: VxeGridProps<RowType> = {
     },
     { slots: { default: 'action' }, title: '操作', minWidth: 100 },
   ],
+  height: 'auto',
   pagerConfig: {},
   proxyConfig: {
     ajax: {
@@ -263,8 +264,8 @@ watch(deptId, () => {
 </script>
 
 <template>
-  <Page>
-    <div class="md:flex md:justify-between md:gap-4">
+  <Page auto-content-height>
+    <div class="h-full md:flex md:justify-between md:gap-4">
       <DeptThree v-model="deptId" v-model:search-value="deptSearchValue" />
       <Grid class="flex-1">
         <template #toolbar-actions>
