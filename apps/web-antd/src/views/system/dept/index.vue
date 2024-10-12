@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { VxeGridListeners, VxeGridProps } from '#/adapter';
+import type { VxeGridProps } from '#/adapter';
 
 import { Page } from '@vben/common-ui';
 import { $t } from '@vben/locales';
@@ -61,13 +61,7 @@ const gridOptions: VxeGridProps<RowType> = {
   },
 };
 
-const gridEvents: VxeGridListeners<RowType> = {
-  cellClick: ({ row }) => {
-    message.info(`cell-click: ${row.name}`);
-  },
-};
-
-const [Grid, gridApi] = useVbenVxeGrid({ gridEvents, gridOptions });
+const [Grid, gridApi] = useVbenVxeGrid({ gridOptions });
 
 const refreshTable = () => {
   gridApi.reload();
