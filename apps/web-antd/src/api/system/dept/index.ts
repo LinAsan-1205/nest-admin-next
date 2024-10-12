@@ -7,7 +7,7 @@ import { type DeptApi } from './model';
  * @param params
  */
 export function getDeptList(params?: DeptApi.ListParams) {
-  return requestClient.get<DeptApi.List[]>('/dept', { params });
+  return requestClient.get<DeptApi.List>('/dept', { params });
 }
 
 export function createDept(data: DeptApi.CreateParams) {

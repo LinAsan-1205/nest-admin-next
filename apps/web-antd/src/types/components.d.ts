@@ -13,6 +13,7 @@ declare module 'vue' {
     Action: typeof import('./../components/Action/index.vue')['default']
     AImage: typeof import('ant-design-vue/es')['Image']
     AInput: typeof import('ant-design-vue/es')['Input']
+    AInputSearch: typeof import('ant-design-vue/es')['InputSearch']
     AModal: typeof import('ant-design-vue/es')['Modal']
     ASpace: typeof import('ant-design-vue/es')['Space']
     ASwitch: typeof import('ant-design-vue/es')['Switch']
@@ -20,6 +21,7 @@ declare module 'vue' {
     AUpload: typeof import('ant-design-vue/es')['Upload']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    TableAction: typeof import('./../components/TableAction/index.vue')['default']
     UploadAvatar: typeof import('./../src/components/Upload/UploadAvatar.vue')['default']
     UploadFile: typeof import('./../components/Upload/UploadFile.vue')['default']
   }

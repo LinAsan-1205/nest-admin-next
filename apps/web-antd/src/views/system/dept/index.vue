@@ -19,6 +19,7 @@ import DeptFormModel from './components/FormModel.vue';
 interface RowType extends DeptApi.Item {}
 
 const formOptions: VbenFormProps = {
+  collapsed: true,
   schema: [
     {
       component: 'Input',
@@ -201,7 +202,7 @@ const actionList = [
     title: '删除',
     danger: true,
     onClick: (row: RowType) => {
-      onRemove([row.deptId]);
+      onRemove([row]);
     },
   },
 ];
@@ -219,10 +220,10 @@ const actionList = [
         />
       </template>
       <template #action="{ row }">
-        <Action :list="actionList" :row="row" />
+        <TableAction :list="actionList" :row="row" />
       </template>
       <template #toolbar-actions>
-        <Action :list="toolbarActionList" type="toolbar" />
+        <TableAction :list="toolbarActionList" type="toolbar" />
       </template>
     </Grid>
     <FormModal @refresh="refreshTable" />

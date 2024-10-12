@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { VbenFormProps, VxeGridProps } from '#/adapter';
 
-import { onMounted, ref } from 'vue';
+import { ref, watch } from 'vue';
 
 import { Page, useVbenModal } from '@vben/common-ui';
 
@@ -9,7 +9,6 @@ import { message, Modal } from 'ant-design-vue';
 import dayjs from 'dayjs';
 
 import { useVbenVxeGrid } from '#/adapter';
-import { type DeptApi, getDeptList } from '#/api/system/dept';
 import {
   changeStatus,
   deleteUser,
@@ -18,14 +17,16 @@ import {
 } from '#/api/system/user';
 import { $t } from '#/locales';
 
+import DeptThree from './components/DeptThree.vue';
 import UserFormModel from './components/FormModel.vue';
 
 interface RowType extends UserApi.List {}
 
-const deptList = ref<DeptApi.List[]>([]);
 const deptId = ref<null | string>(null);
+const deptSearchValue = ref<null | string>(null);
 
 const formOptions: VbenFormProps = {
+  collapsed: true,
   schema: [
     {
       component: 'Input',
@@ -187,11 +188,6 @@ const onChangeStatus = async (checked: string, row: RowType) => {
   }
 };
 
-const onTreeSelect = (selectedKeys: string[]) => {
-  deptId.value = selectedKeys[0] || null;
-  refreshTable();
-};
-
 const onCreate = () => {
   formModalApi.setState({ title: $t('page.users.createUser') });
   formModalApi.setData({
@@ -227,6 +223,24 @@ const onRemove = async (ids: RowType[]) => {
   });
 };
 
+const toolbarActionList = [
+  {
+    title: '新增',
+    type: 'primary',
+    onClick: () => {
+      onCreate();
+    },
+  },
+  {
+    title: '删除',
+    type: 'primary',
+    danger: true,
+    onClick: () => {
+      onRemove([]);
+    },
+  },
+];
+
 const actionList = [
   {
     title: '编辑',
@@ -243,38 +257,18 @@ const actionList = [
   },
 ];
 
-onMounted(async () => {
-  await getDeptList({ status: '0' }).then((res) => {
-    deptList.value = res;
-  });
+watch(deptId, () => {
+  refreshTable();
 });
 </script>
 
 <template>
   <Page>
     <div class="md:flex md:justify-between md:gap-4">
-      <a-card :bordered="false" class="mb-4 flex-none md:mb-0 md:w-[250px]">
-        <a-tree
-          v-if="deptList.length > 0"
-          :field-names="{
-            title: 'deptName',
-            key: 'deptId',
-            children: 'children',
-          }"
-          :tree-data="deptList"
-          block-node
-          default-expand-all
-          @select="onTreeSelect"
-        />
-      </a-card>
+      <DeptThree v-model="deptId" v-model:search-value="deptSearchValue" />
       <Grid class="flex-1">
         <template #toolbar-actions>
-          <a-space>
-            <a-button type="primary" @click="onCreate">新增</a-button>
-            <a-button danger type="primary" @click="onRemove([])">
-              删除
-            </a-button>
-          </a-space>
+          <TableAction :list="toolbarActionList" type="toolbar" />
         </template>
         <template #avatar="{ row }">
           <a-avatar :src="row.avatar" />
@@ -290,7 +284,7 @@ onMounted(async () => {
         </template>
         <template #action="{ row }">
           <template v-if="!row.userTypeDisable">
-            <Action :list="actionList" :row="row" />
+            <TableAction :list="actionList" :row="row" />
           </template>
         </template>
       </Grid>

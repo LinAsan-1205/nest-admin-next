@@ -12,6 +12,7 @@ export declare namespace DeptApi {
     phone: null | string;
     email: null | string;
     status: string;
+    children: Item[];
   }
   export type List = Item[];
 

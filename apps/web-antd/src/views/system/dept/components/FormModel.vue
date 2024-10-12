@@ -38,7 +38,7 @@ const [Form, formApi] = useVbenForm({
     {
       component: 'TreeSelect',
       componentProps: {
-        placeholder: '请输入',
+        placeholder: '请选择',
         treeData: [],
         fieldNames: {
           children: 'children',
@@ -50,7 +50,6 @@ const [Form, formApi] = useVbenForm({
       formItemClass: 'col-span-2',
       fieldName: 'parentId',
       label: $t('page.dept.parentName'),
-      rules: 'required',
     },
     {
       component: 'Input',
