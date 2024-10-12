@@ -30,6 +30,7 @@ const gridOptions: VxeGridProps<RowType> = {
       minWidth: 100,
     },
     { field: 'orderNum', title: $t('page.dept.orderNum'), minWidth: 100 },
+    { slots: { default: 'action' }, title: '操作', minWidth: 100 },
   ],
   height: 'auto',
   treeConfig: {
@@ -82,6 +83,28 @@ const onChangeStatus = async (checked: string, row: RowType) => {
     row.status = checked === '0' ? '1' : '0';
   }
 };
+
+const actionList = [
+  {
+    title: '编辑',
+    onClick: (_: RowType) => {
+      // onUpdate(row);
+    },
+  },
+  {
+    title: '新增',
+    onClick: (_: RowType) => {
+      // onUpdate(row);
+    },
+  },
+  {
+    title: '删除',
+    danger: true,
+    onClick: (_: RowType) => {
+      // onRemove([row]);
+    },
+  },
+];
 </script>
 
 <template>
@@ -94,6 +117,9 @@ const onChangeStatus = async (checked: string, row: RowType) => {
           un-checked-value="1"
           @change="onChangeStatus($event, row)"
         />
+      </template>
+      <template #action="{ row }">
+        <Action :list="actionList" :row="row" />
       </template>
     </Grid>
   </Page>
