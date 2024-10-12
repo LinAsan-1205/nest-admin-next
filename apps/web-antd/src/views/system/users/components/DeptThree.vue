@@ -10,7 +10,7 @@ const searchValue = ref<string>('');
 const deptList = ref<DeptApi.List>([]);
 
 const flattenDeptList = (list: DeptApi.List) => {
-  const flattened: Dept[] = [];
+  const flattened: DeptApi.List = [];
   const stack = [...list];
   while (stack.length > 0) {
     const item = stack.pop();
@@ -18,6 +18,7 @@ const flattenDeptList = (list: DeptApi.List) => {
       flattened.push(item);
       if (item.children && item.children.length > 0) {
         stack.push(...item.children);
+        item.children = [];
       }
     }
   }
