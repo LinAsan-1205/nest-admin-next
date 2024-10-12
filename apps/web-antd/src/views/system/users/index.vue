@@ -207,7 +207,7 @@ const onUpdate = (row: RowType) => {
   formModalApi.open();
 };
 
-const onRemove = async (ids: RowType[]) => {
+const onRemove = async (ids?: RowType[]) => {
   const records = ids || (gridApi.grid?.getCheckboxRecords() as RowType[]);
   if (records.length === 0) {
     message.error($t('page.users.selectUser'));
@@ -237,7 +237,7 @@ const toolbarActionList = [
     type: 'primary',
     danger: true,
     onClick: () => {
-      onRemove([]);
+      onRemove();
     },
   },
 ];

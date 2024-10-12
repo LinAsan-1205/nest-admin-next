@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { VbenFormProps, VxeGridProps } from '#/adapter';
 
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 
 import { Page, useVbenModal } from '@vben/common-ui';
 import { $t } from '@vben/locales';
@@ -11,30 +11,25 @@ import { message, Modal } from 'ant-design-vue';
 import { useVbenVxeGrid } from '#/adapter';
 import {
   changeStatus,
-  deleteDept,
-  type DeptApi,
-  getDeptList,
-} from '#/api/system/dept';
+  deleteDictData,
+  type DictDataApi,
+  getDictDataList,
+} from '#/api/system/dict';
 
 import DictType from './components/DictType.vue';
 import DictDataFormModel from './components/FormModel.vue';
 
 const dictType = ref<string>('');
 
-interface RowType extends DeptApi.Item {}
+interface RowType extends DictDataApi.Item {}
 
 const formOptions: VbenFormProps = {
   collapsed: true,
   schema: [
     {
       component: 'Input',
-      fieldName: 'deptName',
-      label: $t('page.dept.deptName'),
-    },
-    {
-      component: 'Input',
-      fieldName: 'leader',
-      label: $t('page.dept.leader'),
+      fieldName: 'dictLabel',
+      label: $t('page.dictData.dictLabel'),
     },
     {
       component: 'Select',
@@ -53,35 +48,37 @@ const formOptions: VbenFormProps = {
         placeholder: '请选择状态',
       },
       fieldName: 'status',
-      label: $t('page.dept.status'),
+      label: $t('page.dictData.status'),
     },
   ],
 };
 
 const gridOptions: VxeGridProps<RowType> = {
+  checkboxConfig: {
+    highlight: true,
+  },
   columns: [
+    { type: 'checkbox', width: 50 },
     { title: '序号', type: 'seq', width: 50 },
     {
-      field: 'deptName',
-      title: $t('page.dept.deptName'),
-      treeNode: true,
+      field: 'dictLabel',
+      title: $t('page.dictData.dictLabel'),
       minWidth: 100,
     },
     {
-      field: 'leader',
-      title: $t('page.dept.leader'),
-      minWidth: 100,
-      formatter: 'formatEmpty',
-    },
-    {
-      field: 'email',
-      title: $t('page.dept.email'),
+      field: 'dictValue',
+      title: $t('page.dictData.dictValue'),
       minWidth: 100,
       formatter: 'formatEmpty',
     },
     {
-      field: 'phone',
-      title: $t('page.dept.phone'),
+      field: 'dictSort',
+      title: $t('page.dictData.dictSort'),
+      minWidth: 100,
+    },
+    {
+      field: 'remark',
+      title: $t('page.dictData.remark'),
       minWidth: 100,
       formatter: 'formatEmpty',
     },
@@ -91,30 +88,25 @@ const gridOptions: VxeGridProps<RowType> = {
       slots: { default: 'status' },
       minWidth: 100,
     },
-    { field: 'orderNum', title: $t('page.dept.orderNum'), minWidth: 100 },
+    {
+      field: 'createTime',
+      title: $t('page.dept.createTime'),
+      formatter: 'formatDateTime',
+      minWidth: 156,
+    },
     { slots: { default: 'action' }, title: '操作', minWidth: 100 },
   ],
   height: 'auto',
-  treeConfig: {
-    parentField: 'parentId',
-    rowField: 'deptId',
-    childrenField: 'children',
-    transform: false,
-  },
-  pagerConfig: {
-    enabled: false,
-  },
   proxyConfig: {
+    autoLoad: false,
     ajax: {
-      query: async (_, formValues) => {
-        return await getDeptList({
+      query: async ({ page }, formValues) => {
+        return await getDictDataList({
+          page: page.currentPage,
+          pageSize: page.pageSize,
           ...formValues,
+          dictType: dictType.value,
         });
-      },
-    },
-    response: {
-      list: ({ data }) => {
-        return data;
       },
     },
   },
@@ -135,7 +127,7 @@ const refreshTable = () => {
 
 const onChangeStatus = async (checked: string, row: RowType) => {
   try {
-    await changeStatus({ status: checked, deptId: row.deptId });
+    await changeStatus({ status: checked, dictCode: row.dictCode });
     row.status = checked;
     message.success($t('page.apiSuccess'));
     refreshTable();
@@ -144,28 +136,42 @@ const onChangeStatus = async (checked: string, row: RowType) => {
   }
 };
 
-const onCreate = (parentId?: string) => {
-  formModalApi.setState({ title: $t('page.dept.createDept') });
+const onCreate = () => {
+  if (dictType.value === '') {
+    message.error($t('page.dictData.selectType'));
+    return;
+  }
+  formModalApi.setState({ title: $t('page.dictData.createData') });
   formModalApi.setData({
     values: {
-      parentId,
+      dictType: dictType.value,
     },
     update: false,
   });
   formModalApi.open();
 };
 
-const onRemove = async (ids: RowType[]) => {
+const onUpdate = (row: RowType) => {
+  formModalApi.setState({ title: $t('page.dictData.updateData') });
+  formModalApi.setData({
+    values: { ...row },
+    update: true,
+    dictCode: row.dictCode,
+  });
+  formModalApi.open();
+};
+
+const onRemove = async (ids?: RowType[]) => {
   const records = ids || (gridApi.grid?.getCheckboxRecords() as RowType[]);
   if (records.length === 0) {
-    message.error($t('page.dept.selectDept'));
+    message.error($t('page.dictData.selectData'));
     return;
   }
   Modal.confirm({
     title: $t('page.modal.confirmTitle'),
     content: $t('page.modal.confirmContent'),
     onOk: async () => {
-      await deleteDept(records.map((item) => item.deptId).join(','));
+      await deleteDictData(records.map((item) => item.dictCode).join(','));
       message.success($t('page.apiRemove'));
       refreshTable();
     },
@@ -185,7 +191,7 @@ const toolbarActionList = [
     type: 'primary',
     danger: true,
     onClick: () => {
-      onRemove([]);
+      onRemove();
     },
   },
 ];
@@ -193,14 +199,8 @@ const toolbarActionList = [
 const actionList = [
   {
     title: '编辑',
-    onClick: (_: RowType) => {
-      // onUpdate(row);
-    },
-  },
-  {
-    title: '新增',
     onClick: (row: RowType) => {
-      onCreate(row.deptId);
+      onUpdate(row);
     },
   },
   {
@@ -211,6 +211,10 @@ const actionList = [
     },
   },
 ];
+
+watch(dictType, () => {
+  refreshTable();
+});
 </script>
 
 <template>

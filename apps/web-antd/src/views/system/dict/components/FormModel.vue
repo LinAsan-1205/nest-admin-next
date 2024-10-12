@@ -1,21 +1,20 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 
-import { useVbenModal, z } from '@vben/common-ui';
+import { useVbenModal } from '@vben/common-ui';
 
 import { message } from 'ant-design-vue';
 
 import { useVbenForm } from '#/adapter';
 import {
-  createDept,
-  type DeptApi,
-  getDeptList,
-  updateDept,
-} from '#/api/system/dept';
+  createDictData,
+  type DictDataApi,
+  updateDictData,
+} from '#/api/system/dict';
 import { $t } from '#/locales';
 
 defineOptions({
-  name: 'DeptFormModel',
+  name: 'DictDataFormModel',
 });
 
 const emit = defineEmits<{
@@ -24,7 +23,7 @@ const emit = defineEmits<{
 
 const updateTheStatus = ref<boolean>(false);
 
-const deptId = ref<string>();
+const dictCode = ref<string>();
 
 const [Form, formApi] = useVbenForm({
   commonConfig: {
@@ -36,47 +35,14 @@ const [Form, formApi] = useVbenForm({
   handleSubmit: onSubmit,
   schema: [
     {
-      component: 'TreeSelect',
+      component: 'Input',
       componentProps: {
-        placeholder: '请选择',
-        treeData: [],
-        fieldNames: {
-          children: 'children',
-          label: 'deptName',
-          value: 'deptId',
-        },
+        placeholder: '请输入',
+        disabled: true,
       },
-      defaultValue: '',
       formItemClass: 'col-span-2',
-      fieldName: 'parentId',
-      label: $t('page.dept.parentName'),
-    },
-    {
-      component: 'Input',
-      componentProps: {
-        placeholder: '请输入',
-      },
-      fieldName: 'deptName',
-      label: $t('page.dept.deptName'),
-      rules: z.string().min(2, { message: '最少输入2个字符' }),
-    },
-
-    {
-      component: 'InputNumber',
-      componentProps: {
-        placeholder: '请输入',
-      },
-      defaultValue: 0,
-      fieldName: 'orderNum',
-      label: $t('page.dept.orderNum'),
-    },
-    {
-      component: 'Input',
-      componentProps: {
-        placeholder: '请输入',
-      },
-      fieldName: 'leader',
-      label: $t('page.dept.leader'),
+      fieldName: 'dictType',
+      label: $t('page.dictData.dictType'),
       rules: 'required',
     },
     {
@@ -84,26 +50,30 @@ const [Form, formApi] = useVbenForm({
       componentProps: {
         placeholder: '请输入',
       },
-      fieldName: 'phone',
-      label: $t('page.dept.phone'),
-      rules: z
-        .string()
-        .min(11, { message: '手机号格式不正确' })
-        .max(11, { message: '手机号最大为11位数' })
-        .refine((value) => /^1[3-9]\d{9}$/.test(value), {
-          message: '手机号格式不正确',
-        })
-        .nullable()
-        .optional(),
+      formItemClass: 'col-span-2',
+      fieldName: 'dictLabel',
+      label: $t('page.dictData.dictLabel'),
+      rules: 'required',
     },
     {
       component: 'Input',
       componentProps: {
         placeholder: '请输入',
       },
-      fieldName: 'email',
-      label: $t('page.users.email'),
-      rules: z.string().email('请输入正确的邮箱').nullable().optional(),
+      formItemClass: 'col-span-2',
+      fieldName: 'dictValue',
+      label: $t('page.dictData.dictValue'),
+      rules: 'required',
+    },
+    {
+      component: 'InputNumber',
+      componentProps: {
+        placeholder: '请输入',
+      },
+      formItemClass: 'col-span-2',
+      defaultValue: 0,
+      fieldName: 'dictSort',
+      label: $t('page.dictData.dictSort'),
     },
     {
       component: 'RadioGroup',
@@ -121,7 +91,7 @@ const [Form, formApi] = useVbenForm({
       },
       defaultValue: '0',
       fieldName: 'status',
-      label: $t('page.dept.status'),
+      label: $t('page.dictData.status'),
       rules: 'selectRequired',
     },
 
@@ -133,7 +103,7 @@ const [Form, formApi] = useVbenForm({
       },
       formItemClass: 'col-span-2',
       fieldName: 'remark',
-      label: $t('page.dept.remark'),
+      label: $t('page.dictData.remark'),
     },
   ],
   showDefaultActions: false,
@@ -155,43 +125,30 @@ const [Modal, modalApi] = useVbenModal({
       const {
         values,
         update,
-        deptId: id,
+        dictCode: id,
       } = modalApi.getData<Record<string, any>>();
       // 修改时设置表单值
       if (values) {
         formApi.setValues(values);
       }
       updateTheStatus.value = update;
-      deptId.value = update ? id : '';
+      dictCode.value = update ? id : '';
     }
   },
 });
 
 async function onSubmit(values: Record<string, any>) {
-  const data = values as DeptApi.CreateParams;
+  const data = values as DictDataApi.FormModelParams;
   const messageContent = updateTheStatus.value
     ? $t('page.apiEditSuccess')
     : $t('page.apiCreateSuccess');
   await (updateTheStatus.value
-    ? updateDept(deptId.value as string, data)
-    : createDept(data));
+    ? updateDictData(dictCode.value as string, data)
+    : createDictData(data));
   message.success(messageContent);
   modalApi.close();
   emit('refresh');
 }
-
-onMounted(async () => {
-  await getDeptList({}).then((res) => {
-    formApi.updateSchema([
-      {
-        fieldName: 'parentId',
-        componentProps: {
-          treeData: res,
-        },
-      },
-    ]);
-  });
-});
 </script>
 <template>
   <Modal class="md:w-[800px]">

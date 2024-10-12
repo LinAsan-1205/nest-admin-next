@@ -150,7 +150,7 @@ const onCreate = (parentId?: string) => {
   formModalApi.open();
 };
 
-const onRemove = async (ids: RowType[]) => {
+const onRemove = async (ids?: RowType[]) => {
   const records = ids || (gridApi.grid?.getCheckboxRecords() as RowType[]);
   if (records.length === 0) {
     message.error($t('page.dept.selectDept'));
@@ -180,7 +180,7 @@ const toolbarActionList = [
     type: 'primary',
     danger: true,
     onClick: () => {
-      onRemove([]);
+      onRemove();
     },
   },
 ];
