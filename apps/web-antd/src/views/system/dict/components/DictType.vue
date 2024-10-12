@@ -11,6 +11,7 @@ import {
   getDictTypeList,
 } from '#/api/system/dict';
 import { $t } from '#/locales';
+import { waitingDelayResolve } from '#/utils';
 
 import DictTypeFormModel from './DictTypeFormModel.vue';
 
@@ -19,6 +20,8 @@ const modelValue = defineModel<null | string>();
 const searchValue = ref<string>('');
 
 const dictTypeList = ref<DictTypeApi.List>([]);
+
+const spinning = ref(true);
 
 const activeStyle = computed(() => {
   return {
@@ -32,8 +35,12 @@ const [FormModal, formModalApi] = useVbenModal({
 });
 
 const fetch = async () => {
+  spinning.value = true;
+  await waitingDelayResolve(1000);
   dictTypeList.value = await getDictTypeList({
     searchValue: searchValue.value,
+  }).finally(() => {
+    spinning.value = false;
   });
 };
 
@@ -84,36 +91,40 @@ onMounted(async () => {
     class="mb-4 h-full flex-none md:mb-0 md:flex md:w-[250px]"
   >
     <div class="flex h-full flex-col">
-      <div class="flex-1">
+      <div class="flex flex-1 flex-col">
         <a-input-search
           v-model:value="searchValue"
-          class="mb-2"
           placeholder="请输入名称/编码/描述"
         />
-        <div class="flex flex-col space-y-1">
-          <div v-for="item in dictTypeList" :key="item.dictId" class="w-full">
-            <a-dropdown :trigger="['contextmenu']">
-              <a-button
-                :style="item.dictType === modelValue ? activeStyle : {}"
-                class="m-0 flex w-full px-1"
-                type="text"
-                @click="modelValue = item.dictType"
-              >
-                {{ item.dictName }} ({{ item.dictType }})
-              </a-button>
-              <template #overlay>
-                <a-menu>
-                  <a-menu-item key="1" @click="onUpdate(item)">
-                    编辑
-                  </a-menu-item>
-                  <a-menu-item key="2" @click="onRemove(item.dictId)">
-                    删除
-                  </a-menu-item>
-                </a-menu>
-              </template>
-            </a-dropdown>
+        <a-spin :spinning="spinning" tip="Loading...">
+          <div
+            :class="spinning ? 'pt-20' : ''"
+            class="flex flex-col space-y-1 pt-2"
+          >
+            <div v-for="item in dictTypeList" :key="item.dictId" class="w-full">
+              <a-dropdown :trigger="['contextmenu']">
+                <a-button
+                  :style="item.dictType === modelValue ? activeStyle : {}"
+                  class="m-0 flex w-full px-1"
+                  type="text"
+                  @click="modelValue = item.dictType"
+                >
+                  {{ item.dictName }} ({{ item.dictType }})
+                </a-button>
+                <template #overlay>
+                  <a-menu>
+                    <a-menu-item key="1" @click="onUpdate(item)">
+                      编辑
+                    </a-menu-item>
+                    <a-menu-item key="2" @click="onRemove(item.dictId)">
+                      删除
+                    </a-menu-item>
+                  </a-menu>
+                </template>
+              </a-dropdown>
+            </div>
           </div>
-        </div>
+        </a-spin>
       </div>
       <a-button type="primary" @click="onCreate">
         {{ $t('page.modal.add') }}
