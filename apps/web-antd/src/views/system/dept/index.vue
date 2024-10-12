@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import type { VxeGridProps } from '#/adapter';
+import type { VbenFormProps, VxeGridProps } from '#/adapter';
 
-import { Page } from '@vben/common-ui';
+import { Page, useVbenModal } from '@vben/common-ui';
 import { $t } from '@vben/locales';
 
 import { message } from 'ant-design-vue';
@@ -9,7 +9,43 @@ import { message } from 'ant-design-vue';
 import { useVbenVxeGrid } from '#/adapter';
 import { changeStatus, type DeptApi, getDeptList } from '#/api/system/dept';
 
+import DeptFormModel from './components/FormModel.vue';
+
 interface RowType extends DeptApi.Item {}
+
+const formOptions: VbenFormProps = {
+  schema: [
+    {
+      component: 'Input',
+      fieldName: 'deptName',
+      label: $t('page.dept.deptName'),
+    },
+    {
+      component: 'Input',
+      fieldName: 'leader',
+      label: $t('page.dept.leader'),
+    },
+    {
+      component: 'Select',
+      componentProps: {
+        allowClear: true,
+        options: [
+          {
+            label: '正常',
+            value: '0',
+          },
+          {
+            label: '停用',
+            value: '1',
+          },
+        ],
+        placeholder: '请选择状态',
+      },
+      fieldName: 'status',
+      label: $t('page.dept.status'),
+    },
+  ],
+};
 
 const gridOptions: VxeGridProps<RowType> = {
   columns: [
@@ -20,9 +56,24 @@ const gridOptions: VxeGridProps<RowType> = {
       treeNode: true,
       minWidth: 100,
     },
-    { field: 'leader', title: $t('page.dept.leader'), minWidth: 100 },
-    { field: 'email', title: $t('page.dept.email'), minWidth: 100 },
-    { field: 'phone', title: $t('page.dept.phone'), minWidth: 100 },
+    {
+      field: 'leader',
+      title: $t('page.dept.leader'),
+      minWidth: 100,
+      formatter: 'formatEmpty',
+    },
+    {
+      field: 'email',
+      title: $t('page.dept.email'),
+      minWidth: 100,
+      formatter: 'formatEmpty',
+    },
+    {
+      field: 'phone',
+      title: $t('page.dept.phone'),
+      minWidth: 100,
+      formatter: 'formatEmpty',
+    },
     {
       field: 'status',
       title: $t('page.dept.status'),
@@ -61,7 +112,11 @@ const gridOptions: VxeGridProps<RowType> = {
   },
 };
 
-const [Grid, gridApi] = useVbenVxeGrid({ gridOptions });
+const [Grid, gridApi] = useVbenVxeGrid({ formOptions, gridOptions });
+
+const [FormModal, formModalApi] = useVbenModal({
+  connectedComponent: DeptFormModel,
+});
 
 const refreshTable = () => {
   gridApi.reload();
@@ -78,6 +133,17 @@ const onChangeStatus = async (checked: string, row: RowType) => {
   }
 };
 
+const onCreate = (parentId?: string) => {
+  formModalApi.setState({ title: $t('page.dept.createDept') });
+  formModalApi.setData({
+    values: {
+      parentId,
+    },
+    update: false,
+  });
+  formModalApi.open();
+};
+
 const actionList = [
   {
     title: '编辑',
@@ -87,8 +153,8 @@ const actionList = [
   },
   {
     title: '新增',
-    onClick: (_: RowType) => {
-      // onUpdate(row);
+    onClick: (row: RowType) => {
+      onCreate(row.deptId);
     },
   },
   {
@@ -116,5 +182,6 @@ const actionList = [
         <Action :list="actionList" :row="row" />
       </template>
     </Grid>
+    <FormModal @refresh="refreshTable" />
   </Page>
 </template>

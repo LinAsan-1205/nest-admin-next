@@ -10,6 +10,14 @@ export function getDeptList(params?: DeptApi.ListParams) {
   return requestClient.get<DeptApi.List[]>('/dept', { params });
 }
 
+export function createDept(data: DeptApi.CreateParams) {
+  return requestClient.post<DeptApi.Item>('/dept', data);
+}
+
+export function updateDept(id: string, data: DeptApi.CreateParams) {
+  return requestClient.put<DeptApi.Item>(`/dept/${id}`, data);
+}
+
 /**
  * 修改部门状态
  * @param data

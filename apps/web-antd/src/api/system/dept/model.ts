@@ -15,6 +15,8 @@ export declare namespace DeptApi {
   }
   export type List = Item[];
 
+  export type CreateParams = Item;
+
   export interface ChangeStatus {
     deptId: string;
     status: string;
