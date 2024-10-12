@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 
 import { useVbenModal } from '@vben/common-ui';
 
@@ -19,6 +19,13 @@ const modelValue = defineModel<null | string>();
 const searchValue = ref<string>('');
 
 const dictTypeList = ref<DictTypeApi.List>([]);
+
+const activeStyle = computed(() => {
+  return {
+    color: 'rgba(50, 54, 57, 0.88)',
+    backgroundColor: 'rgba(50, 54, 57, 0.06)',
+  };
+});
 
 const [FormModal, formModalApi] = useVbenModal({
   connectedComponent: DictTypeFormModel,
@@ -87,6 +94,7 @@ onMounted(async () => {
           <div v-for="item in dictTypeList" :key="item.dictId" class="w-full">
             <a-dropdown :trigger="['contextmenu']">
               <a-button
+                :style="item.dictType === modelValue ? activeStyle : {}"
                 class="m-0 flex w-full px-1"
                 type="text"
                 @click="modelValue = item.dictType"

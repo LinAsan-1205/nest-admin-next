@@ -152,6 +152,10 @@ const onCreate = () => {
 };
 
 const onUpdate = (row: RowType) => {
+  if (dictType.value === '') {
+    message.error($t('page.dictData.selectType'));
+    return;
+  }
   formModalApi.setState({ title: $t('page.dictData.updateData') });
   formModalApi.setData({
     values: { ...row },
@@ -162,6 +166,10 @@ const onUpdate = (row: RowType) => {
 };
 
 const onRemove = async (ids?: RowType[]) => {
+  if (dictType.value === '') {
+    message.error($t('page.dictData.selectType'));
+    return;
+  }
   const records = ids || (gridApi.grid?.getCheckboxRecords() as RowType[]);
   if (records.length === 0) {
     message.error($t('page.dictData.selectData'));
