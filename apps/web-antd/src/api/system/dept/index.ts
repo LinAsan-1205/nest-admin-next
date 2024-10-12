@@ -18,6 +18,10 @@ export function updateDept(id: string, data: DeptApi.CreateParams) {
   return requestClient.put<DeptApi.Item>(`/dept/${id}`, data);
 }
 
+export function deleteDept(ids: string) {
+  return requestClient.delete<boolean>(`/dept/${ids}`);
+}
+
 /**
  * 修改部门状态
  * @param data

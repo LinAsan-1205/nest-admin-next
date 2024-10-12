@@ -4,10 +4,15 @@ import type { VbenFormProps, VxeGridProps } from '#/adapter';
 import { Page, useVbenModal } from '@vben/common-ui';
 import { $t } from '@vben/locales';
 
-import { message } from 'ant-design-vue';
+import { message, Modal } from 'ant-design-vue';
 
 import { useVbenVxeGrid } from '#/adapter';
-import { changeStatus, type DeptApi, getDeptList } from '#/api/system/dept';
+import {
+  changeStatus,
+  deleteDept,
+  type DeptApi,
+  getDeptList,
+} from '#/api/system/dept';
 
 import DeptFormModel from './components/FormModel.vue';
 
@@ -144,12 +149,37 @@ const onCreate = (parentId?: string) => {
   formModalApi.open();
 };
 
+const onRemove = async (ids: RowType[]) => {
+  const records = ids || (gridApi.grid?.getCheckboxRecords() as RowType[]);
+  if (records.length === 0) {
+    message.error($t('page.dept.selectDept'));
+    return;
+  }
+  Modal.confirm({
+    title: $t('page.modal.confirmTitle'),
+    content: $t('page.modal.confirmContent'),
+    onOk: async () => {
+      await deleteDept(records.map((item) => item.deptId).join(','));
+      message.success($t('page.apiRemove'));
+      refreshTable();
+    },
+  });
+};
+
 const toolbarActionList = [
   {
     title: '新增',
     type: 'primary',
     onClick: () => {
       onCreate();
+    },
+  },
+  {
+    title: '删除',
+    type: 'primary',
+    danger: true,
+    onClick: () => {
+      onRemove([]);
     },
   },
 ];
@@ -170,8 +200,8 @@ const actionList = [
   {
     title: '删除',
     danger: true,
-    onClick: (_: RowType) => {
-      // onRemove([row]);
+    onClick: (row: RowType) => {
+      onRemove([row.deptId]);
     },
   },
 ];

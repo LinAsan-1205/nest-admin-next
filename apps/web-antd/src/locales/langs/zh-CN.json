@@ -33,7 +33,8 @@
       "remark": "备注",
       "createDept": "创建部门",
       "createTime": "创建时间",
-      "parentName": "上级部门"
+      "parentName": "上级部门",
+      "selectDept": "请选择部门"
     },
     "modal": {
       "add": "新增",
