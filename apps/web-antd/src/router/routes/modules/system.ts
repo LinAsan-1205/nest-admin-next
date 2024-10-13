@@ -32,7 +32,15 @@ const routes: RouteRecordRaw[] = [
           title: $t('menu.dept.title'),
         },
       },
-
+      {
+        name: 'Menu',
+        path: '/system/menu',
+        component: () => import('#/views/system/menu/index.vue'),
+        meta: {
+          icon: 'ant-design:menu-outlined',
+          title: $t('menu.menu.title'),
+        },
+      },
       {
         name: 'Dict',
         path: '/system/dict',
