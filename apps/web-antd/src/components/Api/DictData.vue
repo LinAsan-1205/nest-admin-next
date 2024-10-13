@@ -76,11 +76,11 @@ onMounted(() => {
 
 <template>
   <component
-    v-bind="attrs"
     :is="components[componentName]"
     ref="selectRef"
     v-model:value="modelValue"
     :placeholder="placeholder"
+    v-bind="attrs"
   >
     <component :is="item" v-for="(item, index) in renderSlots()" :key="index" />
   </component>

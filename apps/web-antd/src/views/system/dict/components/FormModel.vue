@@ -66,6 +66,15 @@ const [Form, formApi] = useVbenForm({
       rules: 'required',
     },
     {
+      component: 'Input',
+      componentProps: {
+        placeholder: '请输入',
+      },
+      formItemClass: 'col-span-2',
+      fieldName: 'color',
+      label: $t('page.dictData.color'),
+    },
+    {
       component: 'InputNumber',
       componentProps: {
         placeholder: '请输入',

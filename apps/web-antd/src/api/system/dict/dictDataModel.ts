@@ -19,9 +19,12 @@ export declare namespace DictDataApi {
     dictType: string;
     status: string;
     remark?: string;
+    color: string;
   }
 
   export type FormModelParams = Pick<Item, 'dictCode'>;
 
   export type List = Item[];
+
+  export type AllFields = Record<string, List>;
 }

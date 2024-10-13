@@ -18,6 +18,10 @@ export declare namespace MenuApi {
     hideInMenu: boolean;
     hideInBreadcrumb: boolean;
     hideInTab: boolean;
+    hideChildrenInMenu: boolean;
+    badgeVariants: string;
+    badge: string;
+    badgeType: string;
     parentId: string;
     remark?: string;
   }

@@ -4,6 +4,13 @@ import { setupVbenVxeTable, useVbenVxeGrid } from '@vben/plugins/vxe-table';
 
 import { Button, Image } from 'ant-design-vue';
 
+import {
+  CellTag,
+  type CellTagProps,
+  DictTag,
+  type DictTagProps,
+} from '#/components/Table/CellRender';
+
 import { useVbenForm } from './form';
 
 setupVbenVxeTable({
@@ -45,6 +52,21 @@ setupVbenVxeTable({
           { size: 'small', type: 'link' },
           { default: () => props?.text },
         );
+      },
+    });
+
+    vxeUI.renderer.add('CellTag', {
+      renderDefault({ props }: { props: CellTagProps }, params) {
+        const { column, row } = params;
+
+        return h(CellTag, { ...props, value: row[column.field] });
+      },
+    });
+
+    vxeUI.renderer.add('DictTag', {
+      renderDefault({ props }: { props: DictTagProps }, params) {
+        const { column, row } = params;
+        return h(DictTag, { ...props, value: row[column.field] });
       },
     });
 

@@ -8,7 +8,7 @@ import { useVbenModal, z } from '@vben/common-ui';
 import { message } from 'ant-design-vue';
 
 import { useVbenForm } from '#/adapter';
-import { type DeptApi, getDeptList } from '#/api/system/dept';
+import { getDeptList } from '#/api/system/dept';
 import { createUser, updateUser, type UserApi } from '#/api/system/user';
 import { $t } from '#/locales';
 
@@ -23,8 +23,6 @@ const emit = defineEmits<{
 const updateTheStatus = ref<boolean>(false);
 
 const userId = ref<string>();
-
-const deptList = ref<DeptApi.List[]>([]);
 
 const avatar = ref<UploadProps['fileList']>([]);
 
@@ -234,7 +232,6 @@ async function onSubmit(values: Record<string, any>) {
 
 onMounted(async () => {
   await getDeptList({}).then((res) => {
-    deptList.value = res;
     formApi.updateSchema([
       {
         fieldName: 'deptId',

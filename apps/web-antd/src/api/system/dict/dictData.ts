@@ -10,6 +10,10 @@ export function getDictDataList(params?: DictDataApi.ListParams) {
   return requestClient.get<DictDataApi.List>('/dictData', { params });
 }
 
+export function getAllFields() {
+  return requestClient.get<DictDataApi.AllFields>(`/dictData/allFields`);
+}
+
 export function getDictDataFieldList(params: DictDataApi.SearchFieldDto) {
   return requestClient.get<DictDataApi.List>('/dictData/field', { params });
 }

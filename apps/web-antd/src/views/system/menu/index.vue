@@ -1,7 +1,9 @@
 <script lang="ts" setup>
 import type { VbenFormProps, VxeGridProps } from '#/adapter';
+import type { CellTagProps } from '#/components/Table/CellRender';
 
 import { Page, useVbenModal } from '@vben/common-ui';
+import { createIconifyIcon } from '@vben/icons';
 import { $t } from '@vben/locales';
 
 import { message, Modal } from 'ant-design-vue';
@@ -10,7 +12,7 @@ import { useVbenVxeGrid } from '#/adapter';
 import { changeStatus, deleteDept } from '#/api/system/dept';
 import { getMenuList, type MenuApi } from '#/api/system/menu';
 
-import DeptFormModel from './components/FormModel.vue';
+import MenuFormModel from './components/FormModel.vue';
 
 interface RowType extends MenuApi.Item {}
 
@@ -44,6 +46,12 @@ const gridOptions: VxeGridProps<RowType> = {
       minWidth: 100,
     },
     {
+      cellRender: {
+        name: 'DictTag',
+        props: {
+          dictType: 'sys_menu_type',
+        },
+      },
       field: 'menuType',
       title: $t('page.menu.menuType'),
       minWidth: 100,
@@ -54,6 +62,7 @@ const gridOptions: VxeGridProps<RowType> = {
       title: $t('page.menu.icon'),
       minWidth: 100,
       formatter: 'formatEmpty',
+      slots: { default: 'icon' },
     },
     {
       field: 'perms',
@@ -74,13 +83,44 @@ const gridOptions: VxeGridProps<RowType> = {
       formatter: 'formatEmpty',
     },
     {
+      field: 'keepAlive',
+      cellRender: {
+        name: 'CellTag',
+        props: {
+          checkedValue: true,
+          checkedText: '是',
+          unCheckedValue: false,
+          unCheckedText: '否',
+        } as CellTagProps,
+      },
+      title: $t('page.menu.keepAlive'),
+      minWidth: 100,
+    },
+    {
+      field: 'hideInMenu',
+      cellRender: {
+        name: 'CellTag',
+        props: {
+          checkedValue: false,
+          unCheckedValue: true,
+        } as CellTagProps,
+      },
+      title: $t('page.menu.hideInMenu'),
+      minWidth: 100,
+    },
+    {
       field: 'status',
       title: $t('page.menu.status'),
       slots: { default: 'status' },
       minWidth: 100,
     },
     { field: 'order', title: $t('page.menu.order'), minWidth: 100 },
-    { slots: { default: 'action' }, title: '操作', minWidth: 100 },
+    {
+      slots: { default: 'action' },
+      fixed: 'right',
+      title: '操作',
+      minWidth: 100,
+    },
   ],
   height: 'auto',
   treeConfig: {
@@ -114,7 +154,7 @@ const gridOptions: VxeGridProps<RowType> = {
 const [Grid, gridApi] = useVbenVxeGrid({ formOptions, gridOptions });
 
 const [FormModal, formModalApi] = useVbenModal({
-  connectedComponent: DeptFormModel,
+  connectedComponent: MenuFormModel,
 });
 
 const refreshTable = () => {
@@ -133,7 +173,7 @@ const onChangeStatus = async (checked: string, row: RowType) => {
 };
 
 const onCreate = (parentId?: string) => {
-  formModalApi.setState({ title: $t('page.dept.createDept') });
+  formModalApi.setState({ title: $t('page.menu.createMenu') });
   formModalApi.setData({
     values: {
       parentId,
@@ -142,11 +182,20 @@ const onCreate = (parentId?: string) => {
   });
   formModalApi.open();
 };
+const onUpdate = (row: RowType) => {
+  formModalApi.setState({ title: $t('page.menu.updateMenu') });
+  formModalApi.setData({
+    values: { ...row },
+    update: true,
+    menuId: row.menuId,
+  });
+  formModalApi.open();
+};
 
 const onRemove = async (ids?: RowType[]) => {
   const records = ids || (gridApi.grid?.getCheckboxRecords() as RowType[]);
   if (records.length === 0) {
-    message.error($t('page.dept.selectDept'));
+    message.error($t('page.menu.selectMenu'));
     return;
   }
   Modal.confirm({
@@ -181,8 +230,8 @@ const toolbarActionList = [
 const actionList = [
   {
     title: '编辑',
-    onClick: (_: RowType) => {
-      // onUpdate(row);
+    onClick: (row: RowType) => {
+      onUpdate(row);
     },
   },
   {
@@ -211,6 +260,14 @@ const actionList = [
           un-checked-value="1"
           @change="onChangeStatus($event, row)"
         />
+      </template>
+      <!--      <template #menuType="{ row }">-->
+      <!--        <DictTag :value="row.menuType" dict-type="sys_menu_type" />-->
+      <!--      </template>-->
+      <template #icon="{ row }">
+        <div class="flex items-center justify-center text-lg">
+          <component :is="createIconifyIcon(row.icon)" />
+        </div>
       </template>
       <template #action="{ row }">
         <TableAction :list="actionList" :row="row" />
