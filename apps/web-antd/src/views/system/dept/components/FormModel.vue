@@ -106,18 +106,11 @@ const [Form, formApi] = useVbenForm({
       rules: z.string().email('请输入正确的邮箱').nullable().optional(),
     },
     {
-      component: 'RadioGroup',
+      component: 'DictData',
       componentProps: {
-        options: [
-          {
-            label: '正常',
-            value: '0',
-          },
-          {
-            label: '禁用',
-            value: '1',
-          },
-        ],
+        dictType: 'sys_dept_status',
+        placeholder: '请选择状态',
+        componentName: 'radio',
       },
       defaultValue: '0',
       fieldName: 'status',
