@@ -10,6 +10,10 @@ export function getDictDataList(params?: DictDataApi.ListParams) {
   return requestClient.get<DictDataApi.List>('/dictData', { params });
 }
 
+export function getDictDataFieldList(params: DictDataApi.SearchFieldDto) {
+  return requestClient.get<DictDataApi.List>('/dictData/field', { params });
+}
+
 /**
  * 创建字典类型
  * @param data

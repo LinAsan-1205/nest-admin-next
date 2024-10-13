@@ -3,6 +3,10 @@ export declare namespace DictDataApi {
     deptType: string;
   }
 
+  export interface SearchFieldDto {
+    dictType: string;
+  }
+
   export interface ChangeStatusParams {
     dictCode: string;
     status: string;

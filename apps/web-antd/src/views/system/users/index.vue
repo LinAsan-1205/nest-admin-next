@@ -49,19 +49,9 @@ const formOptions: VbenFormProps = {
       label: $t('page.users.email'),
     },
     {
-      component: 'Select',
+      component: 'DictSelectData',
       componentProps: {
-        allowClear: true,
-        options: [
-          {
-            label: '正常',
-            value: '0',
-          },
-          {
-            label: '停用',
-            value: '1',
-          },
-        ],
+        dictType: 'sys_user_status',
         placeholder: '请选择状态',
       },
       fieldName: 'status',
