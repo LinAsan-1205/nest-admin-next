@@ -2,7 +2,7 @@
 import { computed } from 'vue';
 
 const {
-  list = [],
+  list,
   row = null,
   type = 'table',
 } = defineProps<{
