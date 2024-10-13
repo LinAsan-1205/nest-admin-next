@@ -269,7 +269,7 @@ const [Form, formApi] = useVbenForm({
     {
       component: 'DictData',
       componentProps: {
-        dictType: 'sys_menu_badge_type',
+        dictType: 'sys_menu_badge_variants',
         placeholder: '请输入',
       },
       dependencies: {
@@ -279,7 +279,7 @@ const [Form, formApi] = useVbenForm({
         triggerFields: ['menuType'],
       },
       formItemClass: 'col-span-2',
-      defaultValue: 'dot',
+      defaultValue: 'default',
       help: '用于配置页面的徽标颜色',
       fieldName: 'badgeVariants',
       label: $t('page.menu.badgeVariants'),
