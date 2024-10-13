@@ -36,7 +36,7 @@ const [FormModal, formModalApi] = useVbenModal({
 
 const fetch = async () => {
   spinning.value = true;
-  await waitingDelayResolve(1000);
+  await waitingDelayResolve(500);
   dictTypeList.value = await getDictTypeList({
     searchValue: searchValue.value,
   }).finally(() => {
