@@ -1,21 +1,16 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 
-import { useVbenModal, z } from '@vben/common-ui';
+import { useVbenModal } from '@vben/common-ui';
 
 import { message } from 'ant-design-vue';
 
 import { useVbenForm } from '#/adapter';
-import {
-  createDept,
-  type DeptApi,
-  getDeptList,
-  updateDept,
-} from '#/api/system/dept';
+import { createMenu, type MenuApi, updateMenu } from '#/api/system/menu';
 import { $t } from '#/locales';
 
 defineOptions({
-  name: 'DeptFormModel',
+  name: 'MenuFormModel',
 });
 
 const emit = defineEmits<{
@@ -24,7 +19,7 @@ const emit = defineEmits<{
 
 const updateTheStatus = ref<boolean>(false);
 
-const deptId = ref<string>();
+const menuId = ref<string>();
 
 const [Form, formApi] = useVbenForm({
   commonConfig: {
@@ -36,6 +31,31 @@ const [Form, formApi] = useVbenForm({
   handleSubmit: onSubmit,
   schema: [
     {
+      component: 'Select',
+      componentProps: {
+        class: 'w-full',
+        options: [
+          {
+            label: '目录',
+            value: 'M',
+          },
+          {
+            label: '菜单',
+            value: 'C',
+          },
+          {
+            label: '按钮',
+            value: 'F',
+          },
+        ],
+        placeholder: '请选择菜单类型',
+      },
+      formItemClass: 'col-span-2',
+      defaultValue: 'M',
+      fieldName: 'menuType',
+      label: $t('page.menu.menuType'),
+    },
+    {
       component: 'TreeSelect',
       componentProps: {
         placeholder: '请选择',
@@ -43,40 +63,22 @@ const [Form, formApi] = useVbenForm({
         fieldNames: {
           children: 'children',
           label: 'deptName',
-          value: 'deptId',
+          value: 'menuId',
         },
       },
       defaultValue: '',
       formItemClass: 'col-span-2',
       fieldName: 'parentId',
-      label: $t('page.dept.parentName'),
+      label: $t('page.menu.parentId'),
     },
     {
       component: 'Input',
       componentProps: {
         placeholder: '请输入',
       },
-      fieldName: 'deptName',
-      label: $t('page.dept.deptName'),
-      rules: z.string().min(2, { message: '最少输入2个字符' }),
-    },
-
-    {
-      component: 'InputNumber',
-      componentProps: {
-        placeholder: '请输入',
-      },
-      defaultValue: 0,
-      fieldName: 'orderNum',
-      label: $t('page.dept.orderNum'),
-    },
-    {
-      component: 'Input',
-      componentProps: {
-        placeholder: '请输入',
-      },
-      fieldName: 'leader',
-      label: $t('page.dept.leader'),
+      formItemClass: 'col-span-2',
+      fieldName: 'menuName',
+      label: $t('page.menu.menuName'),
       rules: 'required',
     },
     {
@@ -84,26 +86,91 @@ const [Form, formApi] = useVbenForm({
       componentProps: {
         placeholder: '请输入',
       },
-      fieldName: 'phone',
-      label: $t('page.dept.phone'),
-      rules: z
-        .string()
-        .min(11, { message: '手机号格式不正确' })
-        .max(11, { message: '手机号最大为11位数' })
-        .refine((value) => /^1[3-9]\d{9}$/.test(value), {
-          message: '手机号格式不正确',
-        })
-        .nullable()
-        .optional(),
+      dependencies: {
+        show(values) {
+          return values.menuType !== 'F';
+        },
+        triggerFields: ['menuType'],
+      },
+      formItemClass: 'col-span-2',
+      fieldName: 'path',
+      label: $t('page.menu.path'),
+      rules: 'required',
     },
     {
       component: 'Input',
       componentProps: {
         placeholder: '请输入',
       },
-      fieldName: 'email',
-      label: $t('page.users.email'),
-      rules: z.string().email('请输入正确的邮箱').nullable().optional(),
+      dependencies: {
+        show(values) {
+          return values.menuType !== 'F';
+        },
+        triggerFields: ['menuType'],
+      },
+      formItemClass: 'col-span-2',
+      fieldName: 'redirect',
+      label: $t('page.menu.redirect'),
+    },
+    {
+      component: 'Input',
+      componentProps: {
+        placeholder: '请输入',
+      },
+      dependencies: {
+        show(values) {
+          return values.menuType === 'F';
+        },
+        triggerFields: ['menuType'],
+      },
+      formItemClass: 'col-span-2',
+      fieldName: 'perms',
+      label: $t('page.menu.perms'),
+    },
+    {
+      component: 'Input',
+      componentProps: {
+        placeholder: '请输入组件路径',
+      },
+      dependencies: {
+        show(values) {
+          return values.menuType === 'C';
+        },
+        triggerFields: ['menuType'],
+      },
+      formItemClass: 'col-span-2',
+      fieldName: 'component',
+      label: $t('page.menu.component'),
+      rules: 'required',
+      renderComponentContent: () => ({
+        prefix: () => '#/views/',
+        suffix: () => '.vue',
+      }),
+    },
+    {
+      component: 'Input',
+      componentProps: {
+        placeholder: '请输入',
+      },
+      dependencies: {
+        show(values) {
+          return values.menuType !== 'F';
+        },
+        triggerFields: ['menuType'],
+      },
+      formItemClass: 'col-span-2',
+      fieldName: 'name',
+      label: $t('page.menu.name'),
+    },
+    {
+      component: 'InputNumber',
+      componentProps: {
+        placeholder: '请输入',
+      },
+      formItemClass: 'col-span-2',
+      defaultValue: 0,
+      fieldName: 'order',
+      label: $t('page.menu.order'),
     },
     {
       component: 'DictData',
@@ -148,43 +215,30 @@ const [Modal, modalApi] = useVbenModal({
       const {
         values,
         update,
-        deptId: id,
+        menuId: id,
       } = modalApi.getData<Record<string, any>>();
       // 修改时设置表单值
       if (values) {
         formApi.setValues(values);
       }
       updateTheStatus.value = update;
-      deptId.value = update ? id : '';
+      menuId.value = update ? id : '';
     }
   },
 });
 
 async function onSubmit(values: Record<string, any>) {
-  const data = values as DeptApi.CreateParams;
+  const data = values as MenuApi.FormModelParams;
   const messageContent = updateTheStatus.value
     ? $t('page.apiEditSuccess')
     : $t('page.apiCreateSuccess');
   await (updateTheStatus.value
-    ? updateDept(deptId.value as string, data)
-    : createDept(data));
+    ? updateMenu(menuId.value as string, data)
+    : createMenu(data));
   message.success(messageContent);
   modalApi.close();
   emit('refresh');
 }
-
-onMounted(async () => {
-  await getDeptList({}).then((res) => {
-    formApi.updateSchema([
-      {
-        fieldName: 'parentId',
-        componentProps: {
-          treeData: res,
-        },
-      },
-    ]);
-  });
-});
 </script>
 <template>
   <Modal class="md:w-[800px]">

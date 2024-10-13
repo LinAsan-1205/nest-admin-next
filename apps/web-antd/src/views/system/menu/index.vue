@@ -56,6 +56,12 @@ const gridOptions: VxeGridProps<RowType> = {
       formatter: 'formatEmpty',
     },
     {
+      field: 'perms',
+      title: $t('page.menu.perms'),
+      minWidth: 100,
+      formatter: 'formatEmpty',
+    },
+    {
       field: 'path',
       title: $t('page.menu.path'),
       minWidth: 100,

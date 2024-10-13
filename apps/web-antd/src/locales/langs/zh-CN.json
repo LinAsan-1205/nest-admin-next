@@ -61,15 +61,16 @@
     "menu": {
       "menuName": "菜单名称",
       "menuId": "菜单ID",
-      "parentId": "父菜单ID",
+      "parentId": "上级菜单",
       "order": "排序",
       "redirect": "重定向",
       "path": "路由地址",
       "component": "组件路径",
       "status": "状态",
+      "name": "组件名称",
       "perms": "权限标识",
       "icon": "图标",
-      "menuType": "类型",
+      "menuType": "菜单类型",
       "createMenu": "创建菜单",
       "updateMenu": "编辑菜单",
       "selectMenu": "请选择菜单"
