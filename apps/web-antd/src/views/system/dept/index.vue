@@ -32,7 +32,7 @@ const formOptions: VbenFormProps = {
       label: $t('page.dept.leader'),
     },
     {
-      component: 'DictSelectData',
+      component: 'DictData',
       componentProps: {
         dictType: 'sys_dept_status',
         placeholder: '请选择状态',

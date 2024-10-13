@@ -115,22 +115,11 @@ const [Form, formApi] = useVbenForm({
       rules: z.string().email('请输入正确的邮箱').nullable().optional(),
     },
     {
-      component: 'RadioGroup',
+      component: 'DictData',
       componentProps: {
-        options: [
-          {
-            label: '男',
-            value: '0',
-          },
-          {
-            label: '女',
-            value: '1',
-          },
-          {
-            label: '未知',
-            value: '2',
-          },
-        ],
+        dictType: 'sys_user_sex',
+        placeholder: '请选择状态',
+        componentName: 'radio',
       },
       defaultValue: '0',
       fieldName: 'sex',
@@ -138,18 +127,11 @@ const [Form, formApi] = useVbenForm({
       rules: 'selectRequired',
     },
     {
-      component: 'RadioGroup',
+      component: 'DictData',
       componentProps: {
-        options: [
-          {
-            label: '正常',
-            value: '0',
-          },
-          {
-            label: '禁用',
-            value: '1',
-          },
-        ],
+        dictType: 'sys_user_status',
+        placeholder: '请选择状态',
+        componentName: 'radio',
       },
       defaultValue: '0',
       fieldName: 'status',

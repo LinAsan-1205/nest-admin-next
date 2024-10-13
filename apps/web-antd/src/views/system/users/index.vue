@@ -49,7 +49,7 @@ const formOptions: VbenFormProps = {
       label: $t('page.users.email'),
     },
     {
-      component: 'DictSelectData',
+      component: 'DictData',
       componentProps: {
         dictType: 'sys_user_status',
         placeholder: '请选择状态',

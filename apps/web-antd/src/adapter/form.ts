@@ -34,7 +34,7 @@ import {
   Upload,
 } from 'ant-design-vue';
 
-import DictSelectData from '#/components/Api/DictSelectData.vue';
+import DictData from '#/components/Api/DictData.vue';
 
 // 这里需要自行根据业务组件库进行适配，需要用到的组件都需要在这里类型说明
 export type FormComponentType =
@@ -42,7 +42,7 @@ export type FormComponentType =
   | 'Checkbox'
   | 'CheckboxGroup'
   | 'DatePicker'
-  | 'DictSelectData'
+  | 'DictData'
   | 'Divider'
   | 'Input'
   | 'InputNumber'
@@ -102,7 +102,7 @@ setupVbenForm<FormComponentType>({
     TimePicker,
     TreeSelect: withDefaultPlaceholder(TreeSelect, 'select'),
     Upload,
-    DictSelectData,
+    DictData,
   },
   config: {
     // ant design vue组件库默认都是 v-model:value
