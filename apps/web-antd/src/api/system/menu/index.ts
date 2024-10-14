@@ -14,4 +14,12 @@ export function updateMenu(id: string, data: MenuApi.FormModelParams) {
   return requestClient.put<boolean>(`/dept/${id}`, data);
 }
 
+export function deleteMenu(ids: string) {
+  return requestClient.delete<boolean>(`/menu/${ids}`);
+}
+
+export function changeStatus(data: MenuApi.ChangeStatusParams) {
+  return requestClient.post<boolean>('/menu/changeStatus', data);
+}
+
 export { type MenuApi };

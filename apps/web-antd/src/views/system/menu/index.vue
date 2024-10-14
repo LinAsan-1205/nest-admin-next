@@ -9,8 +9,12 @@ import { $t } from '@vben/locales';
 import { message, Modal } from 'ant-design-vue';
 
 import { useVbenVxeGrid } from '#/adapter';
-import { changeStatus, deleteDept } from '#/api/system/dept';
-import { getMenuList, type MenuApi } from '#/api/system/menu';
+import {
+  changeStatus,
+  deleteMenu,
+  getMenuList,
+  type MenuApi,
+} from '#/api/system/menu';
 
 import MenuFormModel from './components/FormModel.vue';
 
@@ -202,7 +206,7 @@ const onRemove = async (ids?: RowType[]) => {
     title: $t('page.modal.confirmTitle'),
     content: $t('page.modal.confirmContent'),
     onOk: async () => {
-      await deleteDept(records.map((item) => item.menuId).join(','));
+      await deleteMenu(records.map((item) => item.menuId).join(','));
       message.success($t('page.apiRemove'));
       refreshTable();
     },
@@ -261,9 +265,6 @@ const actionList = [
           @change="onChangeStatus($event, row)"
         />
       </template>
-      <!--      <template #menuType="{ row }">-->
-      <!--        <DictTag :value="row.menuType" dict-type="sys_menu_type" />-->
-      <!--      </template>-->
       <template #icon="{ row }">
         <div class="flex items-center justify-center text-lg">
           <component :is="createIconifyIcon(row.icon)" />

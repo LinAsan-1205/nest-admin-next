@@ -28,4 +28,9 @@ export declare namespace MenuApi {
   export type List = Item[];
 
   export type FormModelParams = Item;
+
+  export interface ChangeStatusParams {
+    id: string;
+    status: string;
+  }
 }
