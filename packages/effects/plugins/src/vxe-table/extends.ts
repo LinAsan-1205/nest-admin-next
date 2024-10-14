@@ -63,11 +63,4 @@ export function extendsDefaultFormatter(vxeUI: VxeUIExport) {
       return dayjs(cellValue).format('YYYY-MM-DD HH:mm:ss');
     },
   });
-
-  vxeUI.formats.add('formatEmpty', {
-    tableCellFormatMethod({ cellValue }) {
-      if (cellValue === '-' || cellValue === null || !cellValue) return '-';
-      return cellValue;
-    },
-  });
 }

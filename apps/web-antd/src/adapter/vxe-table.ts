@@ -70,6 +70,13 @@ setupVbenVxeTable({
       },
     });
 
+    vxeUI.formats.add('formatEmpty', {
+      tableCellFormatMethod({ cellValue }) {
+        if (cellValue === '-' || cellValue === null || !cellValue) return '-';
+        return cellValue;
+      },
+    });
+
     // 这里可以自行扩展 vxe-table 的全局配置，比如自定义格式化
     // vxeUI.formats.add
   },
