@@ -71,9 +71,24 @@ const gridOptions: VxeGridProps<RowType> = {
       formatter: 'formatEmpty',
     },
     {
+      cellRender: {
+        name: 'switch',
+        props: {
+          checkedValue: '0',
+          unCheckedValue: '1',
+          onChangeStatus: async (checked: string, row: RowType) => {
+            try {
+              await changeStatus({ status: checked, deptId: row.deptId });
+              row.status = checked;
+              message.success($t('page.apiSuccess'));
+            } catch {
+              row.status = checked === '0' ? '1' : '0';
+            }
+          },
+        },
+      },
       field: 'status',
       title: $t('page.dept.status'),
-      slots: { default: 'status' },
       minWidth: 100,
     },
     { field: 'orderNum', title: $t('page.dept.orderNum'), minWidth: 100 },

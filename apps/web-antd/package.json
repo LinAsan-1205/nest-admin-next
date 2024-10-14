@@ -46,6 +46,7 @@
     "pinia": "catalog:",
     "vue": "catalog:",
     "vue-router": "catalog:",
-    "unplugin-vue-components": "catalog:"
+    "unplugin-vue-components": "catalog:",
+    "vxe-table": "catalog:"
   }
 }

@@ -113,14 +113,55 @@ const gridOptions: VxeGridProps<RowType> = {
       minWidth: 100,
     },
     {
+      cellRender: {
+        name: 'switch',
+        props: {
+          checkedValue: '0',
+          unCheckedValue: '1',
+          onChangeStatus: async (checked: string, row: RowType) => {
+            try {
+              await changeStatus({ status: checked, id: row.menuId });
+              row.status = checked;
+              message.success($t('page.apiSuccess'));
+            } catch {
+              row.status = checked === '0' ? '1' : '0';
+            }
+          },
+        },
+      },
       field: 'status',
       title: $t('page.menu.status'),
-      slots: { default: 'status' },
+      // slots: { default: 'status' },
       minWidth: 100,
     },
     { field: 'order', title: $t('page.menu.order'), minWidth: 100 },
     {
-      slots: { default: 'action' },
+      cellRender: {
+        name: 'TableAction',
+        props: {
+          list: [
+            {
+              title: '编辑',
+              onClick: (row: RowType) => {
+                onUpdate(row);
+              },
+            },
+            {
+              title: '新增',
+              onClick: (row: RowType) => {
+                onCreate(row.menuId);
+              },
+            },
+            {
+              title: '删除',
+              danger: true,
+              onClick: (row: RowType) => {
+                onRemove([row]);
+              },
+            },
+          ],
+        },
+      },
       fixed: 'right',
       title: '操作',
       minWidth: 100,
@@ -164,18 +205,6 @@ const [FormModal, formModalApi] = useVbenModal({
 const refreshTable = () => {
   gridApi.reload();
 };
-
-const onChangeStatus = async (checked: string, row: RowType) => {
-  try {
-    await changeStatus({ status: checked, deptId: row.menuId });
-    row.status = checked;
-    message.success($t('page.apiSuccess'));
-    refreshTable();
-  } catch {
-    row.status = checked === '0' ? '1' : '0';
-  }
-};
-
 const onCreate = (parentId?: string) => {
   formModalApi.setState({ title: $t('page.menu.createMenu') });
   formModalApi.setData({
@@ -212,6 +241,16 @@ const onRemove = async (ids?: RowType[]) => {
     },
   });
 };
+const onChangeStatus = async (checked: string, row: RowType) => {
+  try {
+    await changeStatus({ status: checked, id: row.menuId });
+    row.status = checked;
+    message.success($t('page.apiSuccess'));
+    refreshTable();
+  } catch {
+    row.status = checked === '0' ? '1' : '0';
+  }
+};
 
 const toolbarActionList = [
   {
@@ -227,28 +266,6 @@ const toolbarActionList = [
     danger: true,
     onClick: () => {
       onRemove();
-    },
-  },
-];
-
-const actionList = [
-  {
-    title: '编辑',
-    onClick: (row: RowType) => {
-      onUpdate(row);
-    },
-  },
-  {
-    title: '新增',
-    onClick: (row: RowType) => {
-      onCreate(row.menuId);
-    },
-  },
-  {
-    title: '删除',
-    danger: true,
-    onClick: (row: RowType) => {
-      onRemove([row]);
     },
   },
 ];
@@ -270,9 +287,7 @@ const actionList = [
           <component :is="createIconifyIcon(row.icon)" />
         </div>
       </template>
-      <template #action="{ row }">
-        <TableAction :list="actionList" :row="row" />
-      </template>
+
       <template #toolbar-actions>
         <TableAction :list="toolbarActionList" type="toolbar" />
       </template>

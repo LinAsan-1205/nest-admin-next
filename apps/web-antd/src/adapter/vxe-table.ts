@@ -4,14 +4,10 @@ import { setupVbenVxeTable, useVbenVxeGrid } from '@vben/plugins/vxe-table';
 
 import { Button, Image } from 'ant-design-vue';
 
-import {
-  CellTag,
-  type CellTagProps,
-  DictTag,
-  type DictTagProps,
-} from '#/components/Table/CellRender';
+import { CellTag, type CellTagProps } from '#/components/Table/CellRender';
 
 import { useVbenForm } from './form';
+import { createRender } from './render';
 
 setupVbenVxeTable({
   configVxeTable: (vxeUI) => {
@@ -55,18 +51,12 @@ setupVbenVxeTable({
       },
     });
 
+    // 表格配置项可以用 cellRender: { name: 'CellTag' },
     vxeUI.renderer.add('CellTag', {
       renderDefault({ props }: { props: CellTagProps }, params) {
         const { column, row } = params;
 
         return h(CellTag, { ...props, value: row[column.field] });
-      },
-    });
-
-    vxeUI.renderer.add('DictTag', {
-      renderDefault({ props }: { props: DictTagProps }, params) {
-        const { column, row } = params;
-        return h(DictTag, { ...props, value: row[column.field] });
       },
     });
 
@@ -76,6 +66,8 @@ setupVbenVxeTable({
         return cellValue;
       },
     });
+
+    createRender(vxeUI.renderer);
 
     // 这里可以自行扩展 vxe-table 的全局配置，比如自定义格式化
     // vxeUI.formats.add

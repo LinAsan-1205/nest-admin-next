@@ -20,7 +20,7 @@ import { $t } from '#/locales';
 import DeptThree from './components/DeptThree.vue';
 import UserFormModel from './components/FormModel.vue';
 
-interface RowType extends UserApi.List {}
+interface RowType extends UserApi.Item {}
 
 const deptId = ref<null | string>(null);
 const deptSearchValue = ref<null | string>(null);
@@ -110,9 +110,31 @@ const gridOptions: VxeGridProps<RowType> = {
       minWidth: 150,
     },
     {
+      cellRender: {
+        name: 'switch',
+        props: {
+          checkedValue: '0',
+          unCheckedValue: '1',
+          disabledValue: (row: RowType) => {
+            return row.userTypeDisable;
+          },
+          onChangeStatus: async (checked: string, row: RowType) => {
+            if (row.userTypeDisable) {
+              message.error('该用户为系统内置用户，不允许操作');
+              return;
+            }
+            try {
+              await changeStatus({ status: checked, id: row.userId });
+              row.status = checked;
+              message.success($t('page.apiSuccess'));
+            } catch {
+              row.status = checked === '0' ? '1' : '0';
+            }
+          },
+        },
+      },
       field: 'status',
       title: $t('page.users.status'),
-      slots: { default: 'status' },
       minWidth: 100,
     },
     {
@@ -162,21 +184,6 @@ const [FormModal, formModalApi] = useVbenModal({
 
 const refreshTable = () => {
   gridApi.reload();
-};
-
-const onChangeStatus = async (checked: string, row: RowType) => {
-  if (row.userTypeDisable) {
-    message.error('该用户为系统内置用户，不允许操作');
-    return;
-  }
-  try {
-    await changeStatus({ status: checked, id: row.userId });
-    row.status = checked;
-    message.success($t('page.apiSuccess'));
-    refreshTable();
-  } catch {
-    row.status = checked === '0' ? '1' : '0';
-  }
 };
 
 const onCreate = () => {
@@ -263,15 +270,6 @@ watch(deptId, () => {
         </template>
         <template #avatar="{ row }">
           <a-avatar :src="row.avatar" />
-        </template>
-        <template #status="{ row }">
-          <a-switch
-            v-model:checked="row.status"
-            :disabled="row.userTypeDisable"
-            checked-value="0"
-            un-checked-value="1"
-            @change="onChangeStatus($event, row)"
-          />
         </template>
         <template #action="{ row }">
           <template v-if="!row.userTypeDisable">

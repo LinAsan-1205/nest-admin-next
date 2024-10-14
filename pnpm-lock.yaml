@@ -681,6 +681,9 @@ importers:
       vue-router:
         specifier: 'catalog:'
         version: 4.4.5(vue@3.5.12(typescript@5.6.3))
+      vxe-table:
+        specifier: 'catalog:'
+        version: 4.7.87
 
   docs:
     dependencies:

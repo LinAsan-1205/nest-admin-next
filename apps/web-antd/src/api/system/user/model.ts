@@ -39,7 +39,7 @@ export declare namespace UserApi {
     password?: string;
   }
 
-  export type List = Item;
+  export type List = Item[];
 
   export type CreateParams = Pick<
     Item,
