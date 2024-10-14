@@ -65,6 +65,7 @@ export async function typescript(): Promise<Linter.Config[]> {
         ],
         '@typescript-eslint/no-use-before-define': 'off',
         '@typescript-eslint/no-var-requires': 'error',
+        'no-use-before-define': 'off',
         'unused-imports/no-unused-vars': 'off',
       },
     },

@@ -51,6 +51,7 @@ export async function vue(): Promise<Linter.Config[]> {
         ...pluginVue.configs['vue3-strongly-recommended'].rules,
         ...pluginVue.configs['vue3-recommended'].rules,
 
+        'no-use-before-define': 'off',
         'vue/attribute-hyphenation': [
           'error',
           'always',
