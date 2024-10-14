@@ -437,6 +437,14 @@ const [Modal, modalApi] = useVbenModal({
       if (values) {
         formApi.setValues(values);
       }
+      formApi.updateSchema([
+        {
+          fieldName: 'menuType',
+          componentProps: {
+            disabled: update,
+          },
+        },
+      ]);
       updateTheStatus.value = update;
       menuId.value = update ? id : '';
     }
