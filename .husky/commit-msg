@@ -1,0 +1,5 @@
+echo Start running commit-msg hook...
+
+# Check whether the git commit information is standardized
+
+echo Run commit-msg hook done.
