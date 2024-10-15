@@ -13,11 +13,13 @@ import { accountLogin, logout as logoutApi } from '#/api/login';
 import { getProfile } from '#/api/system/user';
 import { type UserApi } from '#/api/system/user/model';
 import { $t } from '#/locales';
+import { useDictDataStore } from '#/store/dictData';
 
 export const useAuthStore = defineStore('auth', () => {
   const accessStore = useAccessStore();
   const userStore = useUserStore();
   const router = useRouter();
+  const { setup } = useDictDataStore();
 
   const loginLoading = ref(false);
 
@@ -95,6 +97,7 @@ export const useAuthStore = defineStore('auth', () => {
     let userInfo: null | UserApi.Profile = null;
     userInfo = await getProfile();
     userStore.setUserInfo({ ...userInfo, roles: ['admin'] } as any);
+    setup();
     return userInfo;
   }
 
