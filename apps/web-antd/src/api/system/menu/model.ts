@@ -30,7 +30,7 @@ export declare namespace MenuApi {
   export type FormModelParams = Item;
 
   export interface ChangeStatusParams {
-    id: string;
+    menuId: string;
     status: string;
   }
 }

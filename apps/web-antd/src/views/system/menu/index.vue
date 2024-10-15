@@ -176,7 +176,7 @@ const gridOptions: VxeGridProps<RowType> = {
   height: 'auto',
   treeConfig: {
     parentField: 'parentId',
-    rowField: 'deptId',
+    rowField: 'menuId',
     childrenField: 'children',
     transform: false,
   },
@@ -249,7 +249,7 @@ const onRemove = async (ids?: RowType[]) => {
 };
 const onChangeStatus = async (checked: string, row: RowType) => {
   try {
-    await changeStatus({ status: checked, id: row.menuId });
+    await changeStatus({ status: checked, menuId: row.menuId });
     row.status = checked;
     message.success($t('page.apiSuccess'));
     refreshTable();
