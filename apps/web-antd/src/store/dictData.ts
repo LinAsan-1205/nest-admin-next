@@ -1,5 +1,7 @@
 import { ref } from 'vue';
 
+import { useUserStore } from '@vben/stores';
+
 import { defineStore } from 'pinia';
 
 import {
@@ -11,12 +13,16 @@ import {
 export const useDictDataStore = defineStore('dictData', () => {
   const data = ref<DictDataApi.List>([]);
   const allFields = ref<DictDataApi.AllFields>({});
+  const userStore = useUserStore();
 
   async function fetchData(dictType: string) {
     data.value = await getDictDataFieldList({ dictType });
   }
 
   function setup() {
+    if (!userStore.userInfo) {
+      return;
+    }
     getAllFields().then((res) => {
       allFields.value = res;
     });

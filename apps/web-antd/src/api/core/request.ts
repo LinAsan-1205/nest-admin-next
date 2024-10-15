@@ -3,7 +3,6 @@
  */
 import type { HttpResponse } from '@vben/request';
 
-import { useAppConfig } from '@vben/hooks';
 import { preferences } from '@vben/preferences';
 import {
   authenticateResponseInterceptor,
@@ -12,12 +11,12 @@ import {
 } from '@vben/request';
 import { useAccessStore } from '@vben/stores';
 
-import { message } from '#/adapter/naive';
+import { message } from 'ant-design-vue';
+
+import { refreshTokenApi } from '#/api';
 import { useAuthStore } from '#/store';
 
-import { refreshTokenApi } from './core';
-
-const { apiURL } = useAppConfig(import.meta.env, import.meta.env.PROD);
+// const { apiURL } = useAppConfig(import.meta.env, import.meta.env.PROD);
 
 function createRequestClient(baseURL: string) {
   const client = new RequestClient({
@@ -72,9 +71,8 @@ function createRequestClient(baseURL: string) {
   client.addResponseInterceptor<HttpResponse>({
     fulfilled: (response) => {
       const { data: responseData, status } = response;
-
       const { code, data, message: msg } = responseData;
-      if (status >= 200 && status < 400 && code === 0) {
+      if (code === 10_000 || (status >= 200 && status < 400 && code === 0)) {
         return data;
       }
       throw new Error(`Error ${status}: ${msg}`);
@@ -106,6 +104,8 @@ function createRequestClient(baseURL: string) {
 
   return client;
 }
+
+const apiURL = 'http://127.0.0.1:7002';
 
 export const requestClient = createRequestClient(apiURL);
 
