@@ -7,8 +7,8 @@ import { PlusOutlined, RefreshOutlined } from '@vben/icons';
 
 import { message, Modal } from 'ant-design-vue';
 
-import { getClassifyList } from '#/api/system/attachment';
-import { deleteDictType, type DictTypeApi } from '#/api/system/dict';
+import { deleteClassify, getClassifyList } from '#/api/system/attachment';
+import { type DictTypeApi } from '#/api/system/dict';
 import { $t } from '#/locales';
 import { waitingDelayResolve } from '#/utils';
 
@@ -70,7 +70,7 @@ const onRemove = (ids: string) => {
     title: $t('page.modal.confirmTitle'),
     content: $t('page.modal.confirmContent'),
     onOk: async () => {
-      await deleteDictType(ids);
+      await deleteClassify(ids);
       message.success($t('page.apiRemove'));
       await fetch();
     },
@@ -131,7 +131,7 @@ onMounted(async () => {
                     <a-menu-item key="1" @click="onUpdate(item)">
                       编辑
                     </a-menu-item>
-                    <a-menu-item key="2" @click="onRemove(item.dictId)">
+                    <a-menu-item key="2" @click="onRemove(item.classifyId)">
                       删除
                     </a-menu-item>
                   </a-menu>

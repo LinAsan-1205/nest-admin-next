@@ -22,4 +22,8 @@ export function updateClassify(id: string, data: ClassifyApi.FormModelParams) {
   return requestClient.put<boolean>(`/attachment/classify/${id}`, data);
 }
 
+export function deleteClassify(ids: string) {
+  return requestClient.post<boolean>(`/attachment/classify/${ids}`);
+}
+
 export { type AttachmentApi, type ClassifyApi };
