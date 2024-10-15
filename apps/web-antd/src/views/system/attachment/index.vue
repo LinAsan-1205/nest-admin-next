@@ -169,7 +169,7 @@ const onRemove = async (ids?: RowType[]) => {
 
 const toolbarActionList = [
   {
-    title: '新增',
+    title: '上传文件',
     type: 'primary',
     onClick: () => {
       onCreate();

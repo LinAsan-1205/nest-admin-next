@@ -9,6 +9,11 @@ export declare namespace ClassifyApi {
     parentId: string;
   }
 
+  export interface FormModelParams extends Item {
+    classifyId?: string;
+    parentId?: string;
+  }
+
   export type List = Item[];
 }
 

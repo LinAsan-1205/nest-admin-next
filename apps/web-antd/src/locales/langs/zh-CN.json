@@ -94,6 +94,7 @@
     },
     "attachment": {
       "classify": "分类",
+      "classifyName": "分类名称",
       "objectName": "储存名称",
       "originName": "原文件名",
       "sizeByte": "文件大小",
