@@ -265,7 +265,7 @@ watch(deptId, () => {
   <Page auto-content-height>
     <div class="h-full md:flex md:justify-between md:gap-4">
       <DeptThree v-model="deptId" v-model:search-value="deptSearchValue" />
-      <Grid class="flex-1">
+      <Grid class="flex-1 md:w-[calc(100%-250px)]">
         <template #toolbar-actions>
           <TableAction :list="toolbarActionList" type="toolbar" />
         </template>

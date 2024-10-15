@@ -97,7 +97,6 @@ const gridOptions: VxeGridProps<RowType> = {
     },
     { slots: { default: 'action' }, title: '操作', minWidth: 100 },
   ],
-  height: 'auto',
   proxyConfig: {
     autoLoad: false,
     ajax: {
@@ -230,22 +229,24 @@ watch(dictType, () => {
   <Page auto-content-height>
     <div class="md:flex md:h-full md:justify-between md:gap-4">
       <DictType v-model="dictType" />
-      <Grid class="flex-1">
-        <template #status="{ row }">
-          <a-switch
-            v-model:checked="row.status"
-            checked-value="0"
-            un-checked-value="1"
-            @change="onChangeStatus($event, row)"
-          />
-        </template>
-        <template #action="{ row }">
-          <TableAction :list="actionList" :row="row" />
-        </template>
-        <template #toolbar-actions>
-          <TableAction :list="toolbarActionList" type="toolbar" />
-        </template>
-      </Grid>
+      <div class="flex-1 md:w-[calc(100%-250px)]">
+        <Grid>
+          <template #status="{ row }">
+            <a-switch
+              v-model:checked="row.status"
+              checked-value="0"
+              un-checked-value="1"
+              @change="onChangeStatus($event, row)"
+            />
+          </template>
+          <template #action="{ row }">
+            <TableAction :list="actionList" :row="row" />
+          </template>
+          <template #toolbar-actions>
+            <TableAction :list="toolbarActionList" type="toolbar" />
+          </template>
+        </Grid>
+      </div>
     </div>
     <FormModal @refresh="refreshTable" />
   </Page>
