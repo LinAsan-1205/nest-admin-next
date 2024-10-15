@@ -33,6 +33,7 @@ declare module 'vue' {
     DictTag: typeof import('./../components/Table/CellRender/DictTag/DictTag.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Side: typeof import('./../components/Table/Side/index.vue')['default']
     TableAction: typeof import('./../components/Table/TableAction/index.vue')['default']
     UploadAvatar: typeof import('./../src/components/Upload/UploadAvatar.vue')['default']
     UploadFile: typeof import('./../components/Upload/UploadFile.vue')['default']
