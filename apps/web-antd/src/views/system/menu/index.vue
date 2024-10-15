@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import type { VbenFormProps, VxeGridProps } from '#/adapter';
+import type { VbenFormProps } from '#/adapter/form';
+import type { VxeGridProps } from '#/adapter/vxe-table';
 import type { CellTagProps } from '#/components/Table/CellRender';
 
 import { Page, useVbenModal } from '@vben/common-ui';
@@ -8,7 +9,7 @@ import { $t } from '@vben/locales';
 
 import { message, Modal } from 'ant-design-vue';
 
-import { useVbenVxeGrid } from '#/adapter';
+import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import {
   changeStatus,
   deleteMenu,
@@ -143,12 +144,14 @@ const gridOptions: VxeGridProps<RowType> = {
             {
               title: '编辑',
               onClick: (row: RowType) => {
+                // eslint-disable-next-line no-use-before-define
                 onUpdate(row);
               },
             },
             {
               title: '新增',
               onClick: (row: RowType) => {
+                // eslint-disable-next-line no-use-before-define
                 onCreate(row.menuId);
               },
             },
@@ -156,6 +159,7 @@ const gridOptions: VxeGridProps<RowType> = {
               title: '删除',
               danger: true,
               onClick: (row: RowType) => {
+                // eslint-disable-next-line no-use-before-define
                 onRemove([row]);
               },
             },

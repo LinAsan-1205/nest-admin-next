@@ -46,11 +46,11 @@ export async function javascript(): Promise<Linter.Config[]> {
         'dot-notation': ['error', { allowKeywords: true }],
         eqeqeq: ['error', 'always'],
         'keyword-spacing': 'off',
-
         'new-cap': [
           'error',
           { capIsNew: false, newIsCap: true, properties: true },
         ],
+
         'no-alert': 'error',
         'no-array-constructor': 'error',
         'no-async-promise-executor': 'error',
@@ -173,6 +173,7 @@ export async function javascript(): Promise<Linter.Config[]> {
             vars: 'all',
           },
         ],
+        'no-use-before-define': 'off',
         'no-use-before-define': [
           'error',
           { classes: false, functions: false, variables: true },

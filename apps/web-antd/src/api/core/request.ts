@@ -105,7 +105,7 @@ function createRequestClient(baseURL: string) {
   return client;
 }
 
-const apiURL = 'http://127.0.0.1:7002';
+export const apiURL = 'http://127.0.0.1:7002';
 
 export const requestClient = createRequestClient(apiURL);
 

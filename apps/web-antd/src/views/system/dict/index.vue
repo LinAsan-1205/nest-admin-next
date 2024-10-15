@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import type { VbenFormProps, VxeGridProps } from '#/adapter';
+import type { VbenFormProps } from '#/adapter/form';
+import type { VxeGridProps } from '#/adapter/vxe-table';
 
 import { ref, watch } from 'vue';
 
@@ -8,7 +9,7 @@ import { $t } from '@vben/locales';
 
 import { message, Modal } from 'ant-design-vue';
 
-import { useVbenVxeGrid } from '#/adapter';
+import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import {
   changeStatus,
   deleteDictData,

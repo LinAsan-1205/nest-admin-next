@@ -7,7 +7,7 @@ import { useVbenModal, z } from '@vben/common-ui';
 
 import { message } from 'ant-design-vue';
 
-import { useVbenForm } from '#/adapter';
+import { useVbenForm } from '#/adapter/form';
 import { getDeptList } from '#/api/system/dept';
 import { createUser, updateUser, type UserApi } from '#/api/system/user';
 import { $t } from '#/locales';
