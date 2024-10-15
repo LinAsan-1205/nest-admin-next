@@ -92,6 +92,20 @@
       "updateMenu": "编辑菜单",
       "selectMenu": "请选择菜单"
     },
+    "attachment": {
+      "classify": "分类",
+      "objectName": "储存名称",
+      "originName": "原文件名",
+      "sizeByte": "文件大小",
+      "suffix": "文件类型",
+      "mimeType": "文件后缀",
+      "storagePath": "存储路径",
+      "remark": "备注",
+      "createTime": "上传时间",
+      "createAttachment": "上传附件",
+      "updateAttachment": "编辑附件",
+      "selectAttachment": "请选择附件"
+    },
     "modal": {
       "add": "新增",
       "edit": "编辑",
@@ -130,6 +144,9 @@
     },
     "menu": {
       "title": "菜单管理"
+    },
+    "attachment": {
+      "title": "附件管理"
     }
   }
 }

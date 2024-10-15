@@ -50,6 +50,15 @@ const routes: RouteRecordRaw[] = [
           title: $t('menu.dict.title'),
         },
       },
+      {
+        name: 'Attachment',
+        path: '/system/attachment',
+        component: () => import('#/views/system/attachment/index.vue'),
+        meta: {
+          icon: 'ant-design:file-text-outlined',
+          title: $t('menu.attachment.title'),
+        },
+      },
     ],
   },
 ];
