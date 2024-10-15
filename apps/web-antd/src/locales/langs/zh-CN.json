@@ -4,6 +4,9 @@
       "title": "演示",
       "antd": "Ant Design Vue"
     },
+    "icon": {
+       "refresh": "刷新"
+    },
     "users": {
       "profile": "个人信息",
       "avatar": "头像",
@@ -25,6 +28,7 @@
       "deptName": "所属部门"
     },
     "dept": {
+      "category": "部门分类",
       "deptName": "部门名称",
       "orderNum": "排序",
       "email": "邮箱",

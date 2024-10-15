@@ -1,9 +1,15 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue';
 
+import { useRefresh } from '@vben/hooks';
+import { RefreshOutlined } from '@vben/icons';
+import { $t } from '@vben/locales';
+
 import { type DeptApi, getDeptList } from '#/api/system/dept';
 
 const modelValue = defineModel<null | string>();
+
+const { refresh } = useRefresh();
 
 const searchValue = ref<string>('');
 
@@ -48,7 +54,19 @@ onMounted(async () => {
 </script>
 
 <template>
-  <a-card :bordered="false" class="mb-4 flex-none md:mb-0 md:w-[250px]">
+  <a-card
+    :body-style="{ padding: '10px' }"
+    :bordered="false"
+    class="mb-4 flex-none md:mb-0 md:w-[250px]"
+  >
+    <div class="mb-2 flex items-center">
+      <h3 class="flex-1">{{ $t('page.dept.category') }}</h3>
+      <a-tooltip :title="$t('page.icon.refresh')">
+        <a-button size="small" type="text" @click="refresh">
+          <RefreshOutlined />
+        </a-button>
+      </a-tooltip>
+    </div>
     <a-input-search
       v-model:value="searchValue"
       class="mb-2"

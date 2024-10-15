@@ -15,3 +15,7 @@ export const MdiQqchat = createIconifyIcon('mdi:qqchat');
 export const UserProfile = createIconifyIcon('ant-design:user-outlined');
 
 export const LoadingOutlined = createIconifyIcon('ant-design:loading-outlined');
+
+export const RefreshOutlined = createIconifyIcon('ant-design:sync-outlined');
+
+export const PlusOutlined = createIconifyIcon('ant-design:plus-outlined');

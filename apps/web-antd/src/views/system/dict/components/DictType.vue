@@ -2,6 +2,8 @@
 import { computed, onMounted, ref, watch } from 'vue';
 
 import { useVbenModal } from '@vben/common-ui';
+import { useRefresh } from '@vben/hooks';
+import { PlusOutlined, RefreshOutlined } from '@vben/icons';
 
 import { message, Modal } from 'ant-design-vue';
 
@@ -16,6 +18,8 @@ import { waitingDelayResolve } from '#/utils';
 import DictTypeFormModel from './DictTypeFormModel.vue';
 
 const modelValue = defineModel<null | string>();
+
+const { refresh } = useRefresh();
 
 const searchValue = ref<string>('');
 
@@ -87,11 +91,25 @@ onMounted(async () => {
 
 <template>
   <a-card
+    :body-style="{ padding: '10px' }"
     :bordered="false"
     class="mb-4 h-full flex-none md:mb-0 md:flex md:w-[250px]"
   >
     <div class="flex h-full flex-col">
       <div class="flex flex-1 flex-col">
+        <div class="mb-2 flex items-center">
+          <h3 class="flex-1">{{ $t('page.dictType.dictType') }}</h3>
+          <a-tooltip :title="$t('page.icon.refresh')">
+            <a-button size="small" type="text" @click="refresh">
+              <RefreshOutlined />
+            </a-button>
+          </a-tooltip>
+          <a-tooltip :title="$t('page.modal.add')">
+            <a-button size="small" type="text" @click="onCreate">
+              <PlusOutlined />
+            </a-button>
+          </a-tooltip>
+        </div>
         <a-input-search
           v-model:value="searchValue"
           placeholder="请输入名称/编码/描述"

@@ -171,6 +171,8 @@ const gridOptions: VxeGridProps<RowType> = {
       minWidth: 100,
     },
   ],
+  showOverflow: true,
+
   height: 'auto',
   treeConfig: {
     parentField: 'parentId',
