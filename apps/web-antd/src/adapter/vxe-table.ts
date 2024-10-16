@@ -4,6 +4,7 @@ import { setupVbenVxeTable, useVbenVxeGrid } from '@vben/plugins/vxe-table';
 
 import { Button, Image } from 'ant-design-vue';
 
+import { createFormats } from '#/adapter/formats';
 import { CellTag, type CellTagProps } from '#/components/Table/CellRender';
 
 import { useVbenForm } from './form';
@@ -60,12 +61,7 @@ setupVbenVxeTable({
       },
     });
 
-    vxeUI.formats.add('formatEmpty', {
-      tableCellFormatMethod({ cellValue }) {
-        if (cellValue === '-' || cellValue === null || !cellValue) return '-';
-        return cellValue;
-      },
-    });
+    createFormats(vxeUI.formats);
 
     createRender(vxeUI.renderer);
 

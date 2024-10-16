@@ -26,4 +26,8 @@ export function deleteClassify(ids: string) {
   return requestClient.post<boolean>(`/attachment/classify/${ids}`);
 }
 
+export function deleteAttachment(ids: string) {
+  return requestClient.delete<boolean>(`/attachment/${ids}`);
+}
+
 export { type AttachmentApi, type ClassifyApi };
