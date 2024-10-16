@@ -6,12 +6,12 @@ export declare namespace ClassifyApi {
   export interface Item {
     classifyId: string;
     classifyName: string;
-    parentId: string;
+    parentId?: string;
+    remark?: string;
   }
 
   export interface FormModelParams extends Item {
     classifyId?: string;
-    parentId?: string;
   }
 
   export type List = Item[];

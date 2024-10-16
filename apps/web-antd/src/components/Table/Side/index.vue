@@ -117,7 +117,9 @@ onMounted(() => {
                 </a-button>
                 <template #overlay>
                   <a-menu>
-                    <a-menu-item key="1"> 编辑</a-menu-item>
+                    <a-menu-item key="1" @click="onUpdate(item)">
+                      编辑
+                    </a-menu-item>
                     <a-menu-item key="2" @click="onRemove(item[fieldKey])">
                       删除
                     </a-menu-item>
