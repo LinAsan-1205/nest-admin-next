@@ -3,7 +3,6 @@ import type { UploadChangeParam } from 'ant-design-vue';
 
 import { computed, ref } from 'vue';
 
-import { $t } from '@vben/locales';
 import { useAccessStore } from '@vben/stores';
 
 import { message } from 'ant-design-vue';
@@ -33,14 +32,6 @@ const headers = {
   Authorization: `Bearer ${accessStore.accessToken}`,
 };
 
-const beforeUpload = (_: File) => {
-  if (!classifyId) {
-    message.error($t('page.attachment.selectClassify'));
-    return false;
-  }
-  return true;
-};
-
 const handleChange = (info: UploadChangeParam) => {
   if (info.file.status === 'done') {
     message.success(`${info.file.name}:上传成功`);
@@ -55,7 +46,6 @@ const handleChange = (info: UploadChangeParam) => {
   <a-upload
     v-model:file-list="fileList"
     :action="action"
-    :before-upload="beforeUpload"
     :data="data"
     :headers="headers"
     :show-upload-list="false"
