@@ -95,6 +95,8 @@
     "attachment": {
       "classify": "分类",
       "classifyName": "分类名称",
+      "createClassify": "创建分类",
+      "updateClassify": "编辑分类",
       "objectName": "储存名称",
       "originName": "原文件名",
       "sizeByte": "文件大小",

@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 
 import { useRefresh } from '@vben/hooks';
 import { PlusOutlined, RefreshOutlined } from '@vben/icons';
 import { $t } from '@vben/locales';
 
-import { message, Modal } from 'ant-design-vue';
+import { Empty, message, Modal } from 'ant-design-vue';
 
 import { waitingDelayResolve } from '#/utils';
 
@@ -14,22 +14,26 @@ const {
   placeholder = '请输入',
   getRequest,
   deleteRequest,
+  updateRequest,
+  createRequest,
   fieldName,
   fieldKey,
 } = defineProps<{
-  deleteRequest?: Function;
-  fieldKey?: string;
-  fieldName?: string;
-  getRequest?: Function;
+  createRequest?: Function;
+  deleteRequest: Function;
+  fieldKey: string;
+  fieldName: string;
+  getRequest: Function;
   placeholder?: string;
   title?: string;
+  updateRequest?: Function;
 }>();
-
+const simpleImage = Empty.PRESENTED_IMAGE_SIMPLE;
 const modelValue = defineModel<number | string>();
 
 const { refresh } = useRefresh();
 
-const list = ref<unknown[]>([]);
+const list = ref<Record<string, any>[]>([]);
 
 const spinning = ref(true);
 
@@ -40,6 +44,10 @@ const activeStyle = computed(() => {
     color: 'rgba(50, 54, 57, 0.88)',
     backgroundColor: 'rgba(50, 54, 57, 0.06)',
   };
+});
+
+const showEmpty = computed(() => {
+  return !spinning.value && list.value.length === 0;
 });
 
 const fetch = async () => {
@@ -53,7 +61,7 @@ const fetch = async () => {
   });
 };
 
-const onRemove = (ids: string) => {
+const onRemove = (row: Record<string, any>) => {
   if (typeof deleteRequest !== 'function') {
     return;
   }
@@ -61,15 +69,27 @@ const onRemove = (ids: string) => {
     title: $t('page.modal.confirmTitle'),
     content: $t('page.modal.confirmContent'),
     onOk: async () => {
-      await deleteRequest(ids);
+      await deleteRequest(row);
       message.success($t('page.apiRemove'));
       await fetch();
     },
   });
 };
 
+const onUpdate = (row: Record<string, any>) => {
+  if (typeof updateRequest !== 'function') {
+    return;
+  }
+  updateRequest(row);
+};
+
+watch(() => searchValue.value, fetch);
+
 onMounted(() => {
   fetch();
+});
+defineExpose({
+  fetch,
 });
 </script>
 
@@ -88,7 +108,7 @@ onMounted(() => {
               <RefreshOutlined />
             </a-button>
           </a-tooltip>
-          <a-tooltip :title="$t('page.modal.add')">
+          <a-tooltip :title="$t('page.modal.add')" @click="createRequest">
             <a-button size="small" type="text">
               <PlusOutlined />
             </a-button>
@@ -101,7 +121,9 @@ onMounted(() => {
         />
         <!--加载-->
         <a-spin :spinning="spinning" tip="Loading...">
+          <a-empty v-if="showEmpty" :image="simpleImage" />
           <div
+            v-if="!spinning"
             :class="spinning ? 'pt-20' : ''"
             class="flex flex-col space-y-1 pt-2"
           >
@@ -120,7 +142,7 @@ onMounted(() => {
                     <a-menu-item key="1" @click="onUpdate(item)">
                       编辑
                     </a-menu-item>
-                    <a-menu-item key="2" @click="onRemove(item[fieldKey])">
+                    <a-menu-item key="2" @click="onRemove(item)">
                       删除
                     </a-menu-item>
                   </a-menu>
@@ -130,6 +152,7 @@ onMounted(() => {
           </div>
         </a-spin>
       </div>
+      <slot name="footer"></slot>
     </div>
   </a-card>
 </template>
