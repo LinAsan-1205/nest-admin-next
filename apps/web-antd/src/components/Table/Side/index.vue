@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, onMounted, ref, useSlots, watch } from 'vue';
 
 import { useRefresh } from '@vben/hooks';
 import { PlusOutlined, RefreshOutlined } from '@vben/icons';
@@ -32,6 +32,8 @@ const simpleImage = Empty.PRESENTED_IMAGE_SIMPLE;
 const modelValue = defineModel<number | string>();
 
 const { refresh } = useRefresh();
+
+const slots = useSlots();
 
 const list = ref<Record<string, any>[]>([]);
 
@@ -95,13 +97,13 @@ defineExpose({
 
 <template>
   <a-card
-    :body-style="{ padding: '10px' }"
+    :body-style="{ padding: '10px', width: '100%' }"
     :bordered="false"
     class="mb-4 h-full flex-none md:mb-0 md:flex md:w-[250px]"
   >
     <div class="flex h-full flex-col">
       <div class="flex flex-1 flex-col">
-        <div class="mb-2 flex items-center">
+        <div class="mb-2 flex w-full items-center">
           <h3 class="flex-1">{{ title }}</h3>
           <a-tooltip :title="$t('page.icon.refresh')">
             <a-button size="small" type="text" @click="refresh">
@@ -135,7 +137,10 @@ defineExpose({
                   type="text"
                   @click="modelValue = item[fieldKey]"
                 >
-                  {{ item[fieldName] }}
+                  <template v-if="slots?.item">
+                    <slot :row="item" name="item"></slot>
+                  </template>
+                  <template v-else>{{ item[fieldName] }}</template>
                 </a-button>
                 <template #overlay>
                   <a-menu>
