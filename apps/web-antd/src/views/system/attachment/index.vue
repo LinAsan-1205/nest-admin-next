@@ -51,7 +51,6 @@ const gridOptions: VxeGridProps<RowType> = {
   },
   columns: [
     { type: 'checkbox', width: 50 },
-    { title: '序号', type: 'seq', width: 50 },
     {
       slots: { default: 'preview' },
       field: 'preview',
