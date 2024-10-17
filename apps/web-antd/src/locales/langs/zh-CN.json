@@ -5,7 +5,7 @@
       "antd": "Ant Design Vue"
     },
     "icon": {
-       "refresh": "刷新"
+      "refresh": "刷新"
     },
     "users": {
       "profile": "个人信息",
@@ -112,6 +112,14 @@
       "selectAttachment": "请选择附件",
       "preview": "预览"
     },
+    "requestLog": {
+      "ip": "IP地址",
+      "params": "请求参数",
+      "url": "请求地址",
+      "method": "请求类型",
+      "createTime": "请求时间",
+      "userId": "用户ID"
+    },
     "modal": {
       "add": "新增",
       "edit": "编辑",
@@ -153,6 +161,12 @@
     },
     "attachment": {
       "title": "附件管理"
+    },
+    "monitor": {
+      "title": "系统监控"
+    },
+    "request": {
+      "title": "请求日志"
     }
   }
 }
