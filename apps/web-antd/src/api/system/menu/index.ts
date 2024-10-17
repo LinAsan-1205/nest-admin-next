@@ -11,7 +11,7 @@ export function createMenu(data: MenuApi.FormModelParams) {
 }
 
 export function updateMenu(id: string, data: MenuApi.FormModelParams) {
-  return requestClient.put<boolean>(`/dept/${id}`, data);
+  return requestClient.put<boolean>(`/menu/${id}`, data);
 }
 
 export function deleteMenu(ids: string) {
