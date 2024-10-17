@@ -109,7 +109,8 @@
       "selectData": "请选择数据",
       "createAttachment": "上传附件",
       "updateAttachment": "编辑附件",
-      "selectAttachment": "请选择附件"
+      "selectAttachment": "请选择附件",
+      "preview": "预览"
     },
     "modal": {
       "add": "新增",

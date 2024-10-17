@@ -17,6 +17,7 @@ import {
 } from '#/api/system/attachment';
 
 import ClassifyThree from './components/ClassifyThree.vue';
+import Preview from './components/Preview.vue';
 import UploadButton from './components/UploadButton.vue';
 
 const classifyId = ref<string>('');
@@ -51,6 +52,12 @@ const gridOptions: VxeGridProps<RowType> = {
   columns: [
     { type: 'checkbox', width: 50 },
     { title: '序号', type: 'seq', width: 50 },
+    {
+      slots: { default: 'preview' },
+      field: 'preview',
+      title: $t('page.attachment.preview'),
+      minWidth: 100,
+    },
     {
       field: 'objectName',
       title: $t('page.attachment.objectName'),
@@ -169,6 +176,9 @@ watch(classifyId, () => {
       <ClassifyThree v-model="classifyId" />
       <div class="flex-1 md:w-[calc(100%-250px)]">
         <Grid>
+          <template #preview="{ row }">
+            <Preview :row="row" />
+          </template>
           <template #action="{ row }">
             <TableAction :list="actionList" :row="row" />
           </template>
