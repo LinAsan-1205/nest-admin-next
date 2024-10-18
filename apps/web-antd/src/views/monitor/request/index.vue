@@ -41,6 +41,12 @@ const gridOptions: VxeGridProps<RowType> = {
       formatter: 'formatEmpty',
     },
     {
+      field: 'users.nickName',
+      title: $t('page.requestLog.nickName'),
+      minWidth: 100,
+      formatter: 'formatEmpty',
+    },
+    {
       field: 'url',
       title: $t('page.requestLog.url'),
       minWidth: 100,

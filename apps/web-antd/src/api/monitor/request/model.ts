@@ -10,6 +10,9 @@ export declare namespace RequestLogApi {
     userId: string;
     ip: string;
     createTime: string;
+    users: {
+      nickName: string;
+    };
   }
   export type List = Item[];
 }

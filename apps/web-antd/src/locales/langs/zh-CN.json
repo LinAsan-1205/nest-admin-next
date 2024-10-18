@@ -118,7 +118,8 @@
       "url": "请求地址",
       "method": "请求类型",
       "createTime": "请求时间",
-      "userId": "用户ID"
+      "userId": "用户ID",
+      "nickName": "操作者"
     },
     "modal": {
       "add": "新增",
