@@ -21,7 +21,11 @@ const formOptions: VbenFormProps = {
       label: $t('page.requestLog.url'),
     },
     {
-      component: 'Input',
+      component: 'DictData',
+      componentProps: {
+        dictType: 'sys_request_method',
+        placeholder: '请选择请求类型',
+      },
       fieldName: 'method',
       label: $t('page.requestLog.method'),
     },
