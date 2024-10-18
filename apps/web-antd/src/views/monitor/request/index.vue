@@ -8,9 +8,13 @@ import { $t } from '@vben/locales';
 import { message, Modal } from 'ant-design-vue';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
-import { getRequestList } from '#/api/monitor/request';
+import {
+  clearRequestTheLog,
+  getRequestList,
+  type RequestLogApi,
+} from '#/api/monitor/request';
 
-interface RowType extends DeptApi.Item {}
+interface RowType extends RequestLogApi.Item {}
 
 const formOptions: VbenFormProps = {
   collapsed: true,
@@ -99,17 +103,12 @@ const refreshTable = () => {
   gridApi.reload();
 };
 
-const onRemove = async (ids?: RowType[]) => {
-  const records = ids || (gridApi.grid?.getCheckboxRecords() as RowType[]);
-  if (records.length === 0) {
-    message.error($t('page.dept.selectDept'));
-    return;
-  }
+const onRemove = async () => {
   Modal.confirm({
     title: $t('page.modal.confirmTitle'),
     content: $t('page.modal.confirmContent'),
     onOk: async () => {
-      await deleteDept(records.map((item) => item.deptId).join(','));
+      await clearRequestTheLog();
       message.success($t('page.apiRemove'));
       refreshTable();
     },

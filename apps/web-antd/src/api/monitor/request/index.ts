@@ -10,8 +10,8 @@ export function getRequestList(params?: RequestLogApi.ListParams) {
   return requestClient.get<RequestLogApi.List>('/request/log', { params });
 }
 
-export function deleteRequest(ids: string) {
-  return requestClient.delete<boolean>(`/request/log/${ids}`);
+export function clearRequestTheLog() {
+  return requestClient.post<boolean>(`/request/log/clearTheLog`);
 }
 
 export { type RequestLogApi };
