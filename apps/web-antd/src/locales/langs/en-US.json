@@ -1,9 +1,5 @@
 {
   "page": {
-    "demos": {
-      "title": "Demos",
-      "antd": "Ant Design Vue"
-    },
     "users": {
       "profile": "personal information",
       "avatar": "profile picture",

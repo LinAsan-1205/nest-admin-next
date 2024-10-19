@@ -1,9 +1,5 @@
 {
   "page": {
-    "demos": {
-      "title": "演示",
-      "antd": "Ant Design Vue"
-    },
     "icon": {
       "refresh": "刷新"
     },
