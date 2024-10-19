@@ -75,8 +75,7 @@ function createRequestClient(baseURL: string) {
       if (code === 10_000 || (status >= 200 && status < 400 && code === 0)) {
         return data;
       }
-      const error = { response };
-      throw error;
+      throw Object.assign({}, response, { response });
     },
   });
 
