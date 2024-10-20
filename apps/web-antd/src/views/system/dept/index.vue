@@ -172,6 +172,15 @@ const onRemove = async (ids?: RowType[]) => {
     },
   });
 };
+const onUpdate = (row: RowType) => {
+  formModalApi.setState({ title: $t('page.dept.updateDept') });
+  formModalApi.setData({
+    values: row,
+    update: true,
+    deptId: row.deptId,
+  });
+  formModalApi.open();
+};
 
 const toolbarActionList = [
   {
@@ -194,8 +203,8 @@ const toolbarActionList = [
 const actionList = [
   {
     title: '编辑',
-    onClick: (_: RowType) => {
-      // onUpdate(row);
+    onClick: (row: RowType) => {
+      onUpdate(row);
     },
   },
   {

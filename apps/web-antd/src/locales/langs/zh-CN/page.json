@@ -46,7 +46,8 @@
     "createDept": "创建部门",
     "createTime": "创建时间",
     "parentName": "上级部门",
-    "selectDept": "请选择部门"
+    "selectDept": "请选择部门",
+    "updateDept": "编辑部门"
   },
   "dictType": {
     "dictName": "字典名称",
