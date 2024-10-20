@@ -1,0 +1,26 @@
+{
+  "system": {
+    "title": "系统管理"
+  },
+  "users": {
+    "title": "用户管理"
+  },
+  "dept": {
+    "title": "部门管理"
+  },
+  "dict": {
+    "title": "字典管理"
+  },
+  "menu": {
+    "title": "菜单管理"
+  },
+  "attachment": {
+    "title": "附件管理"
+  },
+  "monitor": {
+    "title": "系统监控"
+  },
+  "request": {
+    "title": "请求日志"
+  }
+}
