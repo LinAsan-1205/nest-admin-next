@@ -23,3 +23,4 @@ export async function getCaptcha() {
 export function logout() {
   return requestClient.post('/auth/logout');
 }
+export { type AuthApi };

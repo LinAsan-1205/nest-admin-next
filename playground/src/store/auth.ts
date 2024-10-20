@@ -10,6 +10,7 @@ import { notification } from 'ant-design-vue';
 import { defineStore } from 'pinia';
 
 import { getAccessCodesApi, getUserInfoApi, loginApi, logoutApi } from '#/api';
+import { logout as logoutApi } from '#/api/login';
 import { $t } from '#/locales';
 
 export const useAuthStore = defineStore('auth', () => {

@@ -1,4 +1,3 @@
-import type { LoginAndRegisterParams } from '@vben/common-ui';
 import type { UserInfo } from '@vben/types';
 
 import { ref } from 'vue';
@@ -10,14 +9,16 @@ import { resetAllStores, useAccessStore, useUserStore } from '@vben/stores';
 import { notification } from 'ant-design-vue';
 import { defineStore } from 'pinia';
 
-import { logoutApi } from '#/api';
+import { accountLogin, type AuthApi, logout as logoutApi } from '#/api/login';
+import { getProfile, type UserApi } from '#/api/system/user';
 import { $t } from '#/locales';
+import { useDictDataStore } from '#/store/dictData';
 
 export const useAuthStore = defineStore('auth', () => {
   const accessStore = useAccessStore();
   const userStore = useUserStore();
   const router = useRouter();
-
+  const { setup } = useDictDataStore();
   const loginLoading = ref(false);
 
   /**
@@ -26,7 +27,7 @@ export const useAuthStore = defineStore('auth', () => {
    * @param params 登录表单数据
    */
   async function authLogin(
-    params: LoginAndRegisterParams,
+    params: AuthApi.AccountLoginParams,
     onSuccess?: () => Promise<void> | void,
   ) {
     // 异步处理用户登录操作并获取 accessToken
@@ -50,7 +51,7 @@ export const useAuthStore = defineStore('auth', () => {
         } else {
           onSuccess
             ? await onSuccess?.()
-            : await router.push(userInfo.homePath || DEFAULT_HOME_PATH);
+            : await router.push(userInfo?.homePath || DEFAULT_HOME_PATH);
         }
 
         if (userInfo?.nickName) {
@@ -91,7 +92,7 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   async function fetchUserInfo() {
-    let userInfo: null | UserApi.Profile = null;
+    let userInfo: any | null | UserApi.Profile = null;
     userInfo = await getProfile();
     userStore.setUserInfo({ ...userInfo, roles: ['admin'] } as any);
     setup();
