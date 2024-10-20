@@ -5,6 +5,9 @@
   "users": {
     "title": "用户管理"
   },
+  "role": {
+   "title": "角色管理"
+  },
   "dept": {
     "title": "部门管理"
   },

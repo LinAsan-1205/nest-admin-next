@@ -24,6 +24,15 @@ const routes: RouteRecordRaw[] = [
         },
       },
       {
+        name: 'Role',
+        path: '/system/role',
+        component: () => import('#/views/system/role/index.vue'),
+        meta: {
+          icon: 'ant-design:team-outlined',
+          title: $t('menu.role.title'),
+        },
+      },
+      {
         name: 'Dept',
         path: '/system/dept',
         component: () => import('#/views/system/dept/index.vue'),
