@@ -68,6 +68,15 @@ const routes: RouteRecordRaw[] = [
           title: $t('menu.attachment.title'),
         },
       },
+      {
+        name: 'Config',
+        path: '/system/config',
+        component: () => import('#/views/system/config/index.vue'),
+        meta: {
+          icon: 'ant-design:setting-outlined',
+          title: $t('menu.config.title'),
+        },
+      },
     ],
   },
 ];

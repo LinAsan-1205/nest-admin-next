@@ -25,5 +25,8 @@
   },
   "request": {
     "title": "请求日志"
+  },
+  "config": {
+    "title": "系统配置"
   }
 }
