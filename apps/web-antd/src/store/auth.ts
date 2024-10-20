@@ -1,4 +1,5 @@
-import type { AuthApi } from '#/api/login/model';
+import type { LoginAndRegisterParams } from '@vben/common-ui';
+import type { UserInfo } from '@vben/types';
 
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
@@ -9,17 +10,13 @@ import { resetAllStores, useAccessStore, useUserStore } from '@vben/stores';
 import { notification } from 'ant-design-vue';
 import { defineStore } from 'pinia';
 
-import { accountLogin, logout as logoutApi } from '#/api/login';
-import { getProfile } from '#/api/system/user';
-import { type UserApi } from '#/api/system/user/model';
+import { logoutApi } from '#/api';
 import { $t } from '#/locales';
-import { useDictDataStore } from '#/store/dictData';
 
 export const useAuthStore = defineStore('auth', () => {
   const accessStore = useAccessStore();
   const userStore = useUserStore();
   const router = useRouter();
-  const { setup } = useDictDataStore();
 
   const loginLoading = ref(false);
 
@@ -29,11 +26,11 @@ export const useAuthStore = defineStore('auth', () => {
    * @param params 登录表单数据
    */
   async function authLogin(
-    params: AuthApi.AccountLoginParams,
+    params: LoginAndRegisterParams,
     onSuccess?: () => Promise<void> | void,
   ) {
     // 异步处理用户登录操作并获取 accessToken
-    let userInfo: null | UserApi.Profile = null;
+    let userInfo: null | UserInfo = null;
     try {
       loginLoading.value = true;
       const { accessToken } = await accountLogin(params);
@@ -82,7 +79,7 @@ export const useAuthStore = defineStore('auth', () => {
     resetAllStores();
     accessStore.setLoginExpired(false);
 
-    // 回登陆页带上当前路由地址
+    // 回登录页带上当前路由地址
     await router.replace({
       path: LOGIN_PATH,
       query: redirect
