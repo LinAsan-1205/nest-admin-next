@@ -69,9 +69,6 @@ catalogs:
     '@tailwindcss/typography':
       specifier: ^0.5.15
       version: 0.5.15
-    '@tanstack/vue-query':
-      specifier: ^5.59.13
-      version: 5.59.13
     '@tanstack/vue-store':
       specifier: ^0.5.5
       version: 0.5.5
@@ -1571,7 +1568,7 @@ importers:
         version: 2.2.2(typescript@5.6.3)(vue@3.5.12(typescript@5.6.3))
       pinia-plugin-persistedstate:
         specifier: 'catalog:'
-        version: 4.1.1(pinia@2.2.2(typescript@5.6.3)(vue@3.5.12(typescript@5.6.3)))(rollup@3.29.5)
+        version: 4.1.1(pinia@2.2.2(typescript@5.6.3)(vue@3.5.12(typescript@5.6.3)))(rollup@4.24.0)
       vue:
         specifier: ^3.5.12
         version: 3.5.12(typescript@5.6.3)
@@ -1605,72 +1602,6 @@ importers:
       '@vben-core/typings':
         specifier: workspace:*
         version: link:../@core/base/typings
-      vue-router:
-        specifier: 'catalog:'
-        version: 4.4.5(vue@3.5.12(typescript@5.6.3))
-
-  playground:
-    dependencies:
-      '@tanstack/vue-query':
-        specifier: 'catalog:'
-        version: 5.59.13(vue@3.5.12(typescript@5.6.3))
-      '@vben/access':
-        specifier: workspace:*
-        version: link:../packages/effects/access
-      '@vben/common-ui':
-        specifier: workspace:*
-        version: link:../packages/effects/common-ui
-      '@vben/constants':
-        specifier: workspace:*
-        version: link:../packages/constants
-      '@vben/hooks':
-        specifier: workspace:*
-        version: link:../packages/effects/hooks
-      '@vben/icons':
-        specifier: workspace:*
-        version: link:../packages/icons
-      '@vben/layouts':
-        specifier: workspace:*
-        version: link:../packages/effects/layouts
-      '@vben/locales':
-        specifier: workspace:*
-        version: link:../packages/locales
-      '@vben/plugins':
-        specifier: workspace:*
-        version: link:../packages/effects/plugins
-      '@vben/preferences':
-        specifier: workspace:*
-        version: link:../packages/preferences
-      '@vben/request':
-        specifier: workspace:*
-        version: link:../packages/effects/request
-      '@vben/stores':
-        specifier: workspace:*
-        version: link:../packages/stores
-      '@vben/styles':
-        specifier: workspace:*
-        version: link:../packages/styles
-      '@vben/types':
-        specifier: workspace:*
-        version: link:../packages/types
-      '@vben/utils':
-        specifier: workspace:*
-        version: link:../packages/utils
-      '@vueuse/core':
-        specifier: 'catalog:'
-        version: 11.1.0(vue@3.5.12(typescript@5.6.3))
-      ant-design-vue:
-        specifier: 'catalog:'
-        version: 4.2.5(vue@3.5.12(typescript@5.6.3))
-      dayjs:
-        specifier: 'catalog:'
-        version: 1.11.13
-      pinia:
-        specifier: 2.2.2
-        version: 2.2.2(typescript@5.6.3)(vue@3.5.12(typescript@5.6.3))
-      vue:
-        specifier: ^3.5.12
-        version: 3.5.12(typescript@5.6.3)
       vue-router:
         specifier: 'catalog:'
         version: 4.4.5(vue@3.5.12(typescript@5.6.3))
@@ -4325,27 +4256,11 @@ packages:
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders || >=4.0.0-alpha.20'
 
-  '@tanstack/match-sorter-utils@8.19.4':
-    resolution: {integrity: sha512-Wo1iKt2b9OT7d+YGhvEPD3DXvPv2etTusIMhMUoG7fbhmxcXCtIjJDEygy91Y2JFlwGyjqiBPRozme7UD8hoqg==}
-    engines: {node: '>=12'}
-
-  '@tanstack/query-core@5.59.13':
-    resolution: {integrity: sha512-Oou0bBu/P8+oYjXsJQ11j+gcpLAMpqW42UlokQYEz4dE7+hOtVO9rVuolJKgEccqzvyFzqX4/zZWY+R/v1wVsQ==}
-
   '@tanstack/store@0.5.5':
     resolution: {integrity: sha512-EOSrgdDAJExbvRZEQ/Xhh9iZchXpMN+ga1Bnk8Nmygzs8TfiE6hbzThF+Pr2G19uHL6+DTDTHhJ8VQiOd7l4tA==}
 
   '@tanstack/virtual-core@3.10.8':
     resolution: {integrity: sha512-PBu00mtt95jbKFi6Llk9aik8bnR3tR/oQP1o3TSi+iG//+Q2RTIzCEgKkHG8BB86kxMNW6O8wku+Lmi+QFR6jA==}
-
-  '@tanstack/vue-query@5.59.13':
-    resolution: {integrity: sha512-3pJg3NlNLD7sQLHFvPKIQ64l86uGuudqDUxlTGCBX5zlpTWjajzfovFc0DHcb0ClKtFyBCmrqnLcMMkjdJj6GQ==}
-    peerDependencies:
-      '@vue/composition-api': ^1.1.2
-      vue: ^3.5.12
-    peerDependenciesMeta:
-      '@vue/composition-api':
-        optional: true
 
   '@tanstack/vue-store@0.5.5':
     resolution: {integrity: sha512-j+CDrxVhtQQNOjWzLmCqJeDwmmTAQGvEaNbLr1uPJ9rxJITodJtFNdBFj7l+Nd5o34v2ayEv64Ugh6+1BtuGNg==}
@@ -8720,9 +8635,6 @@ packages:
     resolution: {integrity: sha512-G08Dxvm4iDN3MLM0EsP62EDV9IuhXPR6blNz6Utcp7zyV3tr4HVNINt6MpaRWbxoOHT3Q7YN2P+jaHX8vUbgog==}
     engines: {node: '>= 0.10'}
 
-  remove-accents@0.5.0:
-    resolution: {integrity: sha512-8g3/Otx1eJaVD12e31UbJj1YzdtVvzH85HV7t+9MJYk/u3XmkOUJ5Ys9wQrf9PCPK8+xn4ymzqYCiZl6QWKn+A==}
-
   repeat-string@1.6.1:
     resolution: {integrity: sha512-PV0dzCYDNfRi1jCDbJzpW7jNNDRuCOG/jI5ctQcGKt/clZD+YcPS3yIlWuTJMmESC8aevCFmWJy5wjAFgNqN6w==}
     engines: {node: '>=0.10'}
@@ -12626,34 +12538,6 @@ snapshots:
       mkdirp: 1.0.4
       rimraf: 3.0.2
 
-  '@nuxt/kit@3.13.2(rollup@3.29.5)':
-    dependencies:
-      '@nuxt/schema': 3.13.2(rollup@3.29.5)
-      c12: 1.11.2
-      consola: 3.2.3
-      defu: 6.1.4
-      destr: 2.0.3
-      globby: 14.0.2
-      hash-sum: 2.0.0
-      ignore: 5.3.2
-      jiti: 1.21.6
-      klona: 2.0.6
-      knitwork: 1.1.0
-      mlly: 1.7.2
-      pathe: 1.1.2
-      pkg-types: 1.2.1
-      scule: 1.3.0
-      semver: 7.6.3
-      ufo: 1.5.4
-      unctx: 2.3.1
-      unimport: 3.13.1(rollup@3.29.5)
-      untyped: 1.5.1
-    transitivePeerDependencies:
-      - magicast
-      - rollup
-      - supports-color
-      - webpack-sources
-
   '@nuxt/kit@3.13.2(rollup@4.24.0)':
     dependencies:
       '@nuxt/schema': 3.13.2(rollup@4.24.0)
@@ -12681,26 +12565,6 @@ snapshots:
       - rollup
       - supports-color
       - webpack-sources
-    optional: true
-
-  '@nuxt/schema@3.13.2(rollup@3.29.5)':
-    dependencies:
-      compatx: 0.1.8
-      consola: 3.2.3
-      defu: 6.1.4
-      hookable: 5.5.3
-      pathe: 1.1.2
-      pkg-types: 1.2.1
-      scule: 1.3.0
-      std-env: 3.7.0
-      ufo: 1.5.4
-      uncrypto: 0.1.3
-      unimport: 3.13.1(rollup@3.29.5)
-      untyped: 1.5.1
-    transitivePeerDependencies:
-      - rollup
-      - supports-color
-      - webpack-sources
 
   '@nuxt/schema@3.13.2(rollup@4.24.0)':
     dependencies:
@@ -12720,7 +12584,6 @@ snapshots:
       - rollup
       - supports-color
       - webpack-sources
-    optional: true
 
   '@one-ini/wasm@0.1.1': {}
 
@@ -13140,23 +13003,9 @@ snapshots:
       postcss-selector-parser: 6.0.10
       tailwindcss: 3.4.14
 
-  '@tanstack/match-sorter-utils@8.19.4':
-    dependencies:
-      remove-accents: 0.5.0
-
-  '@tanstack/query-core@5.59.13': {}
-
   '@tanstack/store@0.5.5': {}
 
   '@tanstack/virtual-core@3.10.8': {}
-
-  '@tanstack/vue-query@5.59.13(vue@3.5.12(typescript@5.6.3))':
-    dependencies:
-      '@tanstack/match-sorter-utils': 8.19.4
-      '@tanstack/query-core': 5.59.13
-      '@vue/devtools-api': 6.6.4
-      vue: 3.5.12(typescript@5.6.3)
-      vue-demi: 0.14.10(vue@3.5.12(typescript@5.6.3))
 
   '@tanstack/vue-store@0.5.5(vue@3.5.12(typescript@5.6.3))':
     dependencies:
@@ -17289,9 +17138,9 @@ snapshots:
 
   pify@4.0.1: {}
 
-  pinia-plugin-persistedstate@4.1.1(pinia@2.2.2(typescript@5.6.3)(vue@3.5.12(typescript@5.6.3)))(rollup@3.29.5):
+  pinia-plugin-persistedstate@4.1.1(pinia@2.2.2(typescript@5.6.3)(vue@3.5.12(typescript@5.6.3)))(rollup@4.24.0):
     dependencies:
-      '@nuxt/kit': 3.13.2(rollup@3.29.5)
+      '@nuxt/kit': 3.13.2(rollup@4.24.0)
       deep-pick-omit: 1.2.1
       defu: 6.1.4
       destr: 2.0.3
@@ -18015,8 +17864,6 @@ snapshots:
       jsesc: 3.0.2
 
   relateurl@0.2.7: {}
-
-  remove-accents@0.5.0: {}
 
   repeat-string@1.6.1: {}
 
@@ -19000,25 +18847,6 @@ snapshots:
   unicorn-magic@0.1.0: {}
 
   unicorn-magic@0.3.0: {}
-
-  unimport@3.13.1(rollup@3.29.5):
-    dependencies:
-      '@rollup/pluginutils': 5.1.2(rollup@3.29.5)
-      acorn: 8.13.0
-      escape-string-regexp: 5.0.0
-      estree-walker: 3.0.3
-      fast-glob: 3.3.2
-      local-pkg: 0.5.0
-      magic-string: 0.30.12
-      mlly: 1.7.2
-      pathe: 1.1.2
-      pkg-types: 1.2.1
-      scule: 1.3.0
-      strip-literal: 2.1.0
-      unplugin: 1.14.1
-    transitivePeerDependencies:
-      - rollup
-      - webpack-sources
 
   unimport@3.13.1(rollup@4.24.0):
     dependencies:

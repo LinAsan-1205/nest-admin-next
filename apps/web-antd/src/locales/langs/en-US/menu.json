@@ -1,0 +1,32 @@
+{
+  "system": {
+    "title": "System Management"
+  },
+  "users": {
+    "title": "User Management"
+  },
+  "role": {
+    "title": "Role Management"
+  },
+  "dept": {
+    "title": "Department Management"
+  },
+  "dict": {
+    "title": "Dictionary Management"
+  },
+  "menu": {
+    "title": "Menu Management"
+  },
+  "attachment": {
+    "title": "Attachment Management"
+  },
+  "monitor": {
+    "title": "System Monitor"
+  },
+  "request": {
+    "title": "Request Log"
+  },
+  "config": {
+    "title": "System Configuration"
+  }
+}
