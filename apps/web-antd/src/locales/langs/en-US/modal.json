@@ -1,0 +1,7 @@
+{
+  "add": "Add",
+  "edit": "Edit",
+  "view": "View",
+  "confirmTitle": "Confirmation Prompt",
+  "confirmContent": "This action will permanently delete the data. Do you want to continue?"
+}
