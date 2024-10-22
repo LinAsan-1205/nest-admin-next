@@ -10,5 +10,6 @@
   "selectRole": "请选择角色",
   "createRole": "创建角色",
   "updateRole": "编辑角色",
+  "permissions": "权限",
   "remark": "备注"
 }

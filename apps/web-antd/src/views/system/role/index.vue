@@ -66,7 +66,7 @@ const gridOptions: VxeGridProps<RowType> = {
           unCheckedValue: '1',
           onChangeStatus: async (checked: string, row: RowType) => {
             try {
-              await changeStatus({ status: checked, deptId: row.deptId });
+              await changeStatus({ status: checked, roleId: row.roleId });
               row.status = checked;
               message.success($t('page.apiSuccess'));
             } catch {
@@ -174,6 +174,12 @@ const toolbarActionList = [
 ];
 
 const actionList = [
+  {
+    title: '设置权限',
+    onClick: (row: RowType) => {
+      onUpdate(row);
+    },
+  },
   {
     title: '编辑',
     onClick: (row: RowType) => {
