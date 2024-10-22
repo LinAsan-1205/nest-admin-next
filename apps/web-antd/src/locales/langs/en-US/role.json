@@ -1,0 +1,15 @@
+{
+  "roleId": "Role ID",
+  "roleName": "Role Name",
+  "roleKey": "Permission Key",
+  "roleSort": "Sort",
+  "dataScope": "Data Scope",
+  "status": "Role Status",
+  "createTime": "Create Time",
+  "updateTime": "Update Time",
+  "selectRole": "Please Select Role",
+  "createRole": "Create Role",
+  "updateRole": "Edit Role",
+  "permissions": "Permissions",
+  "remark": "Remark"
+}
