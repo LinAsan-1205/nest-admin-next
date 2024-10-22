@@ -1,0 +1,14 @@
+{
+  "roleId": "角色ID",
+  "roleName": "角色名称",
+  "roleKey": "权限字符串",
+  "roleSort": "排序",
+  "dataScope": "数据范围",
+  "status": "角色状态",
+  "createTime": "创建时间",
+  "updateTime": "更新时间",
+  "selectRole": "请选择角色",
+  "createRole": "创建角色",
+  "updateRole": "编辑角色",
+  "remark": "备注"
+}
