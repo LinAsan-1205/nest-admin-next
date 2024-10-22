@@ -20,12 +20,17 @@ import DeptFormModel from './components/FormModel.vue';
 interface RowType extends RoleApi.Item {}
 
 const formOptions: VbenFormProps = {
-  collapsed: true,
+  collapsed: false,
   schema: [
     {
       component: 'Input',
       fieldName: 'roleName',
       label: $t('role.roleName'),
+    },
+    {
+      component: 'Input',
+      fieldName: 'roleKey',
+      label: $t('role.roleKey'),
     },
     {
       component: 'DictData',
@@ -173,12 +178,6 @@ const actionList = [
     title: '编辑',
     onClick: (row: RowType) => {
       onUpdate(row);
-    },
-  },
-  {
-    title: '新增',
-    onClick: (row: RowType) => {
-      onCreate(row.deptId);
     },
   },
   {
