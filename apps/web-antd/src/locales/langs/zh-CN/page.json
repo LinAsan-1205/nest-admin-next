@@ -129,13 +129,6 @@
     "userId": "用户ID",
     "nickName": "操作者"
   },
-  "modal": {
-    "add": "新增",
-    "edit": "编辑",
-    "view": "查看",
-    "confirmTitle": "确认提示",
-    "confirmContent": "此操作将永久删除该数据, 是否继续?"
-  },
   "apiSuccess": "修改成功",
   "apiFail": "修改失败",
   "apiRemove": "删除成功",

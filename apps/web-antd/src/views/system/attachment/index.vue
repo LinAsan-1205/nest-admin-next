@@ -131,8 +131,8 @@ const onRemove = async (ids?: RowType[]) => {
     return;
   }
   Modal.confirm({
-    title: $t('page.modal.confirmTitle'),
-    content: $t('page.modal.confirmContent'),
+    title: $t('modal.confirmTitle'),
+    content: $t('modal.confirmContent'),
     onOk: async () => {
       await deleteAttachment(
         records.map((item) => item.attachmentId).join(','),

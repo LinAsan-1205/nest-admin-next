@@ -14,7 +14,7 @@ import {
 import { $t } from '#/locales';
 
 defineOptions({
-  name: 'DictDataFormModel',
+  name: 'AttachmentsFormModel',
 });
 
 const emit = defineEmits<{

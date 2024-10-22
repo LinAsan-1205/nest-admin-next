@@ -74,7 +74,7 @@ const fetchData = async () => {
     </template>
     <template #footer>
       <a-button type="primary" @click="onCreate">
-        {{ $t('page.modal.add') }}
+        {{ $t('modal.add') }}
       </a-button>
     </template>
   </Side>
