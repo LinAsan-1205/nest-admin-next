@@ -4,7 +4,7 @@
   <a-card
     :body-style="{ padding: '10px', width: '100%' }"
     :bordered="false"
-    class="mb-4 h-full w-[400px] md:mb-0"
+    class="mb-4 h-full w-[500px] md:mb-0"
   >
     111
   </a-card>
