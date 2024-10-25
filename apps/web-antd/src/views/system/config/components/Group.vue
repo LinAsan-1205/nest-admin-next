@@ -19,6 +19,7 @@ const segmentedOptions = computed(() =>
 const fetch = () => {
   getConfigGroupList().then((res) => {
     data.value = res;
+    modelValue.value = res[0]?.groupId;
   });
 };
 
@@ -33,7 +34,9 @@ onMounted(() => {
     :bordered="false"
     class="mb-4 h-full flex-1 md:mb-0"
   >
-    <a-segmented v-model:value="modelValue" :options="segmentedOptions" />
+    <div class="flex flex-col">
+      <a-segmented v-model:value="modelValue" :options="segmentedOptions" />
+    </div>
   </a-card>
 </template>
 
