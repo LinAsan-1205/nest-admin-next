@@ -1,14 +1,16 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 
 import {
   type ConfigGroupModelApi,
+  type ConfigModelApi,
   getConfigGroupList,
+  getConfigurationBasedOnGrouping,
 } from '#/api/system/config';
 
 const modelValue = defineModel<string>();
 const data = ref<ConfigGroupModelApi.List>([]);
-
+const formData = ref<ConfigModelApi.List>([]);
 const segmentedOptions = computed(() =>
   data.value.flatMap((item) => ({
     label: item.groupName,
@@ -26,6 +28,12 @@ const fetch = () => {
 onMounted(() => {
   fetch();
 });
+
+watch(modelValue, (value: string) => {
+  getConfigurationBasedOnGrouping(value).then((res) => {
+    formData.value = res;
+  });
+});
 </script>
 
 <template>
@@ -35,7 +43,11 @@ onMounted(() => {
     class="mb-4 h-full flex-1 md:mb-0"
   >
     <div class="flex flex-col">
-      <a-segmented v-model:value="modelValue" :options="segmentedOptions" />
+      <a-segmented
+        v-model:value="modelValue"
+        :options="segmentedOptions"
+        class="mb-4"
+      />
     </div>
   </a-card>
 </template>
