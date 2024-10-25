@@ -40,6 +40,7 @@ const fetchConfig = () => {
             componentProps: {
               placeholder: '请输入',
             },
+            help: item.key,
             fieldName: item.key,
             label: item.name,
           };
@@ -64,7 +65,11 @@ watch(modelValue, () => {
     :bordered="false"
     class="mb-4 h-full flex-1 md:mb-0"
   >
-    <div class="flex flex-col">
+    <div class="mb-4 flex w-full justify-end gap-x-4">
+      <a-button type="primary">新增组</a-button>
+      <a-button type="primary">组配置</a-button>
+    </div>
+    <div v-if="segmentedOptions.length > 0" class="flex flex-col">
       <a-segmented
         v-model:value="modelValue"
         :options="segmentedOptions"

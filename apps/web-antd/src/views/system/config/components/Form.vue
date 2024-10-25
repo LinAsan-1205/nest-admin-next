@@ -74,6 +74,14 @@ const [Form, formApi] = useVbenForm({
       label: '输入组件',
       rules: 'selectRequired',
     },
+    {
+      component: 'Input',
+      componentProps: {
+        placeholder: '请输入配置说明',
+      },
+      fieldName: 'remark',
+      label: '配置说明',
+    },
   ],
   wrapperClass: 'grid-cols-1',
 });
@@ -103,7 +111,7 @@ onMounted(() => {
   <a-card
     :body-style="{ padding: '10px', width: '100%' }"
     :bordered="false"
-    class="mb-4 h-full w-[800px] md:mb-0"
+    class="mb-4 h-full flex-1 md:mb-0"
   >
     <Form />
   </a-card>

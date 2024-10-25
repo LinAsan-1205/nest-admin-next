@@ -13,7 +13,7 @@ export function getConfigGroupList() {
  * 根据获取系统配置
  * @param groupId
  */
-export function getConfigurationBasedOnGrouping(groupId: string) {
+export function getConfigurationBasedOnGrouping(groupId?: string) {
   return requestClient.get<ConfigModelApi.List>(
     `config/grouping/${groupId}`,
     {},
