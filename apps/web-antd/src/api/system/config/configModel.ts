@@ -5,6 +5,7 @@ export declare namespace ConfigModelApi {
     name: string;
     value: string;
     sort: number;
+    inputType: string;
     remark: null | string;
   }
   export type List = Item[];
