@@ -4,14 +4,12 @@ import { computed, onMounted, ref, watch } from 'vue';
 import { useVbenForm } from '#/adapter/form';
 import {
   type ConfigGroupModelApi,
-  type ConfigModelApi,
   getConfigGroupList,
   getConfigurationBasedOnGrouping,
 } from '#/api/system/config';
 
 const modelValue = defineModel<string>();
 const data = ref<ConfigGroupModelApi.List>([]);
-const formData = ref<ConfigModelApi.List>([]);
 
 const [Form, formApi] = useVbenForm({
   wrapperClass: 'grid-cols-1',
@@ -30,13 +28,8 @@ const fetch = () => {
   });
 };
 
-onMounted(() => {
-  fetch();
-});
-
-watch(modelValue, (value: string) => {
-  getConfigurationBasedOnGrouping(value).then((res) => {
-    formData.value = res;
+const fetchConfig = () => {
+  getConfigurationBasedOnGrouping(modelValue.value).then((res) => {
     formApi.setState((_) => {
       return {
         schema: res.flatMap((item) => {
@@ -54,6 +47,14 @@ watch(modelValue, (value: string) => {
       };
     });
   });
+};
+
+onMounted(() => {
+  fetch();
+});
+
+watch(modelValue, () => {
+  fetchConfig();
 });
 </script>
 
