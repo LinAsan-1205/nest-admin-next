@@ -1,8 +1,16 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 
-import { useVbenForm } from '#/adapter/form';
-import { getConfigGroupList } from '#/api/system/config';
+import { useVbenForm, z } from '#/adapter/form';
+import {
+  type ConfigModelApi,
+  createConfig,
+  getConfigGroupList,
+} from '#/api/system/config';
+
+const emit = defineEmits<{
+  refresh: [];
+}>();
 
 const [Form, formApi] = useVbenForm({
   commonConfig: {
@@ -10,6 +18,7 @@ const [Form, formApi] = useVbenForm({
       class: 'w-full',
     },
   },
+  handleSubmit: onSubmit,
   schema: [
     {
       component: 'Select',
@@ -36,7 +45,9 @@ const [Form, formApi] = useVbenForm({
       },
       fieldName: 'key',
       label: '配置标识',
-      rules: 'required',
+      rules: z.string().refine((value: string) => /^[a-z]+$/i.test(value), {
+        message: '只允许输入字母',
+      }),
     },
     {
       component: 'Input',
@@ -118,7 +129,7 @@ const [Form, formApi] = useVbenForm({
         class: 'h-[200px]',
       },
       dependencies: {
-        show(values) {
+        if(values) {
           return !values.inputType.includes('input');
         },
         triggerFields: ['inputType'],
@@ -147,6 +158,12 @@ const fetch = () => {
     ]);
   });
 };
+
+async function onSubmit(values: Record<string, any>) {
+  await createConfig(values as ConfigModelApi.CreateParams);
+  await formApi.resetForm();
+  emit('refresh');
+}
 
 onMounted(() => {
   fetch();

@@ -62,12 +62,17 @@ const fetchConfig = async () => {
   formApi.setState((_) => {
     return {
       schema: res.flatMap((item) => {
+        const configData = item.configData ?? {};
         return {
           component: item.inputType.replace(/^./, (char) => char.toUpperCase()),
-          componentProps: {
-            placeholder: '请输入',
-            defaultValue: item.value,
-          },
+          componentProps: Object.assign(
+            {},
+            {
+              placeholder: '请输入',
+              defaultValue: item.value,
+            },
+            configData,
+          ),
           help: item.key,
           fieldName: item.key,
           label: item.name,
@@ -113,6 +118,11 @@ onMounted(() => {
 
 watch(modelValue, () => {
   fetchConfig();
+});
+
+defineExpose({
+  fetch,
+  fetchConfig,
 });
 </script>
 

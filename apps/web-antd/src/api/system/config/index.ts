@@ -52,6 +52,14 @@ export function getConfigurationBasedOnGrouping(groupId?: string) {
 }
 
 /**
+ * 创建系统配置
+ * @param data
+ */
+export function createConfig(data: ConfigModelApi.CreateParams) {
+  return requestClient.post<ConfigModelApi.List>(`config`, data);
+}
+
+/**
  * 更新系统配置所有字段
  * @param groupId
  * @param data

@@ -5,12 +5,13 @@ export declare namespace ConfigModelApi {
     name: string;
     value: string;
     sort: number;
+    configData: Record<any, any>;
     inputType: string;
     remark: null | string;
   }
   export type List = Item[];
 
-  export type CreateParams = Item;
+  export type CreateParams = Omit<Item, 'groupId'>;
 
   export type UpdateAllFields = Record<string, boolean | number | string>;
 
