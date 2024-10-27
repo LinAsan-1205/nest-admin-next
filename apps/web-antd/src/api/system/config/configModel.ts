@@ -12,6 +12,8 @@ export declare namespace ConfigModelApi {
 
   export type CreateParams = Item;
 
+  export type UpdateAllFields = Record<string, boolean | number | string>;
+
   export interface ChangeStatus {
     groupId: string;
     status: string;

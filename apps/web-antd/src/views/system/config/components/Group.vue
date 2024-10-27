@@ -3,7 +3,7 @@ import { computed, onMounted, ref, watch } from 'vue';
 
 import { useVbenModal } from '@vben/common-ui';
 
-import { Empty } from 'ant-design-vue';
+import { Empty, message } from 'ant-design-vue';
 
 import { useVbenForm } from '#/adapter/form';
 import {
@@ -11,6 +11,7 @@ import {
   type ConfigModelApi,
   getConfigGroupList,
   getConfigurationBasedOnGrouping,
+  updateConfigAllFields,
 } from '#/api/system/config';
 import { $t } from '#/locales';
 
@@ -24,7 +25,13 @@ const data = ref<ConfigGroupModelApi.List>([]);
 const configData = ref<ConfigModelApi.List>([]);
 
 const [Form, formApi] = useVbenForm({
+  commonConfig: {
+    componentProps: {
+      class: 'w-full',
+    },
+  },
   wrapperClass: 'grid-cols-1',
+  handleSubmit: onSubmit,
 });
 
 const [FormModal, formModalApi] = useVbenModal({
@@ -59,6 +66,7 @@ const fetchConfig = async () => {
           component: item.inputType.replace(/^./, (char) => char.toUpperCase()),
           componentProps: {
             placeholder: '请输入',
+            defaultValue: item.value,
           },
           help: item.key,
           fieldName: item.key,
@@ -90,6 +98,14 @@ const onUpdate = () => {
   });
   formModalApi.open();
 };
+
+async function onSubmit(values: ConfigModelApi.UpdateAllFields) {
+  if (!modelValue.value) {
+    return;
+  }
+  await updateConfigAllFields(modelValue.value, values);
+  message.success('更新成功');
+}
 
 onMounted(() => {
   fetch();

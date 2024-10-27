@@ -51,4 +51,19 @@ export function getConfigurationBasedOnGrouping(groupId?: string) {
   );
 }
 
+/**
+ * 更新系统配置所有字段
+ * @param groupId
+ * @param data
+ */
+export function updateConfigAllFields(
+  groupId: string,
+  data: ConfigModelApi.UpdateAllFields,
+) {
+  return requestClient.post<ConfigModelApi.List>(
+    `config/updateAllFields/${groupId}`,
+    data,
+  );
+}
+
 export { type ConfigGroupModelApi, type ConfigModelApi };
