@@ -291,6 +291,9 @@ catalogs:
     medium-zoom:
       specifier: ^1.1.0
       version: 1.1.0
+    monaco-editor:
+      specifier: ^0.52.0
+      version: 0.52.0
     nanoid:
       specifier: ^5.0.7
       version: 5.0.7
@@ -660,6 +663,9 @@ importers:
       dayjs:
         specifier: 'catalog:'
         version: 1.11.13
+      monaco-editor:
+        specifier: 'catalog:'
+        version: 0.52.0
       pinia:
         specifier: 2.2.2
         version: 2.2.2(typescript@5.6.3)(vue@3.5.12(typescript@5.6.3))
@@ -7536,6 +7542,9 @@ packages:
 
   mlly@1.7.2:
     resolution: {integrity: sha512-tN3dvVHYVz4DhSXinXIk7u9syPYaJvio118uomkovAtWBT+RdbP6Lfh/5Lvo519YMmwBafwlh20IPTXIStscpA==}
+
+  monaco-editor@0.52.0:
+    resolution: {integrity: sha512-OeWhNpABLCeTqubfqLMXGsqf6OmPU6pHM85kF3dhy6kq5hnhuVS1p3VrEW/XhWHc71P2tHyS5JFySD8mgs1crw==}
 
   mri@1.2.0:
     resolution: {integrity: sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA==}
@@ -16828,6 +16837,8 @@ snapshots:
       pathe: 1.1.2
       pkg-types: 1.2.1
       ufo: 1.5.4
+
+  monaco-editor@0.52.0: {}
 
   mri@1.2.0: {}
 

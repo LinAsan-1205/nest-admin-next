@@ -44,6 +44,7 @@ const [Form, formApi] = useVbenForm({
         placeholder: '请输入配置值',
       },
       fieldName: 'value',
+      help: '默认值',
       label: '配置值',
     },
     {
@@ -77,6 +78,14 @@ const [Form, formApi] = useVbenForm({
             value: 'switch',
           },
           {
+            label: '评分',
+            value: 'rate',
+          },
+          {
+            label: '字典下拉选择器',
+            value: 'dictData',
+          },
+          {
             label: '日期选择器',
             value: 'datePicker',
           },
@@ -84,8 +93,13 @@ const [Form, formApi] = useVbenForm({
             label: '日期范围选择器',
             value: 'rangePicker',
           },
+          {
+            label: '时间选择框',
+            value: 'timePicker',
+          },
         ],
       },
+      defaultValue: 'input',
       fieldName: 'inputType',
       label: '输入组件',
       rules: 'selectRequired',
@@ -97,6 +111,22 @@ const [Form, formApi] = useVbenForm({
       },
       fieldName: 'remark',
       label: '配置说明',
+    },
+    {
+      component: 'MonacoEditor',
+      componentProps: {
+        class: 'h-[200px]',
+      },
+      dependencies: {
+        show(values) {
+          return !values.inputType.includes('input');
+        },
+        triggerFields: ['inputType'],
+      },
+      defaultValue: '{}',
+      fieldName: 'configData',
+      label: '组件配置',
+      help: '用于配置指定组件的props参数等',
     },
   ],
   wrapperClass: 'grid-cols-1',

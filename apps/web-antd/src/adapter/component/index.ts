@@ -37,6 +37,7 @@ import {
 } from 'ant-design-vue';
 
 import DictData from '#/components/Api/DictData.vue';
+import MonacoEditor from '#/components/MonacoEditor/MonacoEditor.vue';
 
 const withDefaultPlaceholder = <T extends Component>(
   component: T,
@@ -61,6 +62,7 @@ export type ComponentType =
   | 'InputNumber'
   | 'InputPassword'
   | 'Mentions'
+  | 'MonacoEditor'
   | 'PrimaryButton'
   | 'Radio'
   | 'RadioGroup'
@@ -110,6 +112,7 @@ async function initComponentAdapter() {
     TreeSelect: withDefaultPlaceholder(TreeSelect, 'select'),
     Upload,
     DictData,
+    MonacoEditor,
   };
 
   // 将组件注册到全局共享状态中

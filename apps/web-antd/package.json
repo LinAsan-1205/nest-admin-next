@@ -47,6 +47,7 @@
     "vue": "catalog:",
     "vue-router": "catalog:",
     "unplugin-vue-components": "catalog:",
+    "monaco-editor": "catalog:",
     "vxe-table": "catalog:"
   }
 }
