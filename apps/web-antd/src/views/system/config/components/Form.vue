@@ -61,12 +61,28 @@ const [Form, formApi] = useVbenForm({
         placeholder: '请选择组件类型',
         options: [
           {
-            label: 'Input',
+            label: '文本框',
             value: 'input',
           },
           {
-            label: 'InputNumber',
+            label: '数字文本框',
             value: 'inputNumber',
+          },
+          {
+            label: '密码文本框',
+            value: 'inputPassword',
+          },
+          {
+            label: '开关',
+            value: 'switch',
+          },
+          {
+            label: '日期选择器',
+            value: 'datePicker',
+          },
+          {
+            label: '日期范围选择器',
+            value: 'rangePicker',
           },
         ],
       },
