@@ -63,16 +63,17 @@ const fetchConfig = async () => {
     return {
       schema: res.flatMap((item) => {
         const configData = item.configData ?? {};
+        const componentProps = Object.assign(
+          {},
+          {
+            placeholder: '请输入',
+            defaultValue: item.value,
+          },
+          configData,
+        );
         return {
           component: item.inputType.replace(/^./, (char) => char.toUpperCase()),
-          componentProps: Object.assign(
-            {},
-            {
-              placeholder: '请输入',
-              defaultValue: item.value,
-            },
-            configData,
-          ),
+          componentProps,
           help: item.key,
           fieldName: item.key,
           label: item.name,
