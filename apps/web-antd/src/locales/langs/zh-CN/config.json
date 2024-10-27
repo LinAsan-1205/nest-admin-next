@@ -1,0 +1,10 @@
+{
+  "group": {
+    "groupName": "配置组名称",
+    "code": "配置组标识",
+    "create": "创建配置组",
+    "update": "编辑配置组",
+    "disposition": "配置组配置"
+  },
+  "remark": "备注"
+}
