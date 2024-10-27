@@ -110,7 +110,7 @@ async function onSubmit(values: ConfigModelApi.UpdateAllFields) {
     return;
   }
   await updateConfigAllFields(modelValue.value, values);
-  message.success('更新成功');
+  message.success($t('page.apiEditSuccess'));
 }
 
 onMounted(() => {
