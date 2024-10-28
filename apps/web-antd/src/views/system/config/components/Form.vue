@@ -45,7 +45,7 @@ const [Form, formApi] = useVbenForm({
       },
       fieldName: 'key',
       label: '配置标识',
-      rules: z.string().refine((value: string) => /^[a-z]+$/i.test(value), {
+      rules: z.string().refine((value: string) => /^[a-z_]+$/i.test(value), {
         message: '只允许输入字母',
       }),
     },
