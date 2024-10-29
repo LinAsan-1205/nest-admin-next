@@ -159,7 +159,12 @@ const gridOptions: VxeGridProps<RowType> = {
       formatter: 'formatDateTime',
       minWidth: 156,
     },
-    { slots: { default: 'action' }, title: '操作', minWidth: 100 },
+    {
+      slots: { default: 'action' },
+      fixed: 'right',
+      title: '操作',
+      minWidth: 100,
+    },
   ],
   height: 'auto',
   pagerConfig: {},

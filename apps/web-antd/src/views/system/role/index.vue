@@ -109,7 +109,7 @@ const refreshTable = () => {
 
 const onChangeStatus = async (checked: string, row: RowType) => {
   try {
-    await changeStatus({ status: checked, deptId: row.deptId });
+    await changeStatus({ status: checked, roleId: row.roleId });
     row.status = checked;
     message.success($t('page.apiSuccess'));
     refreshTable();
@@ -150,7 +150,7 @@ const onUpdate = (row: RowType) => {
   formModalApi.setData({
     values: row,
     update: true,
-    deptId: row.deptId,
+    roleId: row.roleId,
   });
   formModalApi.open();
 };
@@ -204,7 +204,7 @@ const actionList = [
           v-model:checked="row.status"
           checked-value="0"
           un-checked-value="1"
-          @change="onChangeStatus($event, row)"
+          @change="onChangeStatus(`${$event}`, row)"
         />
       </template>
       <template #action="{ row }">

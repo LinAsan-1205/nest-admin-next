@@ -8,6 +8,7 @@ export declare namespace RoleApi {
     roleId: string;
     roleName: string;
     roleSort: number;
+    status: string;
   }
 
   export type List = Item[];
