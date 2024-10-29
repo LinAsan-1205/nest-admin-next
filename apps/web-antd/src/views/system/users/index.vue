@@ -221,7 +221,7 @@ const onRemove = async (ids?: RowType[]) => {
     content: $t('modal.confirmContent'),
     onOk: async () => {
       await deleteUser(records.map((item) => item.userId).join(','));
-      message.success($t('page.apiRemove'));
+      message.success($t('api.remove'));
       refreshTable();
     },
   });

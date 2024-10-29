@@ -99,8 +99,8 @@ const [Modal, modalApi] = useVbenModal({
 async function onSubmit(values: Record<string, any>) {
   const data = values as ConfigGroupModelApi.Item;
   const messageContent = updateTheStatus.value
-    ? $t('page.apiEditSuccess')
-    : $t('page.apiCreateSuccess');
+    ? $t('api.editSuccess')
+    : $t('api.createSuccess');
   await (updateTheStatus.value
     ? updateConfigGroup(groupId.value as string, data)
     : createConfigGroup(data));

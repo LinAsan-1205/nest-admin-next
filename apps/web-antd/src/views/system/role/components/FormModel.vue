@@ -115,8 +115,8 @@ const [Modal, modalApi] = useVbenModal({
 async function onSubmit(values: Record<string, any>) {
   const data = values as RoleApi.CreateParams;
   const messageContent = updateTheStatus.value
-    ? $t('page.apiEditSuccess')
-    : $t('page.apiCreateSuccess');
+    ? $t('api.editSuccess')
+    : $t('api.createSuccess');
   await (updateTheStatus.value
     ? updateRole(roleId.value as string, data)
     : createRole(data));

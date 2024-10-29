@@ -137,7 +137,7 @@ const onRemove = async (ids?: RowType[]) => {
       await deleteAttachment(
         records.map((item) => item.attachmentId).join(','),
       );
-      message.success($t('page.apiRemove'));
+      message.success($t('api.remove'));
       refreshTable();
     },
   });

@@ -42,7 +42,7 @@ const [Form, formApi] = useVbenForm({
       },
       formItemClass: 'col-span-2',
       fieldName: 'avatar',
-      label: $t('page.users.avatar'),
+      label: $t('users.avatar'),
     },
     {
       component: 'Input',
@@ -50,7 +50,7 @@ const [Form, formApi] = useVbenForm({
         placeholder: '请输入',
       },
       fieldName: 'userName',
-      label: $t('page.users.userName'),
+      label: $t('users.userName'),
       rules: z.string().min(4, { message: '最少输入4个字符' }),
     },
     {
@@ -65,7 +65,7 @@ const [Form, formApi] = useVbenForm({
         },
       },
       fieldName: 'deptId',
-      label: $t('page.users.dept'),
+      label: $t('users.dept'),
       rules: 'required',
     },
     {
@@ -74,7 +74,7 @@ const [Form, formApi] = useVbenForm({
         placeholder: '请输入',
       },
       fieldName: 'nickName',
-      label: $t('page.users.nickName'),
+      label: $t('users.nickName'),
       rules: z.string().min(2, { message: '最少输入2个字符' }),
     },
     {
@@ -83,7 +83,7 @@ const [Form, formApi] = useVbenForm({
         placeholder: '请输入',
       },
       fieldName: 'password',
-      label: $t('page.users.password'),
+      label: $t('users.password'),
       rules: z.string().min(6, { message: '密码长度不能小于6位' }),
     },
     {
@@ -92,7 +92,7 @@ const [Form, formApi] = useVbenForm({
         placeholder: '请输入',
       },
       fieldName: 'phone',
-      label: $t('page.users.phone'),
+      label: $t('users.phone'),
       rules: z
         .string()
         .min(11, { message: '手机号格式不正确' })
@@ -109,7 +109,7 @@ const [Form, formApi] = useVbenForm({
         placeholder: '请输入',
       },
       fieldName: 'email',
-      label: $t('page.users.email'),
+      label: $t('users.email'),
       rules: z.string().email('请输入正确的邮箱').nullable().optional(),
     },
     {
@@ -121,7 +121,7 @@ const [Form, formApi] = useVbenForm({
       },
       defaultValue: '0',
       fieldName: 'sex',
-      label: $t('page.users.sex'),
+      label: $t('users.sex'),
       rules: 'selectRequired',
     },
     {
@@ -133,7 +133,7 @@ const [Form, formApi] = useVbenForm({
       },
       defaultValue: '0',
       fieldName: 'status',
-      label: $t('page.users.status'),
+      label: $t('users.status'),
       rules: 'selectRequired',
     },
 
@@ -145,7 +145,7 @@ const [Form, formApi] = useVbenForm({
       },
       formItemClass: 'col-span-2',
       fieldName: 'remark',
-      label: $t('page.users.remark'),
+      label: $t('users.remark'),
     },
   ],
   showDefaultActions: false,
@@ -220,8 +220,8 @@ async function onSubmit(values: Record<string, any>) {
     avatar: avatar.value?.[0]?.url,
   };
   const messageContent = updateTheStatus.value
-    ? $t('page.apiEditSuccess')
-    : $t('page.apiCreateSuccess');
+    ? $t('api.editSuccess')
+    : $t('api.createSuccess');
   await (updateTheStatus.value
     ? updateUser(userId.value as string, params)
     : createUser(params));

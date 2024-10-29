@@ -13,15 +13,5 @@
   },
   "icon": {
     "refresh": "刷新"
-  },
-  "apiSuccess": "修改成功",
-  "apiFail": "修改失败",
-  "apiRemove": "删除成功",
-  "apiRemoveFail": "删除失败",
-  "apiCreateSuccess": "新增成功",
-  "apiCreateFail": "创建失败",
-  "apiUpdateSuccess": "更新成功",
-  "apiUpdateFail": "更新失败",
-  "apiBatchRemoveSuccess": "批量删除成功",
-  "apiEditSuccess": "编辑成功"
+  }
 }

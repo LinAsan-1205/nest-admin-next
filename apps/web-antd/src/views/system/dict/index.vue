@@ -129,7 +129,7 @@ const onChangeStatus = async (checked: string, row: RowType) => {
   try {
     await changeStatus({ status: checked, dictCode: row.dictCode });
     row.status = checked;
-    message.success($t('page.apiSuccess'));
+    message.success($t('api.success'));
     refreshTable();
   } catch {
     row.status = checked === '0' ? '1' : '0';
@@ -180,7 +180,7 @@ const onRemove = async (ids?: RowType[]) => {
     content: $t('modal.confirmContent'),
     onOk: async () => {
       await deleteDictData(records.map((item) => item.dictCode).join(','));
-      message.success($t('page.apiRemove'));
+      message.success($t('api.remove'));
       refreshTable();
     },
   });

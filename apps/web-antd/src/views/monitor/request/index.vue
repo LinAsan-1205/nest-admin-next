@@ -109,7 +109,7 @@ const onRemove = async () => {
     content: $t('modal.confirmContent'),
     onOk: async () => {
       await clearRequestTheLog();
-      message.success($t('page.apiRemove'));
+      message.success($t('api.remove'));
       refreshTable();
     },
   });
