@@ -30,6 +30,9 @@ setupVbenVxeTable({
           showActiveMsg: true,
           showResponseMsg: false,
         },
+        pagerConfig: {
+          pageSize: 30,
+        },
         round: true,
         showOverflow: true,
         size: 'small',
