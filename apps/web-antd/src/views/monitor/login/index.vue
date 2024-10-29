@@ -11,7 +11,7 @@ import { getLoginLogList, type LoginLogApi } from '#/api/monitor/login';
 interface RowType extends LoginLogApi.Item {}
 
 const formOptions: VbenFormProps = {
-  collapsed: true,
+  collapsed: false,
   schema: [
     {
       component: 'Input',
@@ -22,6 +22,15 @@ const formOptions: VbenFormProps = {
       component: 'Input',
       fieldName: 'ip',
       label: $t('log.login.ip'),
+    },
+    {
+      component: 'DictData',
+      componentProps: {
+        dictType: 'sys_login_log_status',
+        placeholder: '请选择请求类型',
+      },
+      fieldName: 'status',
+      label: $t('log.status'),
     },
   ],
 };
@@ -84,6 +93,18 @@ const gridOptions: VxeGridProps<RowType> = {
       formatter: 'formatEmpty',
     },
     {
+      cellRender: {
+        name: 'DictTag',
+        props: {
+          dictType: 'sys_login_log_status',
+        },
+      },
+      field: 'status',
+      title: $t('log.status'),
+      minWidth: 100,
+      formatter: 'formatEmpty',
+    },
+    {
       field: 'msg',
       title: $t('log.login.msg'),
       minWidth: 100,
@@ -107,9 +128,6 @@ const gridOptions: VxeGridProps<RowType> = {
         });
       },
     },
-  },
-  sortConfig: {
-    multiple: true,
   },
 };
 

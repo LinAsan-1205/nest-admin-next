@@ -20,5 +20,6 @@
     "createTime": "请求时间",
     "userId": "用户ID",
     "nickName": "操作者"
-  }
+  },
+  "status": "状态"
 }
