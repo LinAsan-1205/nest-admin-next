@@ -1,0 +1,24 @@
+{
+  "login": {
+    "userName": "用户名",
+    "ip": "IP",
+    "country": "国家",
+    "province": "省份",
+    "city": "城市",
+    "district": "区县",
+    "isp": "运营商",
+    "browser": "浏览器",
+    "os": "操作系统",
+    "msg": "操作消息",
+    "loginTime": "登录时间"
+  },
+  "requestLog": {
+    "ip": "IP地址",
+    "params": "请求参数",
+    "url": "请求地址",
+    "method": "请求类型",
+    "createTime": "请求时间",
+    "userId": "用户ID",
+    "nickName": "操作者"
+  }
+}

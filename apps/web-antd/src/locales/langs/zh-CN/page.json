@@ -120,15 +120,6 @@
     "selectAttachment": "请选择附件",
     "preview": "预览"
   },
-  "requestLog": {
-    "ip": "IP地址",
-    "params": "请求参数",
-    "url": "请求地址",
-    "method": "请求类型",
-    "createTime": "请求时间",
-    "userId": "用户ID",
-    "nickName": "操作者"
-  },
   "apiSuccess": "修改成功",
   "apiFail": "修改失败",
   "apiRemove": "删除成功",

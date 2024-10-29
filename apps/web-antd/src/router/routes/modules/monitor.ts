@@ -23,6 +23,15 @@ const routes: RouteRecordRaw[] = [
           title: $t('menu.request.title'),
         },
       },
+      {
+        name: 'LoginLog',
+        path: '/monitor/login-log',
+        component: () => import('#/views/monitor/login/index.vue'),
+        meta: {
+          icon: 'ant-design:file-outlined',
+          title: $t('menu.login.title'),
+        },
+      },
     ],
   },
 ];

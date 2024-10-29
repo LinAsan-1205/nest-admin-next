@@ -22,7 +22,7 @@ const formOptions: VbenFormProps = {
     {
       component: 'Input',
       fieldName: 'url',
-      label: $t('page.requestLog.url'),
+      label: $t('log.requestLog.url'),
     },
     {
       component: 'DictData',
@@ -31,7 +31,7 @@ const formOptions: VbenFormProps = {
         placeholder: '请选择请求类型',
       },
       fieldName: 'method',
-      label: $t('page.requestLog.method'),
+      label: $t('log.requestLog.method'),
     },
   ],
 };
@@ -41,41 +41,41 @@ const gridOptions: VxeGridProps<RowType> = {
     { title: '序号', type: 'seq', width: 50 },
     {
       field: 'userId',
-      title: $t('page.requestLog.userId'),
+      title: $t('log.requestLog.userId'),
       formatter: 'formatEmpty',
     },
     {
       field: 'users.nickName',
-      title: $t('page.requestLog.nickName'),
+      title: $t('log.requestLog.nickName'),
       minWidth: 100,
       formatter: 'formatEmpty',
     },
     {
       field: 'url',
-      title: $t('page.requestLog.url'),
+      title: $t('log.requestLog.url'),
       minWidth: 100,
       formatter: 'formatEmpty',
     },
     {
       field: 'method',
-      title: $t('page.requestLog.method'),
+      title: $t('log.requestLog.method'),
       treeNode: true,
       minWidth: 100,
     },
     {
       field: 'params',
-      title: $t('page.requestLog.params'),
+      title: $t('log.requestLog.params'),
       minWidth: 100,
     },
     {
       field: 'ip',
-      title: $t('page.requestLog.ip'),
+      title: $t('log.requestLog.ip'),
       minWidth: 100,
       formatter: 'formatEmpty',
     },
     {
       field: 'createTime',
-      title: $t('page.requestLog.createTime'),
+      title: $t('log.requestLog.createTime'),
       formatter: 'formatDateTime',
       minWidth: 156,
     },
@@ -105,8 +105,8 @@ const refreshTable = () => {
 
 const onRemove = async () => {
   Modal.confirm({
-    title: $t('page.modal.confirmTitle'),
-    content: $t('page.modal.confirmContent'),
+    title: $t('modal.confirmTitle'),
+    content: $t('modal.confirmContent'),
     onOk: async () => {
       await clearRequestTheLog();
       message.success($t('page.apiRemove'));
