@@ -32,22 +32,22 @@ const formOptions: VbenFormProps = {
     {
       component: 'Input',
       fieldName: 'userName',
-      label: $t('page.users.userName'),
+      label: $t('users.userName'),
     },
     {
       component: 'Input',
       fieldName: 'nickName',
-      label: $t('page.users.nickName'),
+      label: $t('users.nickName'),
     },
     {
       component: 'Input',
       fieldName: 'phone',
-      label: $t('page.users.phone'),
+      label: $t('users.phone'),
     },
     {
       component: 'Input',
       fieldName: 'email',
-      label: $t('page.users.email'),
+      label: $t('users.email'),
     },
     {
       component: 'DictData',
@@ -56,12 +56,12 @@ const formOptions: VbenFormProps = {
         placeholder: '请选择状态',
       },
       fieldName: 'status',
-      label: $t('page.users.status'),
+      label: $t('users.status'),
     },
     {
       component: 'RangePicker',
       fieldName: 'registeredTime',
-      label: $t('page.users.createTime'),
+      label: $t('users.createTime'),
       componentProps: {
         format: 'YYYY-MM-DD',
         valueFormat: 'YYYY-MM-DD',
@@ -81,32 +81,32 @@ const gridOptions: VxeGridProps<RowType> = {
     { type: 'checkbox', width: 50 },
     {
       field: 'avatar',
-      title: $t('page.users.avatar'),
+      title: $t('users.avatar'),
       slots: { default: 'avatar' },
       minWidth: 100,
     },
-    { field: 'userName', title: $t('page.users.userName'), minWidth: 100 },
+    { field: 'userName', title: $t('users.userName'), minWidth: 100 },
     {
       field: 'nickName',
-      title: $t('page.users.nickName'),
+      title: $t('users.nickName'),
       formatter: 'formatEmpty',
       minWidth: 100,
     },
     {
       field: 'dept.deptName',
-      title: $t('page.users.deptName'),
+      title: $t('users.deptName'),
       formatter: 'formatEmpty',
       minWidth: 100,
     },
     {
       field: 'phone',
-      title: $t('page.users.phone'),
+      title: $t('users.phone'),
       formatter: 'formatEmpty',
       minWidth: 100,
     },
     {
       field: 'email',
-      title: $t('page.users.email'),
+      title: $t('users.email'),
       formatter: 'formatEmpty',
       minWidth: 150,
     },
@@ -135,18 +135,18 @@ const gridOptions: VxeGridProps<RowType> = {
         },
       },
       field: 'status',
-      title: $t('page.users.status'),
+      title: $t('users.status'),
       minWidth: 100,
     },
     {
       field: 'loginIp',
-      title: $t('page.users.loginIp'),
+      title: $t('users.loginIp'),
       formatter: 'formatEmpty',
       minWidth: 156,
     },
     {
       field: 'loginDate',
-      title: $t('page.users.loginDate'),
+      title: $t('users.loginDate'),
       minWidth: 156,
       formatter: ({ cellValue }) => {
         if (!cellValue) return '从未登录过';
@@ -155,7 +155,7 @@ const gridOptions: VxeGridProps<RowType> = {
     },
     {
       field: 'createTime',
-      title: $t('page.users.createTime'),
+      title: $t('users.createTime'),
       formatter: 'formatDateTime',
       minWidth: 156,
     },
@@ -193,7 +193,7 @@ const refreshTable = () => {
 };
 
 const onCreate = () => {
-  formModalApi.setState({ title: $t('page.users.createUser') });
+  formModalApi.setState({ title: $t('users.createUser') });
   formModalApi.setData({
     update: false,
   });
@@ -201,7 +201,7 @@ const onCreate = () => {
 };
 
 const onUpdate = (row: RowType) => {
-  formModalApi.setState({ title: $t('page.users.editUser') });
+  formModalApi.setState({ title: $t('users.editUser') });
   formModalApi.setData({
     values: { ...row },
     update: true,
@@ -213,7 +213,7 @@ const onUpdate = (row: RowType) => {
 const onRemove = async (ids?: RowType[]) => {
   const records = ids || (gridApi.grid?.getCheckboxRecords() as RowType[]);
   if (records.length === 0) {
-    message.error($t('page.users.selectUser'));
+    message.error($t('users.selectUser'));
     return;
   }
   Modal.confirm({

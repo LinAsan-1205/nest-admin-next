@@ -41,7 +41,7 @@ const [Form, formApi] = useVbenForm({
       },
       formItemClass: 'col-span-2',
       fieldName: 'dictName',
-      label: $t('page.dictType.dictName'),
+      label: $t('dictType.dictName'),
       rules: 'required',
     },
     {
@@ -51,7 +51,7 @@ const [Form, formApi] = useVbenForm({
       },
       formItemClass: 'col-span-2',
       fieldName: 'dictType',
-      label: $t('page.dictType.dictType'),
+      label: $t('dictType.dictType'),
       rules: 'required',
     },
     // {
@@ -79,7 +79,7 @@ const [Form, formApi] = useVbenForm({
       },
       defaultValue: '0',
       fieldName: 'status',
-      label: $t('page.dictType.status'),
+      label: $t('dictType.status'),
       rules: 'selectRequired',
     },
 
@@ -91,7 +91,7 @@ const [Form, formApi] = useVbenForm({
       },
       formItemClass: 'col-span-2',
       fieldName: 'remark',
-      label: $t('page.dictType.remark'),
+      label: $t('dictType.remark'),
     },
   ],
   showDefaultActions: false,

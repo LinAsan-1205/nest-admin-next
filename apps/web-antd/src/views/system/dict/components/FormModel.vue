@@ -42,7 +42,7 @@ const [Form, formApi] = useVbenForm({
       },
       formItemClass: 'col-span-2',
       fieldName: 'dictType',
-      label: $t('page.dictData.dictType'),
+      label: $t('dictData.dictType'),
       rules: 'required',
     },
     {
@@ -52,7 +52,7 @@ const [Form, formApi] = useVbenForm({
       },
       formItemClass: 'col-span-2',
       fieldName: 'dictLabel',
-      label: $t('page.dictData.dictLabel'),
+      label: $t('dictData.dictLabel'),
       rules: 'required',
     },
     {
@@ -62,7 +62,7 @@ const [Form, formApi] = useVbenForm({
       },
       formItemClass: 'col-span-2',
       fieldName: 'dictValue',
-      label: $t('page.dictData.dictValue'),
+      label: $t('dictData.dictValue'),
       rules: 'required',
     },
     {
@@ -72,7 +72,7 @@ const [Form, formApi] = useVbenForm({
       },
       formItemClass: 'col-span-2',
       fieldName: 'color',
-      label: $t('page.dictData.color'),
+      label: $t('dictData.color'),
     },
     {
       component: 'InputNumber',
@@ -82,7 +82,7 @@ const [Form, formApi] = useVbenForm({
       formItemClass: 'col-span-2',
       defaultValue: 0,
       fieldName: 'dictSort',
-      label: $t('page.dictData.dictSort'),
+      label: $t('dictData.dictSort'),
     },
     {
       component: 'RadioGroup',
@@ -100,7 +100,7 @@ const [Form, formApi] = useVbenForm({
       },
       defaultValue: '0',
       fieldName: 'status',
-      label: $t('page.dictData.status'),
+      label: $t('dictData.status'),
       rules: 'selectRequired',
     },
 
@@ -112,7 +112,7 @@ const [Form, formApi] = useVbenForm({
       },
       formItemClass: 'col-span-2',
       fieldName: 'remark',
-      label: $t('page.dictData.remark'),
+      label: $t('dictData.remark'),
     },
   ],
   showDefaultActions: false,

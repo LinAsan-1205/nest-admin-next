@@ -30,17 +30,17 @@ const formOptions: VbenFormProps = {
     {
       component: 'Input',
       fieldName: 'objectName',
-      label: $t('page.attachment.objectName'),
+      label: $t('attachment.objectName'),
     },
     {
       component: 'Input',
       fieldName: 'originName',
-      label: $t('page.attachment.originName'),
+      label: $t('attachment.originName'),
     },
     {
       component: 'Input',
       fieldName: 'suffix',
-      label: $t('page.attachment.suffix'),
+      label: $t('attachment.suffix'),
     },
   ],
 };
@@ -54,47 +54,47 @@ const gridOptions: VxeGridProps<RowType> = {
     {
       slots: { default: 'preview' },
       field: 'preview',
-      title: $t('page.attachment.preview'),
+      title: $t('attachment.preview'),
       minWidth: 100,
     },
     {
       field: 'objectName',
-      title: $t('page.attachment.objectName'),
+      title: $t('attachment.objectName'),
       showOverflow: 'tooltip',
       minWidth: 100,
     },
     {
       field: 'originName',
-      title: $t('page.attachment.originName'),
+      title: $t('attachment.originName'),
       minWidth: 100,
       showOverflow: 'tooltip',
       formatter: 'formatEmpty',
     },
     {
       field: 'sizeByte',
-      title: $t('page.attachment.sizeByte'),
+      title: $t('attachment.sizeByte'),
       formatter: 'formatSize',
       minWidth: 100,
     },
     {
       field: 'suffix',
-      title: $t('page.attachment.suffix'),
+      title: $t('attachment.suffix'),
       minWidth: 100,
       formatter: 'formatEmpty',
     },
     {
       field: 'mimeType',
-      title: $t('page.attachment.mimeType'),
+      title: $t('attachment.mimeType'),
       minWidth: 100,
     },
     {
       field: 'storagePath',
-      title: $t('page.attachment.storagePath'),
+      title: $t('attachment.storagePath'),
       minWidth: 100,
     },
     {
       field: 'createTime',
-      title: $t('page.dept.createTime'),
+      title: $t('attachment.createTime'),
       formatter: 'formatDateTime',
       minWidth: 156,
     },
@@ -127,7 +127,7 @@ const refreshTable = () => {
 const onRemove = async (ids?: RowType[]) => {
   const records = ids || (gridApi.grid?.getCheckboxRecords() as RowType[]);
   if (records.length === 0) {
-    message.error($t('page.attachment.selectAttachment'));
+    message.error($t('attachment.selectAttachment'));
     return;
   }
   Modal.confirm({

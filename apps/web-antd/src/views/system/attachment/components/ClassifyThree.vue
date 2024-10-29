@@ -28,7 +28,7 @@ const fetch = (value: string) => {
 };
 
 const onCreate = () => {
-  formModalApi.setState({ title: $t('page.attachment.createClassify') });
+  formModalApi.setState({ title: $t('attachment.createClassify') });
   formModalApi.setData({
     update: false,
   });
@@ -36,7 +36,7 @@ const onCreate = () => {
 };
 
 const onUpdate = (row: ClassifyApi.Item) => {
-  formModalApi.setState({ title: $t('page.attachment.updateClassify') });
+  formModalApi.setState({ title: $t('attachment.updateClassify') });
   formModalApi.setData({
     values: {
       ...row,
@@ -63,7 +63,7 @@ const onRemove = (row: ClassifyApi.Item) => {
     :create-request="onCreate"
     :delete-request="onRemove"
     :get-request="fetch"
-    :title="$t('page.attachment.classify')"
+    :title="$t('attachment.classify')"
     :update-request="onUpdate"
     field-key="classifyId"
     field-name="classifyName"

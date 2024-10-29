@@ -1,0 +1,8 @@
+{
+  "dictName": "字典名称",
+  "dictType": "字典类型",
+  "status": "状态",
+  "remark": "备注",
+  "createType": "创建字典类型",
+  "updateType": "编辑字典类型"
+}

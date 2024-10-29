@@ -27,7 +27,7 @@ const formOptions: VbenFormProps = {
     {
       component: 'Input',
       fieldName: 'menuName',
-      label: $t('page.menu.menuName'),
+      label: $t('menu.menuName'),
     },
     {
       component: 'DictData',
@@ -36,7 +36,7 @@ const formOptions: VbenFormProps = {
         placeholder: '请选择状态',
       },
       fieldName: 'status',
-      label: $t('page.menu.status'),
+      label: $t('menu.status'),
     },
   ],
 };
@@ -46,7 +46,7 @@ const gridOptions: VxeGridProps<RowType> = {
     { title: '序号', type: 'seq', width: 50 },
     {
       field: 'menuName',
-      title: $t('page.menu.menuName'),
+      title: $t('menu.menuName'),
       treeNode: true,
       minWidth: 100,
     },
@@ -58,32 +58,32 @@ const gridOptions: VxeGridProps<RowType> = {
         },
       },
       field: 'menuType',
-      title: $t('page.menu.menuType'),
+      title: $t('menu.menuType'),
       minWidth: 100,
       formatter: 'formatEmpty',
     },
     {
       field: 'icon',
-      title: $t('page.menu.icon'),
+      title: $t('menu.icon'),
       minWidth: 100,
       formatter: 'formatEmpty',
       slots: { default: 'icon' },
     },
     {
       field: 'perms',
-      title: $t('page.menu.perms'),
+      title: $t('menu.perms'),
       minWidth: 100,
       formatter: 'formatEmpty',
     },
     {
       field: 'path',
-      title: $t('page.menu.path'),
+      title: $t('menu.path'),
       minWidth: 100,
       formatter: 'formatEmpty',
     },
     {
       field: 'component',
-      title: $t('page.menu.component'),
+      title: $t('menu.component'),
       minWidth: 100,
       formatter: 'formatEmpty',
     },
@@ -98,7 +98,7 @@ const gridOptions: VxeGridProps<RowType> = {
           unCheckedText: '否',
         } as CellTagProps,
       },
-      title: $t('page.menu.keepAlive'),
+      title: $t('menu.keepAlive'),
       minWidth: 100,
     },
     {
@@ -110,7 +110,7 @@ const gridOptions: VxeGridProps<RowType> = {
           unCheckedValue: true,
         } as CellTagProps,
       },
-      title: $t('page.menu.hideInMenu'),
+      title: $t('menu.hideInMenu'),
       minWidth: 100,
     },
     {
@@ -131,11 +131,11 @@ const gridOptions: VxeGridProps<RowType> = {
         },
       },
       field: 'status',
-      title: $t('page.menu.status'),
+      title: $t('menu.status'),
       // slots: { default: 'status' },
       minWidth: 100,
     },
-    { field: 'order', title: $t('page.menu.order'), minWidth: 100 },
+    { field: 'order', title: $t('menu.order'), minWidth: 100 },
     {
       cellRender: {
         name: 'TableAction',
@@ -212,7 +212,7 @@ const refreshTable = () => {
   gridApi.reload();
 };
 const onCreate = (parentId?: string) => {
-  formModalApi.setState({ title: $t('page.menu.createMenu') });
+  formModalApi.setState({ title: $t('menu.createMenu') });
   formModalApi.setData({
     values: {
       parentId,
@@ -222,7 +222,7 @@ const onCreate = (parentId?: string) => {
   formModalApi.open();
 };
 const onUpdate = (row: RowType) => {
-  formModalApi.setState({ title: $t('page.menu.updateMenu') });
+  formModalApi.setState({ title: $t('menu.updateMenu') });
   formModalApi.setData({
     values: { ...row },
     update: true,
@@ -234,7 +234,7 @@ const onUpdate = (row: RowType) => {
 const onRemove = async (ids?: RowType[]) => {
   const records = ids || (gridApi.grid?.getCheckboxRecords() as RowType[]);
   if (records.length === 0) {
-    message.error($t('page.menu.selectMenu'));
+    message.error($t('menu.selectMenu'));
     return;
   }
   Modal.confirm({

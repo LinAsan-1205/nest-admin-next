@@ -25,12 +25,12 @@ const formOptions: VbenFormProps = {
     {
       component: 'Input',
       fieldName: 'deptName',
-      label: $t('page.dept.deptName'),
+      label: $t('dept.deptName'),
     },
     {
       component: 'Input',
       fieldName: 'leader',
-      label: $t('page.dept.leader'),
+      label: $t('dept.leader'),
     },
     {
       component: 'DictData',
@@ -39,7 +39,7 @@ const formOptions: VbenFormProps = {
         placeholder: '请选择状态',
       },
       fieldName: 'status',
-      label: $t('page.dept.status'),
+      label: $t('dept.status'),
     },
   ],
 };
@@ -49,25 +49,25 @@ const gridOptions: VxeGridProps<RowType> = {
     { title: '序号', type: 'seq', width: 50 },
     {
       field: 'deptName',
-      title: $t('page.dept.deptName'),
+      title: $t('dept.deptName'),
       treeNode: true,
       minWidth: 100,
     },
     {
       field: 'leader',
-      title: $t('page.dept.leader'),
+      title: $t('dept.leader'),
       minWidth: 100,
       formatter: 'formatEmpty',
     },
     {
       field: 'email',
-      title: $t('page.dept.email'),
+      title: $t('dept.email'),
       minWidth: 100,
       formatter: 'formatEmpty',
     },
     {
       field: 'phone',
-      title: $t('page.dept.phone'),
+      title: $t('dept.phone'),
       minWidth: 100,
       formatter: 'formatEmpty',
     },
@@ -89,10 +89,10 @@ const gridOptions: VxeGridProps<RowType> = {
         },
       },
       field: 'status',
-      title: $t('page.dept.status'),
+      title: $t('dept.status'),
       minWidth: 100,
     },
-    { field: 'orderNum', title: $t('page.dept.orderNum'), minWidth: 100 },
+    { field: 'orderNum', title: $t('dept.orderNum'), minWidth: 100 },
     { slots: { default: 'action' }, title: '操作', minWidth: 100 },
   ],
   height: 'auto',
@@ -146,7 +146,7 @@ const onChangeStatus = async (checked: string, row: RowType) => {
 };
 
 const onCreate = (parentId?: string) => {
-  formModalApi.setState({ title: $t('page.dept.createDept') });
+  formModalApi.setState({ title: $t('dept.createDept') });
   formModalApi.setData({
     values: {
       parentId,
@@ -159,7 +159,7 @@ const onCreate = (parentId?: string) => {
 const onRemove = async (ids?: RowType[]) => {
   const records = ids || (gridApi.grid?.getCheckboxRecords() as RowType[]);
   if (records.length === 0) {
-    message.error($t('page.dept.selectDept'));
+    message.error($t('dept.selectDept'));
     return;
   }
   Modal.confirm({
@@ -173,7 +173,7 @@ const onRemove = async (ids?: RowType[]) => {
   });
 };
 const onUpdate = (row: RowType) => {
-  formModalApi.setState({ title: $t('page.dept.updateDept') });
+  formModalApi.setState({ title: $t('dept.updateDept') });
   formModalApi.setData({
     values: row,
     update: true,

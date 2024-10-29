@@ -31,5 +31,32 @@
   },
   "login": {
     "title": "登录日志"
-  }
+  },
+  "menuName": "菜单名称",
+  "menuId": "菜单ID",
+  "parentId": "上级菜单",
+  "order": "排序",
+  "redirect": "重定向",
+  "path": "路由地址",
+  "component": "组件路径",
+  "keepAlive": "路由缓存",
+  "hideInMenu": "显示菜单",
+  "hideInTab": "标签页",
+  "hideInBreadcrumb": "面包屑",
+  "hideChildrenInMenu": "子菜单",
+  "badge": "徽标",
+  "badgeType": "徽标类型",
+  "iframeSrc": "内嵌页面路径",
+  "link": "外链",
+  "badgeVariants": "徽标颜色",
+  "activePath": "当前激活的菜单",
+  "status": "状态",
+  "name": "组件名称",
+  "perms": "权限标识",
+  "icon": "图标",
+  "remark": "备注",
+  "menuType": "菜单类型",
+  "createMenu": "创建菜单",
+  "updateMenu": "编辑菜单",
+  "selectMenu": "请选择菜单"
 }

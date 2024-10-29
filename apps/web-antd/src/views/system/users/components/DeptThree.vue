@@ -60,7 +60,7 @@ onMounted(async () => {
     class="mb-4 flex-none md:mb-0 md:w-[250px]"
   >
     <div class="mb-2 flex items-center">
-      <h3 class="flex-1">{{ $t('page.dept.category') }}</h3>
+      <h3 class="flex-1">{{ $t('dept.category') }}</h3>
       <a-tooltip :title="$t('page.icon.refresh')">
         <a-button size="small" type="text" @click="refresh">
           <RefreshOutlined />

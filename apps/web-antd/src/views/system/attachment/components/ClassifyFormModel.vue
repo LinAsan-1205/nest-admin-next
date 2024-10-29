@@ -41,7 +41,7 @@ const [Form, formApi] = useVbenForm({
       },
       formItemClass: 'col-span-2',
       fieldName: 'classifyName',
-      label: $t('page.attachment.classifyName'),
+      label: $t('attachment.classifyName'),
       rules: 'required',
     },
     {
@@ -52,7 +52,7 @@ const [Form, formApi] = useVbenForm({
       },
       formItemClass: 'col-span-2',
       fieldName: 'remark',
-      label: $t('page.attachment.remark'),
+      label: $t('attachment.remark'),
     },
   ],
   showDefaultActions: false,

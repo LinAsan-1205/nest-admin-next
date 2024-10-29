@@ -49,7 +49,7 @@ const [Form, formApi] = useVbenForm({
       defaultValue: '',
       formItemClass: 'col-span-2',
       fieldName: 'parentId',
-      label: $t('page.dept.parentName'),
+      label: $t('dept.parentName'),
     },
     {
       component: 'Input',
@@ -57,7 +57,7 @@ const [Form, formApi] = useVbenForm({
         placeholder: '请输入',
       },
       fieldName: 'deptName',
-      label: $t('page.dept.deptName'),
+      label: $t('dept.deptName'),
       rules: z.string().min(2, { message: '最少输入2个字符' }),
     },
 
@@ -68,7 +68,7 @@ const [Form, formApi] = useVbenForm({
       },
       defaultValue: 0,
       fieldName: 'orderNum',
-      label: $t('page.dept.orderNum'),
+      label: $t('dept.orderNum'),
     },
     {
       component: 'Input',
@@ -76,7 +76,7 @@ const [Form, formApi] = useVbenForm({
         placeholder: '请输入',
       },
       fieldName: 'leader',
-      label: $t('page.dept.leader'),
+      label: $t('dept.leader'),
       rules: 'required',
     },
     {
@@ -85,7 +85,7 @@ const [Form, formApi] = useVbenForm({
         placeholder: '请输入',
       },
       fieldName: 'phone',
-      label: $t('page.dept.phone'),
+      label: $t('dept.phone'),
       rules: z
         .string()
         .min(11, { message: '手机号格式不正确' })
@@ -102,7 +102,7 @@ const [Form, formApi] = useVbenForm({
         placeholder: '请输入',
       },
       fieldName: 'email',
-      label: $t('page.users.email'),
+      label: $t('dept.email'),
       rules: z.string().email('请输入正确的邮箱').nullable().optional(),
     },
     {
@@ -114,7 +114,7 @@ const [Form, formApi] = useVbenForm({
       },
       defaultValue: '0',
       fieldName: 'status',
-      label: $t('page.dept.status'),
+      label: $t('dept.status'),
       rules: 'selectRequired',
     },
 
@@ -126,7 +126,7 @@ const [Form, formApi] = useVbenForm({
       },
       formItemClass: 'col-span-2',
       fieldName: 'remark',
-      label: $t('page.dept.remark'),
+      label: $t('dept.remark'),
     },
   ],
   showDefaultActions: false,

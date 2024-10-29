@@ -28,7 +28,7 @@ const fetch = (searchValue: string) => {
 };
 
 const onCreate = () => {
-  formModalApi.setState({ title: $t('page.dictType.createType') });
+  formModalApi.setState({ title: $t('dictType.createType') });
   formModalApi.setData({
     update: false,
   });
@@ -36,7 +36,7 @@ const onCreate = () => {
 };
 
 const onUpdate = (row: DictTypeApi.Item) => {
-  formModalApi.setState({ title: $t('page.dictType.updateType') });
+  formModalApi.setState({ title: $t('dictType.updateType') });
   formModalApi.setData({
     values: {
       ...row,
@@ -63,7 +63,7 @@ const fetchData = async () => {
     :create-request="onCreate"
     :delete-request="onRemove"
     :get-request="fetch"
-    :title="$t('page.dictType.dictType')"
+    :title="$t('dictType.dictType')"
     :update-request="onUpdate"
     field-key="dictType"
     field-name="dictName"

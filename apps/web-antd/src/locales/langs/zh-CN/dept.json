@@ -1,0 +1,15 @@
+{
+  "category": "部门分类",
+  "deptName": "部门名称",
+  "orderNum": "排序",
+  "email": "邮箱",
+  "leader": "负责人",
+  "phone": "手机",
+  "status": "状态",
+  "remark": "备注",
+  "createDept": "创建部门",
+  "createTime": "创建时间",
+  "parentName": "上级部门",
+  "selectDept": "请选择部门",
+  "updateDept": "编辑部门"
+}

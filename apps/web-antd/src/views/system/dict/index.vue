@@ -30,7 +30,7 @@ const formOptions: VbenFormProps = {
     {
       component: 'Input',
       fieldName: 'dictLabel',
-      label: $t('page.dictData.dictLabel'),
+      label: $t('dictData.dictLabel'),
     },
     {
       component: 'Select',
@@ -49,7 +49,7 @@ const formOptions: VbenFormProps = {
         placeholder: '请选择状态',
       },
       fieldName: 'status',
-      label: $t('page.dictData.status'),
+      label: $t('dictData.status'),
     },
   ],
 };
@@ -63,35 +63,35 @@ const gridOptions: VxeGridProps<RowType> = {
     { title: '序号', type: 'seq', width: 50 },
     {
       field: 'dictLabel',
-      title: $t('page.dictData.dictLabel'),
+      title: $t('dictData.dictLabel'),
       minWidth: 100,
     },
     {
       field: 'dictValue',
-      title: $t('page.dictData.dictValue'),
+      title: $t('dictData.dictValue'),
       minWidth: 100,
       formatter: 'formatEmpty',
     },
     {
       field: 'dictSort',
-      title: $t('page.dictData.dictSort'),
+      title: $t('dictData.dictSort'),
       minWidth: 100,
     },
     {
       field: 'remark',
-      title: $t('page.dictData.remark'),
+      title: $t('dictData.remark'),
       minWidth: 100,
       formatter: 'formatEmpty',
     },
     {
       field: 'status',
-      title: $t('page.dept.status'),
+      title: $t('dictData.status'),
       slots: { default: 'status' },
       minWidth: 100,
     },
     {
       field: 'createTime',
-      title: $t('page.dept.createTime'),
+      title: $t('dictData.createTime'),
       formatter: 'formatDateTime',
       minWidth: 156,
     },
@@ -138,10 +138,10 @@ const onChangeStatus = async (checked: string, row: RowType) => {
 
 const onCreate = () => {
   if (dictType.value === '') {
-    message.error($t('page.dictData.selectType'));
+    message.error($t('dictData.selectType'));
     return;
   }
-  formModalApi.setState({ title: $t('page.dictData.createData') });
+  formModalApi.setState({ title: $t('dictData.createData') });
   formModalApi.setData({
     values: {
       dictType: dictType.value,
@@ -153,10 +153,10 @@ const onCreate = () => {
 
 const onUpdate = (row: RowType) => {
   if (dictType.value === '') {
-    message.error($t('page.dictData.selectType'));
+    message.error($t('dictData.selectType'));
     return;
   }
-  formModalApi.setState({ title: $t('page.dictData.updateData') });
+  formModalApi.setState({ title: $t('dictData.updateData') });
   formModalApi.setData({
     values: { ...row },
     update: true,
@@ -167,12 +167,12 @@ const onUpdate = (row: RowType) => {
 
 const onRemove = async (ids?: RowType[]) => {
   if (dictType.value === '') {
-    message.error($t('page.dictData.selectType'));
+    message.error($t('dictData.selectType'));
     return;
   }
   const records = ids || (gridApi.grid?.getCheckboxRecords() as RowType[]);
   if (records.length === 0) {
-    message.error($t('page.dictData.selectData'));
+    message.error($t('dictData.selectData'));
     return;
   }
   Modal.confirm({

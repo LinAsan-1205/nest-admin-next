@@ -48,7 +48,7 @@ const [Form, formApi] = useVbenForm({
       formItemClass: 'col-span-2',
       defaultValue: 'M',
       fieldName: 'menuType',
-      label: $t('page.menu.menuType'),
+      label: $t('menu.menuType'),
       rules: 'required',
     },
     {
@@ -65,7 +65,7 @@ const [Form, formApi] = useVbenForm({
       defaultValue: '',
       formItemClass: 'col-span-2',
       fieldName: 'parentId',
-      label: $t('page.menu.parentId'),
+      label: $t('menu.parentId'),
     },
     {
       component: 'Input',
@@ -80,7 +80,7 @@ const [Form, formApi] = useVbenForm({
       },
       formItemClass: 'col-span-2',
       fieldName: 'icon',
-      label: $t('page.menu.icon'),
+      label: $t('menu.icon'),
     },
     {
       component: 'Input',
@@ -89,7 +89,7 @@ const [Form, formApi] = useVbenForm({
       },
       formItemClass: 'col-span-2',
       fieldName: 'menuName',
-      label: $t('page.menu.menuName'),
+      label: $t('menu.menuName'),
       rules: 'required',
     },
     {
@@ -105,7 +105,7 @@ const [Form, formApi] = useVbenForm({
       },
       formItemClass: 'col-span-2',
       fieldName: 'path',
-      label: $t('page.menu.path'),
+      label: $t('menu.path'),
       rules: 'required',
     },
     {
@@ -121,7 +121,7 @@ const [Form, formApi] = useVbenForm({
       },
       formItemClass: 'col-span-2',
       fieldName: 'redirect',
-      label: $t('page.menu.redirect'),
+      label: $t('menu.redirect'),
     },
     {
       component: 'Input',
@@ -136,7 +136,7 @@ const [Form, formApi] = useVbenForm({
       },
       formItemClass: 'col-span-2',
       fieldName: 'perms',
-      label: $t('page.menu.perms'),
+      label: $t('menu.perms'),
     },
     {
       component: 'Input',
@@ -151,7 +151,7 @@ const [Form, formApi] = useVbenForm({
       },
       formItemClass: 'col-span-2',
       fieldName: 'component',
-      label: $t('page.menu.component'),
+      label: $t('menu.component'),
       rules: 'required',
       renderComponentContent: () => ({
         prefix: () => '#/views/',
@@ -172,7 +172,7 @@ const [Form, formApi] = useVbenForm({
       formItemClass: 'col-span-2',
       help: '组件名称:(类似唯一的key,后续操作路由可以根据key来跳转等操作)',
       fieldName: 'name',
-      label: $t('page.menu.name'),
+      label: $t('menu.name'),
     },
     {
       component: 'Input',
@@ -188,7 +188,7 @@ const [Form, formApi] = useVbenForm({
       help: '用于配置外链跳转路径，会在新窗口打开',
       formItemClass: 'col-span-2',
       fieldName: 'link',
-      label: $t('page.menu.link'),
+      label: $t('menu.link'),
     },
     {
       component: 'Input',
@@ -204,7 +204,7 @@ const [Form, formApi] = useVbenForm({
       help: '用于配置内嵌页面的 iframe 地址，设置后会在当前页面内嵌对应的页面',
       formItemClass: 'col-span-2',
       fieldName: 'iframeSrc',
-      label: $t('page.menu.iframeSrc'),
+      label: $t('menu.iframeSrc'),
     },
     {
       component: 'Input',
@@ -220,7 +220,7 @@ const [Form, formApi] = useVbenForm({
       help: '用于配置当前激活的菜单，有时候页面没有显示在菜单内，需要激活父级菜单时使用',
       formItemClass: 'col-span-2',
       fieldName: 'activePath',
-      label: $t('page.menu.activePath'),
+      label: $t('menu.activePath'),
     },
     {
       component: 'InputNumber',
@@ -230,7 +230,7 @@ const [Form, formApi] = useVbenForm({
       formItemClass: 'col-span-2',
       defaultValue: 0,
       fieldName: 'order',
-      label: $t('page.menu.order'),
+      label: $t('menu.order'),
     },
     {
       component: 'Input',
@@ -245,7 +245,7 @@ const [Form, formApi] = useVbenForm({
       },
       help: '用于配置页面的徽标，会在菜单显示',
       fieldName: 'badge',
-      label: $t('page.menu.badge'),
+      label: $t('menu.badge'),
     },
     {
       component: 'DictData',
@@ -264,7 +264,7 @@ const [Form, formApi] = useVbenForm({
       defaultValue: 'dot',
       help: '用于配置页面的徽标类型',
       fieldName: 'badgeType',
-      label: $t('page.menu.badgeType'),
+      label: $t('menu.badgeType'),
     },
     {
       component: 'DictData',
@@ -282,7 +282,7 @@ const [Form, formApi] = useVbenForm({
       defaultValue: 'default',
       help: '用于配置页面的徽标颜色',
       fieldName: 'badgeVariants',
-      label: $t('page.menu.badgeVariants'),
+      label: $t('menu.badgeVariants'),
     },
     {
       component: 'Switch',
@@ -303,7 +303,7 @@ const [Form, formApi] = useVbenForm({
       defaultValue: false,
       fieldName: 'keepAlive',
       help: '开启后会对路由的内容进行缓存',
-      label: $t('page.menu.keepAlive'),
+      label: $t('menu.keepAlive'),
     },
     {
       component: 'Switch',
@@ -324,7 +324,7 @@ const [Form, formApi] = useVbenForm({
       defaultValue: false,
       help: '当前路由在菜单中不展现',
       fieldName: 'hideInMenu',
-      label: $t('page.menu.hideInMenu'),
+      label: $t('menu.hideInMenu'),
     },
     {
       component: 'Switch',
@@ -345,7 +345,7 @@ const [Form, formApi] = useVbenForm({
       defaultValue: false,
       help: '当前路由在面包屑中不展现',
       fieldName: 'hideInBreadcrumb',
-      label: $t('page.menu.hideInBreadcrumb'),
+      label: $t('menu.hideInBreadcrumb'),
     },
     {
       component: 'Switch',
@@ -366,7 +366,7 @@ const [Form, formApi] = useVbenForm({
       defaultValue: false,
       help: '当前路由在标签页不展现',
       fieldName: 'hideInTab',
-      label: $t('page.menu.hideInTab'),
+      label: $t('menu.hideInTab'),
     },
     {
       component: 'Switch',
@@ -387,7 +387,7 @@ const [Form, formApi] = useVbenForm({
       defaultValue: false,
       help: '隐藏当前路由的子菜单',
       fieldName: 'hideChildrenInMenu',
-      label: $t('page.menu.hideChildrenInMenu'),
+      label: $t('menu.hideChildrenInMenu'),
     },
     {
       component: 'DictData',
@@ -399,7 +399,7 @@ const [Form, formApi] = useVbenForm({
       defaultValue: '0',
       fieldName: 'status',
       help: '用于当前数据是否显示',
-      label: $t('page.menu.status'),
+      label: $t('menu.status'),
     },
     {
       component: 'Textarea',
@@ -409,7 +409,7 @@ const [Form, formApi] = useVbenForm({
       },
       formItemClass: 'col-span-2',
       fieldName: 'remark',
-      label: $t('page.menu.remark'),
+      label: $t('menu.remark'),
     },
   ],
   showDefaultActions: false,
