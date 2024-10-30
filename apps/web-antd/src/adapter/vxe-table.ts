@@ -33,6 +33,11 @@ setupVbenVxeTable({
         pagerConfig: {
           pageSize: 30,
         },
+        toolbarConfig: {
+          custom: true,
+          refresh: true,
+          zoom: true,
+        },
         round: true,
         showOverflow: true,
         size: 'small',
