@@ -2,6 +2,10 @@ import { acceptHMRUpdate, defineStore } from 'pinia';
 
 interface BasicUserInfo {
   avatar: string;
+  dept?: {
+    deptId: number;
+    deptName: string;
+  };
   email: string;
   homePath?: string;
   nickName: string;

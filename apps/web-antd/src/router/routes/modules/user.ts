@@ -12,14 +12,14 @@ const routes: RouteRecordRaw[] = [
       icon: 'ant-design:user-outlined',
       keepAlive: true,
       order: 1000,
-      title: $t('page.users.profile'),
+      title: $t('users.profile.title'),
     },
     name: 'Account',
     path: '/account/settings',
     children: [
       {
         meta: {
-          title: $t('page.users.profile'),
+          title: $t('users.profile.title'),
         },
         name: 'AccountSettings',
         path: '/account/settings',

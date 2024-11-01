@@ -1,5 +1,4 @@
 {
-  "profile": "个人信息",
   "avatar": "头像",
   "userName": "用户名",
   "nickName": "昵称",
@@ -16,5 +15,12 @@
   "editUser": "编辑用户",
   "dept": "所属部门",
   "sex": "性别",
-  "deptName": "所属部门"
+  "deptName": "所属部门",
+  "profile": {
+    "title": "个人信息",
+    "description": "用于设置个人账户",
+    "basic_information": "基础信息",
+    "security_settings": "安全设置",
+    "third_party_accounts": "第三方账号"
+  }
 }
