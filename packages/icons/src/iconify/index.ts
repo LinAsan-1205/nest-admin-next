@@ -21,3 +21,8 @@ export const RefreshOutlined = createIconifyIcon('ant-design:sync-outlined');
 export const PlusOutlined = createIconifyIcon('ant-design:plus-outlined');
 
 export const UploadOutlined = createIconifyIcon('ant-design:upload-outlined');
+
+export const UploadDeleteOutlined = createIconifyIcon(
+  'ant-design:delete-outlined',
+);
+export const PreviewOutlined = createIconifyIcon('ant-design:eye-outlined');

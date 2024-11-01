@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 
+import { PreviewOutlined, UploadDeleteOutlined } from '@vben/icons';
 import { useAccessStore } from '@vben/stores';
 import { openWindow } from '@vben/utils';
 
@@ -9,7 +10,7 @@ import { type UploadFile } from 'ant-design-vue/es/upload/interface';
 
 import { apiURL } from '#/api/core/request';
 
-import { checkFileType } from './helper';
+import { checkFileType, getInitialValue } from './helper';
 
 interface UploadFileProps {
   maxCount?: number;
@@ -18,6 +19,8 @@ interface UploadFileProps {
   accept?: string[];
   name?: string;
   disabled?: boolean;
+  height?: number;
+  width?: number;
 }
 
 const {
@@ -27,6 +30,8 @@ const {
   maxSize = 5,
   name = 'file',
   disabled = false,
+  height = 100,
+  width = 100,
 } = defineProps<UploadFileProps>();
 
 const action = `${apiURL}/upload/singleFile`;
@@ -36,16 +41,6 @@ const modelValue = defineModel<string>({
 });
 
 const dataList = ref<UploadFile[]>([]);
-
-function getInitialValue(value: UploadFile[]) {
-  if (!value || !Array.isArray(value) || value.length === 0) {
-    return '';
-  }
-  if (value.length === 1 && value[0]) {
-    return value[0].url as string;
-  }
-  return value.map((item) => item.url as string).join(',');
-}
 
 const fileList = computed({
   get: () => dataList.value,
@@ -141,6 +136,24 @@ watch(
       <div v-if="showUploadIcon">
         <div class="mt-4 text-sm">{{ helpText }}</div>
       </div>
+      <template #itemRender="{ file }">
+        <a-image :height :src="file.url" :width>
+          <template #previewMask>
+            <a-space>
+              <PreviewOutlined class="size-4 outline-none" />
+              <a-popconfirm
+                cancel-text="取消"
+                ok-text="确认"
+                placement="right"
+                title="确认删除嘛?"
+                @confirm="handleRemove(file)"
+              >
+                <UploadDeleteOutlined class="size-4 outline-none" @click.stop />
+              </a-popconfirm>
+            </a-space>
+          </template>
+        </a-image>
+      </template>
     </a-upload>
   </div>
 </template>
