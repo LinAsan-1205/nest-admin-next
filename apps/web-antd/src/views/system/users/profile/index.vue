@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 import { Page } from '@vben/common-ui';
 import { useUserStore } from '@vben/stores';
@@ -13,6 +13,15 @@ const bodyStyle = {
 };
 
 const { userInfo } = useUserStore();
+
+const avatar = computed({
+  get: () => userInfo?.avatar,
+  set: (value) => {
+    if (value && userInfo) {
+      userInfo.avatar = value;
+    }
+  },
+});
 
 const segmented = ref('basic');
 const segmentedData = ref([
@@ -40,7 +49,12 @@ const segmentedData = ref([
       <a-card :body-style="bodyStyle" :bordered class="md:basis-1/4">
         <div class="flex flex-col px-2 py-6">
           <div class="flex justify-center py-4">
-            <UploadFile :max-count="1" class="h-[100px]" help-text="上传图片" />
+            <UploadFile
+              v-model="avatar"
+              :max-count="1"
+              class="h-[100px]"
+              help-text="上传图片"
+            />
           </div>
           <div class="px-2">
             <a-descriptions :column="1" size="small">

@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import type { UploadProps } from 'ant-design-vue';
-
-import { computed } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 import { useAccessStore } from '@vben/stores';
 import { openWindow } from '@vben/utils';
 
-import { message } from 'ant-design-vue';
+import { message, Upload } from 'ant-design-vue';
+import { type UploadFile } from 'ant-design-vue/es/upload/interface';
 
 import { apiURL } from '#/api/core/request';
 
@@ -32,8 +31,28 @@ const {
 
 const action = `${apiURL}/upload/singleFile`;
 
-const modelValue = defineModel<UploadProps['fileList']>({
-  default: () => [],
+const modelValue = defineModel<string>({
+  default: () => '',
+});
+
+const dataList = ref<UploadFile[]>([]);
+
+function getInitialValue(value: UploadFile[]) {
+  if (!value || !Array.isArray(value) || value.length === 0) {
+    return '';
+  }
+  if (value.length === 1 && value[0]) {
+    return value[0].url as string;
+  }
+  return value.map((item) => item.url as string).join(',');
+}
+
+const fileList = computed({
+  get: () => dataList.value,
+  set: (value) => {
+    modelValue.value = getInitialValue(value);
+    dataList.value = value;
+  },
 });
 
 const accessStore = useAccessStore();
@@ -45,20 +64,23 @@ const headers = computed(() => {
 });
 
 const showUploadIcon = computed(() => {
-  if (!modelValue.value) {
+  if (!fileList.value) {
     return false;
   }
-  return modelValue.value.length < maxCount;
+  return fileList.value.length < maxCount;
 });
 
+// TODO 上传之前需要做压缩
 const beforeUpload = (file: File) => {
   const isFile = checkFileType(file, accept);
   if (!isFile) {
     message.error(`只能上传 ${accept.join(', ')} 格式的文件!`);
+    return Upload.LIST_IGNORE;
   }
   const isLt2M = file.size / 1024 / 1024 < maxSize;
   if (!isLt2M) {
     message.error(`文件大小不能超过 ${maxSize}MB!`);
+    return Upload.LIST_IGNORE;
   }
   return isFile && isLt2M;
 };
@@ -74,12 +96,37 @@ const handleChange = (info: any) => {
     message.error(`${info.file.name} 上传失败`);
   }
 };
+
+const handleRemove = (file: UploadFile) => {
+  const index = dataList.value.findIndex((item) => item.uid === file.uid);
+  if (index !== -1) {
+    dataList.value.splice(index, 1);
+    return true;
+  }
+  return false;
+};
+
+watch(
+  () => modelValue.value,
+  (value) => {
+    if (value) {
+      dataList.value = Array.isArray(value)
+        ? value.map((url) => ({ url, name: url, uid: url }))
+        : [{ url: value, uid: value, name: value }];
+    } else {
+      dataList.value = [];
+    }
+  },
+  {
+    immediate: true,
+  },
+);
 </script>
 
 <template>
   <div class="flex">
     <a-upload
-      v-model:file-list="modelValue"
+      v-model:file-list="fileList"
       :action="action"
       :before-upload="beforeUpload"
       :disabled="disabled"
@@ -89,6 +136,7 @@ const handleChange = (info: any) => {
       list-type="picture-card"
       @change="handleChange"
       @preview="handlePreview"
+      @remove="handleRemove"
     >
       <div v-if="showUploadIcon">
         <div class="mt-4 text-sm">{{ helpText }}</div>
