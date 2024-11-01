@@ -127,7 +127,7 @@ const gridOptions: VxeGridProps<RowType> = {
             try {
               await changeStatus({ status: checked, id: row.userId });
               row.status = checked;
-              message.success($t('page.apiSuccess'));
+              message.success($t('api.success'));
             } catch {
               row.status = checked === '0' ? '1' : '0';
             }
