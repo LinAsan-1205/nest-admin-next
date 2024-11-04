@@ -26,7 +26,7 @@ const menus = computed(() => [
       router.push({ name: 'AccountSettings' });
     },
     icon: UserProfile,
-    text: $t('users.profile'),
+    text: $t('users.profile.title'),
   },
 ]);
 

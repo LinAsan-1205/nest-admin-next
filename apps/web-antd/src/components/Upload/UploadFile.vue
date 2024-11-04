@@ -90,6 +90,9 @@ const handleChange = (info: any) => {
   if (info.file.status === 'error') {
     message.error(`${info.file.name} 上传失败`);
   }
+  if (info.file.status === 'done') {
+    info.file.url = info.file.response.data.url;
+  }
 };
 
 const handleRemove = (file: UploadFile) => {
