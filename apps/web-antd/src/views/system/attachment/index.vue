@@ -46,8 +46,8 @@ const formOptions: VbenFormProps = {
 };
 
 const gridOptions: VxeGridProps<RowType> = {
-  checkboxConfig: {
-    highlight: true,
+  pagerConfig: {
+    pageSize: 10,
   },
   columns: [
     { type: 'checkbox', width: 50 },
@@ -55,7 +55,7 @@ const gridOptions: VxeGridProps<RowType> = {
       slots: { default: 'preview' },
       field: 'preview',
       title: $t('attachment.preview'),
-      minWidth: 100,
+      width: 130,
     },
     {
       field: 'objectName',
@@ -102,6 +102,7 @@ const gridOptions: VxeGridProps<RowType> = {
   ],
   height: 'auto',
   proxyConfig: {
+    enabled: false,
     ajax: {
       query: async ({ page }, formValues) => {
         return await getAttachmentList({
@@ -112,9 +113,6 @@ const gridOptions: VxeGridProps<RowType> = {
         });
       },
     },
-  },
-  sortConfig: {
-    multiple: true,
   },
 };
 
