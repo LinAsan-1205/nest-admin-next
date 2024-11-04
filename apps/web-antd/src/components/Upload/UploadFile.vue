@@ -140,7 +140,7 @@ watch(
         <div class="mt-4 text-sm">{{ helpText }}</div>
       </div>
       <template #itemRender="{ file }">
-        <a-image :height :src="file.url" :width>
+        <a-image :height :src="file.url" :width class="rounded-[4px]">
           <template #previewMask>
             <a-space>
               <PreviewOutlined class="size-4 outline-none" />
