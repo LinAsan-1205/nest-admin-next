@@ -18,8 +18,11 @@ export const overridesPreferences = defineOverridesPreferences({
   theme: {
     builtinType: 'default',
     mode: 'light',
-    semiDarkSidebar: true,
+    semiDarkSidebar: false,
     radius: '0.25',
+  },
+  sidebar: {
+    width: 200,
   },
   breadcrumb: {
     showHome: true,
