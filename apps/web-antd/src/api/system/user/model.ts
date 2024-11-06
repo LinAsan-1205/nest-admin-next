@@ -70,6 +70,6 @@ export declare namespace UserApi {
   >;
 
   export type BasicInformationParams = Partial<
-    Pick<Item, 'nickName' | 'sex' | 'signed' | 'userId'>
+    Pick<Item, 'avatar' | 'nickName' | 'sex' | 'signed'>
   >;
 }

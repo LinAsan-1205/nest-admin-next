@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, h, ref } from 'vue';
 
 import { Page } from '@vben/common-ui';
 import { useUserStore } from '@vben/stores';
 
 import { $t } from '#/locales';
 
+import Accounts from './components/Accounts.vue';
 import Basic from './components/Basic.vue';
+import Security from './components/Security.vue';
 
 const bordered = false;
 
@@ -30,17 +32,17 @@ const segmentedData = ref([
   {
     label: $t('users.profile.basic_information'),
     value: 'basic',
-    component: Basic,
+    component: h(Basic),
   },
   {
     label: $t('users.profile.security_settings'),
     value: 'security',
-    component: Basic,
+    component: h(Security),
   },
   {
     label: $t('users.profile.third_party_accounts'),
     value: 'accounts',
-    component: Basic,
+    component: h(Accounts),
   },
 ]);
 const segmentedComponent = computed(
