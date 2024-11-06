@@ -16,6 +16,7 @@
   "dept": "所属部门",
   "sex": "性别",
   "deptName": "所属部门",
+  "signed": "个性签名",
   "profile": {
     "title": "个人信息",
     "description": "用于设置个人账户",

@@ -50,4 +50,10 @@ export async function deleteUser(ids: string) {
   return requestClient.delete(`/users/${ids}`);
 }
 
+export async function updateBasicInformation(
+  data: UserApi.BasicInformationParams,
+) {
+  return requestClient.put('/users/basic/information', data);
+}
+
 export { type UserApi };

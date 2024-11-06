@@ -12,7 +12,8 @@ interface BasicUserInfo {
   phone: string;
   roles: string[];
   sex: string;
-  userId: number;
+  signed: string;
+  userId: string;
   userName: string;
   userTypeName: string;
 }

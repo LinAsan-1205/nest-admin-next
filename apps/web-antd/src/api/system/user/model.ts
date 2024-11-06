@@ -36,24 +36,40 @@ export declare namespace UserApi {
     userType: string;
     userTypeDisable: boolean;
     userTypeName: string;
-    password?: string;
+    password: string;
+    signed: string;
   }
 
   export type List = Item[];
 
-  export type CreateParams = Pick<
+  export type Optional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+
+  export type CreateParams = Optional<
     Item,
     | 'avatar'
-    | 'deptId'
     | 'email'
+    | 'loginDate'
+    | 'loginIp'
     | 'nickName'
-    | 'password'
     | 'phone'
     | 'remark'
-    | 'sex'
-    | 'status'
-    | 'userName'
+    | 'signed'
+    | 'userId'
   >;
 
-  export type UpdateParams = Partial<CreateParams>;
+  export type UpdateParams = Optional<
+    Item,
+    | 'avatar'
+    | 'email'
+    | 'loginDate'
+    | 'loginIp'
+    | 'nickName'
+    | 'phone'
+    | 'remark'
+    | 'signed'
+  >;
+
+  export type BasicInformationParams = Partial<
+    Pick<Item, 'nickName' | 'sex' | 'signed' | 'userId'>
+  >;
 }

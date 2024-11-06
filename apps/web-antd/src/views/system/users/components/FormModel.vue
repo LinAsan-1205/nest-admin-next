@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import type { UploadProps } from 'ant-design-vue';
-
 import { onMounted, ref } from 'vue';
 
 import { useVbenModal, z } from '@vben/common-ui';
@@ -24,7 +22,7 @@ const updateTheStatus = ref<boolean>(false);
 
 const userId = ref<string>();
 
-const avatar = ref<UploadProps['fileList']>([]);
+const avatar = ref<string>('');
 
 const [Form, formApi] = useVbenForm({
   commonConfig: {
@@ -136,7 +134,16 @@ const [Form, formApi] = useVbenForm({
       label: $t('users.status'),
       rules: 'selectRequired',
     },
-
+    {
+      component: 'Textarea',
+      componentProps: {
+        placeholder: '请输入',
+        autoSize: { minRows: 3, maxRows: 5 },
+      },
+      formItemClass: 'col-span-2',
+      fieldName: 'signed',
+      label: $t('users.signed'),
+    },
     {
       component: 'Textarea',
       componentProps: {
@@ -153,13 +160,7 @@ const [Form, formApi] = useVbenForm({
 
 const setAvatar = (url: string) => {
   if (!url) return;
-  avatar.value = [
-    {
-      uid: '-1',
-      name: 'avatar.png',
-      url,
-    },
-  ];
+  avatar.value = url;
 };
 
 const [Modal, modalApi] = useVbenModal({
@@ -214,17 +215,16 @@ const [Modal, modalApi] = useVbenModal({
 });
 
 async function onSubmit(values: Record<string, any>) {
-  const data = values as UserApi.CreateParams;
   const params = {
-    ...data,
-    avatar: avatar.value?.[0]?.url,
+    ...values,
+    avatar: avatar.value,
   };
   const messageContent = updateTheStatus.value
     ? $t('api.editSuccess')
     : $t('api.createSuccess');
   await (updateTheStatus.value
-    ? updateUser(userId.value as string, params)
-    : createUser(params));
+    ? updateUser(userId.value as string, params as UserApi.UpdateParams)
+    : createUser(params as UserApi.CreateParams));
   message.success(messageContent);
   modalApi.close();
   emit('refresh');

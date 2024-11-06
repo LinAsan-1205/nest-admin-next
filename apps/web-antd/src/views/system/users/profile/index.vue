@@ -6,6 +6,8 @@ import { useUserStore } from '@vben/stores';
 
 import { $t } from '#/locales';
 
+import Basic from './components/Basic.vue';
+
 const bordered = false;
 
 const bodyStyle = {
@@ -28,16 +30,24 @@ const segmentedData = ref([
   {
     label: $t('users.profile.basic_information'),
     value: 'basic',
+    component: Basic,
   },
   {
     label: $t('users.profile.security_settings'),
     value: 'security',
+    component: Basic,
   },
   {
     label: $t('users.profile.third_party_accounts'),
     value: 'accounts',
+    component: Basic,
   },
 ]);
+const segmentedComponent = computed(
+  () =>
+    segmentedData.value.find((item) => item.value === segmented.value)
+      ?.component,
+);
 </script>
 
 <template>
@@ -80,6 +90,9 @@ const segmentedData = ref([
       <a-card :body-style="bodyStyle" :bordered class="flex-1">
         <div class="flex flex-col gap-2 p-2">
           <a-segmented v-model:value="segmented" :options="segmentedData" />
+        </div>
+        <div class="mt-2 px-2">
+          <component :is="segmentedComponent" />
         </div>
       </a-card>
     </div>
