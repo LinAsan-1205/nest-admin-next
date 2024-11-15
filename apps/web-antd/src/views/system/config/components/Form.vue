@@ -93,6 +93,10 @@ const [Form, formApi] = useVbenForm({
             value: 'rate',
           },
           {
+            label: '文件上传',
+            value: 'upload',
+          },
+          {
             label: '字典下拉选择器',
             value: 'dictData',
           },

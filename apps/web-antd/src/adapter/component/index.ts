@@ -39,6 +39,7 @@ import {
 import DictData from '#/components/Api/DictData.vue';
 import IconPicker from '#/components/IconPicker/index.vue';
 import MonacoEditor from '#/components/MonacoEditor/MonacoEditor.vue';
+import UploadFile from '#/components/Upload/UploadFile.vue';
 
 const withDefaultPlaceholder = <T extends Component>(
   component: T,
@@ -77,6 +78,7 @@ export type ComponentType =
   | 'TimePicker'
   | 'TreeSelect'
   | 'Upload'
+  | 'UploadFile'
   | BaseFormComponentType;
 
 async function initComponentAdapter() {
@@ -116,6 +118,7 @@ async function initComponentAdapter() {
     DictData,
     MonacoEditor,
     IconPicker,
+    UploadFile,
   };
 
   // 将组件注册到全局共享状态中

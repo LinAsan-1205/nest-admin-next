@@ -23,6 +23,11 @@ interface UploadFileProps {
   width?: number;
 }
 
+defineOptions({
+  name: 'UploadFile',
+  inheritAttrs: false,
+});
+
 const {
   maxCount = 5,
   helpText = '请上传',
@@ -36,13 +41,13 @@ const {
 
 const action = `${apiURL}/upload/singleFile`;
 
-const modelValue = defineModel<string>({
+const modelValue = defineModel<string>('value', {
   default: () => '',
 });
 
 const dataList = ref<UploadFile[]>([]);
 
-const fileList = computed({
+const files = computed({
   get: () => dataList.value,
   set: (value) => {
     modelValue.value = getInitialValue(value);
@@ -59,10 +64,10 @@ const headers = computed(() => {
 });
 
 const showUploadIcon = computed(() => {
-  if (!fileList.value) {
+  if (!files.value) {
     return false;
   }
-  return fileList.value.length < maxCount;
+  return files.value.length < maxCount;
 });
 
 // TODO 上传之前需要做压缩
@@ -87,11 +92,18 @@ const handlePreview = async (file: any) => {
 };
 
 const handleChange = (info: any) => {
+  if (info.file.status === 'uploading') {
+    return;
+  }
   if (info.file.status === 'error') {
     message.error(`${info.file.name} 上传失败`);
   }
   if (info.file.status === 'done') {
-    info.file.url = info.file.response.data.url;
+    if (info.file.response && info.file.response.data) {
+      info.file.url = info.file.response.data.url;
+    } else {
+      message.error(`${info.file.name} 上传成功，但未返回 URL`);
+    }
   }
 };
 
@@ -123,14 +135,14 @@ watch(
 
 <template>
   <div class="flex">
-    <a-upload
-      v-model:file-list="fileList"
+    <Upload
+      v-model:file-list="files"
       :action="action"
       :before-upload="beforeUpload"
       :disabled="disabled"
       :headers="headers"
       :max-count="maxCount"
-      :name
+      :name="name"
       list-type="picture-card"
       @change="handleChange"
       @preview="handlePreview"
@@ -157,7 +169,7 @@ watch(
           </template>
         </a-image>
       </template>
-    </a-upload>
+    </Upload>
   </div>
 </template>
 

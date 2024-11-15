@@ -62,7 +62,7 @@ const segmentedComponent = computed(
         <div class="flex flex-col px-2 py-6">
           <div class="flex justify-center py-4">
             <UploadFile
-              v-model="avatar"
+              v-model:value="avatar"
               :max-count="1"
               class="h-[100px]"
               help-text="上传图片"

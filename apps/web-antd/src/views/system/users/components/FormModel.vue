@@ -247,7 +247,7 @@ onMounted(async () => {
   <Modal class="md:w-[800px]">
     <Form>
       <template #avatar>
-        <UploadFile v-model="avatar" :max-count="1" />
+        <UploadFile v-model:value="avatar" :max-count="1" />
       </template>
     </Form>
   </Modal>
