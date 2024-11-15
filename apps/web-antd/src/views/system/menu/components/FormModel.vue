@@ -68,7 +68,7 @@ const [Form, formApi] = useVbenForm({
       label: $t('menu.parentId'),
     },
     {
-      component: 'Input',
+      component: 'IconPicker',
       componentProps: {
         placeholder: '请输入',
       },
