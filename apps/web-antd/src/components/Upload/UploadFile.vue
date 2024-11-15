@@ -50,7 +50,11 @@ const dataList = ref<UploadFile[]>([]);
 const files = computed({
   get: () => dataList.value,
   set: (value) => {
-    modelValue.value = getInitialValue(value);
+    const filterList = value.filter((item) => item.response);
+    const result = getInitialValue(filterList);
+    if (result) {
+      modelValue.value = result;
+    }
     dataList.value = value;
   },
 });

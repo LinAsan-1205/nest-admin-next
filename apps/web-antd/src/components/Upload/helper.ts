@@ -15,7 +15,7 @@ export function getInitialValue(value: UploadFile[]) {
     return '';
   }
   if (value.length === 1 && value[0]) {
-    return value[0].url as string;
+    return value[0]?.response?.data?.url as string;
   }
-  return value.map((item) => item.url as string).join(',');
+  return value.map((item) => item?.response?.data?.url as string).join(',');
 }

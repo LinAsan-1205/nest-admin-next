@@ -77,6 +77,7 @@ const fetchConfig = async () => {
           help: item.key,
           fieldName: item.key,
           label: item.name,
+          value: item.value ?? '',
         };
       }),
     };
