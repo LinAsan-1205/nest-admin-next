@@ -32,6 +32,9 @@
   "login": {
     "title": "登录日志"
   },
+  "cms": {
+    "title": "内容管理"
+  },
   "menuName": "菜单名称",
   "menuId": "菜单ID",
   "parentId": "上级菜单",

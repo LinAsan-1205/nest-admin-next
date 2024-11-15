@@ -8,7 +8,7 @@ const routes: RouteRecordRaw[] = [
     component: BasicLayout,
     meta: {
       icon: 'ant-design:fund-projection-screen-outlined',
-      order: 1,
+      order: 98,
       title: $t('menu.monitor.title'),
     },
     name: 'Monitor',

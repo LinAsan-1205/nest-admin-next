@@ -13,6 +13,7 @@ const SvgCakeIcon = createIconifyIcon('svg:cake');
 const SvgAntdvLogoIcon = createIconifyIcon('svg:antdv-logo');
 const SvgGieeIcon = createIconifyIcon('svg:gitee');
 const SvgGithubIcon = createIconifyIcon('svg:github');
+const SvgCategoryIcon = createIconifyIcon('svg:category');
 export {
   SvgAntdvLogoIcon,
   SvgAvatar1Icon,
@@ -22,6 +23,7 @@ export {
   SvgBellIcon,
   SvgCakeIcon,
   SvgCardIcon,
+  SvgCategoryIcon,
   SvgDownloadIcon,
   SvgGieeIcon,
   SvgGithubIcon,

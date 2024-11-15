@@ -8,7 +8,7 @@ const routes: RouteRecordRaw[] = [
     component: BasicLayout,
     meta: {
       icon: 'icon-park-outline:system',
-      order: -1,
+      order: 97,
       title: $t('menu.system.title'),
     },
     name: 'System',
