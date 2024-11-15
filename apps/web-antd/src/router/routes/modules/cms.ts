@@ -24,6 +24,16 @@ const routes: RouteRecordRaw[] = [
           order: 1,
         },
       },
+      {
+        name: 'CmsTag',
+        path: '/cms/tag',
+        component: () => import('#/views/cms/tag/index.vue'),
+        meta: {
+          icon: 'ant-design:tag-outlined',
+          title: $t('cms_tag.title'),
+          order: 99,
+        },
+      },
     ],
   },
 ];
