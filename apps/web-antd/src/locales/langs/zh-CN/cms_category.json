@@ -1,3 +1,15 @@
 {
-  "title": "分类管理"
+  "title": "分类管理",
+  "name": "分类名称",
+  "parent_id": "父级分类",
+  "slug": "别名",
+  "orderNum": "排序",
+  "status": "状态",
+  "desc": "描述",
+  "create_time": "创建时间",
+  "update_time": "更新时间",
+  "selectCategory": "选择分类",
+  "updateCategory": "更新分类",
+  "createCategory": "创建分类"
+
 }
