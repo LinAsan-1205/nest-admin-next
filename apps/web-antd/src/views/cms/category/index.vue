@@ -9,7 +9,7 @@ import { message, Modal } from 'ant-design-vue';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { type CategoryApi, getCategoryList } from '#/api/cms/category';
-import { changeStatus, deleteRole } from '#/api/system/role';
+import { changeStatus, deleteCategory } from '#/api/cms/category';
 
 import FormModel from './components/FormModel.vue';
 
@@ -75,9 +75,15 @@ const gridOptions: VxeGridProps<RowType> = {
       minWidth: 100,
     },
     { field: 'orderNum', title: $t('cms_category.orderNum'), minWidth: 100 },
+    {
+      field: 'desc',
+      title: $t('cms_category.desc'),
+      minWidth: 100,
+      showOverflow: true,
+      formatter: 'formatEmpty',
+    },
     { slots: { default: 'action' }, title: '操作', minWidth: 100 },
   ],
-  height: 'auto',
   proxyConfig: {
     ajax: {
       query: async (_, formValues) => {
@@ -86,9 +92,6 @@ const gridOptions: VxeGridProps<RowType> = {
         });
       },
     },
-  },
-  sortConfig: {
-    multiple: true,
   },
 };
 
@@ -123,7 +126,7 @@ const onRemove = async (ids?: RowType[]) => {
     title: $t('modal.confirmTitle'),
     content: $t('modal.confirmContent'),
     onOk: async () => {
-      await deleteRole(records.map((item) => item.categoryId).join(','));
+      await deleteCategory(records.map((item) => item.categoryId).join(','));
       message.success($t('api.remove'));
       refreshTable();
     },

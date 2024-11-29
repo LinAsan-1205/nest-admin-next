@@ -6,7 +6,11 @@ import { useVbenModal } from '@vben/common-ui';
 import { message } from 'ant-design-vue';
 
 import { useVbenForm } from '#/adapter/form';
-import { createRole, type RoleApi, updateRole } from '#/api/system/role';
+import {
+  type CategoryApi,
+  createCategory,
+  updateCategory,
+} from '#/api/cms/category';
 import { $t } from '#/locales';
 
 defineOptions({
@@ -100,7 +104,7 @@ const [Modal, modalApi] = useVbenModal({
       const {
         values,
         update,
-        roleId: id,
+        categoryId: id,
       } = modalApi.getData<Record<string, any>>();
       // 修改时设置表单值
       if (values) {
@@ -113,13 +117,13 @@ const [Modal, modalApi] = useVbenModal({
 });
 
 async function onSubmit(values: Record<string, any>) {
-  const data = values as RoleApi.CreateParams;
+  const data = values as CategoryApi.CreateParams;
   const messageContent = updateTheStatus.value
     ? $t('api.editSuccess')
     : $t('api.createSuccess');
   await (updateTheStatus.value
-    ? updateRole(roleId.value as string, data)
-    : createRole(data));
+    ? updateCategory(roleId.value as string, data)
+    : createCategory(data));
   message.success(messageContent);
   modalApi.close();
   emit('refresh');
