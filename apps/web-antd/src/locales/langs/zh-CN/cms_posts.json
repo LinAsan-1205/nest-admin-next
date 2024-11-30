@@ -1,0 +1,20 @@
+{
+  "menu_title": "文章管理",
+  "postsId": "文章id",
+  "title": "标题",
+  "customSummaries": "自定义摘要",
+  "alias": "别名",
+  "commentsAreAllowed": "是否允许评论",
+  "pinnedOrNot": "是否置顶",
+  "cover": "封面",
+  "template": "模板",
+  "visibility": "可见性",
+  "likeCount": "点赞数",
+  "shareCount": "分享数",
+  "content": "内容",
+  "status": "状态",
+  "publicationTime": "发表时间",
+  "category": "所属分类",
+  "userId": "发布者id",
+  "create_title": "创建文章"
+}

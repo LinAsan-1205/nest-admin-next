@@ -49,6 +49,7 @@
     "unplugin-vue-components": "catalog:",
     "monaco-editor": "catalog:",
     "vxe-table": "catalog:",
-    "lucide-vue-next": "catalog:"
+    "lucide-vue-next": "catalog:",
+    "md-editor-v3": "catalog:"
   }
 }

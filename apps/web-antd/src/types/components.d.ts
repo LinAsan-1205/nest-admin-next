@@ -38,6 +38,7 @@ declare module 'vue' {
     DictTag: typeof import('./../components/Table/CellRender/DictTag/DictTag.vue')['default']
     IconPicker: typeof import('./../components/IconPicker/index.vue')['default']
     JsonEditor: typeof import('./../components/MonacoEditor/JsonEditor.vue')['default']
+    MdEditor: typeof import('./../components/MdEditor/MdEditor.vue')['default']
     MonacoEditor: typeof import('./../components/MonacoEditor/MonacoEditor.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

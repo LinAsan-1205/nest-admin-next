@@ -9,7 +9,7 @@ const { dictType, value } = defineProps<DictTagProps>();
 const { allFields } = useDictDataStore();
 const TagInfo = computed(() => {
   const data = allFields[dictType] || [];
-  return data?.find((item) => item.dictValue === value);
+  return data?.find((item) => item.dictValue === value.toString());
 });
 
 const textValue = computed(() => TagInfo.value?.dictLabel);

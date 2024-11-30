@@ -38,6 +38,7 @@ import {
 
 import DictData from '#/components/Api/DictData.vue';
 import IconPicker from '#/components/IconPicker/index.vue';
+import MdEditor from '#/components/MdEditor/MdEditor.vue';
 import MonacoEditor from '#/components/MonacoEditor/MonacoEditor.vue';
 import UploadFile from '#/components/Upload/UploadFile.vue';
 
@@ -64,6 +65,7 @@ export type ComponentType =
   | 'Input'
   | 'InputNumber'
   | 'InputPassword'
+  | 'MdEditor'
   | 'Mentions'
   | 'MonacoEditor'
   | 'PrimaryButton'
@@ -119,6 +121,7 @@ async function initComponentAdapter() {
     MonacoEditor,
     IconPicker,
     UploadFile,
+    MdEditor,
   };
 
   // 将组件注册到全局共享状态中

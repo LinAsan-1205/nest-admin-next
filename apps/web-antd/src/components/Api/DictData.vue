@@ -35,10 +35,10 @@ const selectRef = useTemplateRef('select');
 
 const renderSlots = () => {
   switch (componentName) {
-    case 'select': {
+    case 'radio': {
       return dictData.value.map((item) =>
         h(
-          Select.Option,
+          Radio,
           { value: item.dictValue },
           {
             default: () => item.dictLabel,
@@ -46,10 +46,10 @@ const renderSlots = () => {
         ),
       );
     }
-    case 'radio': {
+    case 'select': {
       return dictData.value.map((item) =>
         h(
-          Radio,
+          Select.Option,
           { value: item.dictValue },
           {
             default: () => item.dictLabel,

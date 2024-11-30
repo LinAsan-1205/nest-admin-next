@@ -25,6 +25,27 @@ const routes: RouteRecordRaw[] = [
         },
       },
       {
+        name: 'CmsPosts',
+        path: '/cms/posts',
+        component: () => import('#/views/cms/posts/index.vue'),
+        meta: {
+          icon: 'ant-design:snippets-outlined',
+          title: $t('cms_posts.menu_title'),
+          order: 2,
+        },
+      },
+      {
+        name: 'CmsPostsCreate',
+        path: '/cms/posts/create',
+        component: () => import('#/views/cms/posts/form.vue'),
+        meta: {
+          icon: 'ant-design:form-outlined',
+          title: $t('cms_posts.create_title'),
+          order: 3,
+          hideInMenu: true,
+        },
+      },
+      {
         name: 'CmsTag',
         path: '/cms/tag',
         component: () => import('#/views/cms/tag/index.vue'),

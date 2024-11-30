@@ -13,6 +13,4 @@ export declare namespace CategoryApi {
   export type List = Item[];
 
   export type CreateParams = Item;
-
-  export type ChangeStatus = Pick<Item, 'categoryId' | 'status'>;
 }

@@ -1,3 +1,5 @@
+import type { ChangeStatus } from '#/api/types';
+
 import { requestClient } from '#/api/core/request';
 
 import { type CategoryApi } from './model';
@@ -22,11 +24,11 @@ export function deleteCategory(ids: string) {
   return requestClient.delete<boolean>(`/cms/category/${ids}`);
 }
 
-/**
- * 修改部门状态
- * @param data
- */
-export function changeStatus(data: CategoryApi.ChangeStatus) {
+export function queryAllList() {
+  return requestClient.get<CategoryApi.List>('/cms/category/all');
+}
+
+export function changeStatus(data: ChangeStatus) {
   return requestClient.post<boolean>('/cms/category/changeStatus', data);
 }
 
