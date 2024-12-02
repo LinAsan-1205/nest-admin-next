@@ -4,6 +4,7 @@ import { computed, onMounted, ref, watch } from 'vue';
 import { useVbenModal } from '@vben/common-ui';
 
 import { Empty, message } from 'ant-design-vue';
+import dayjs from 'dayjs';
 
 import { useVbenForm } from '#/adapter/form';
 import {
@@ -55,6 +56,13 @@ const fetch = async () => {
   }
 };
 
+const getDefaultValue = (inputType: string, value: string) => {
+  if (inputType === 'datePicker') {
+    return dayjs(value);
+  }
+  return value || '';
+};
+
 const fetchConfig = async () => {
   const res = await getConfigurationBasedOnGrouping(modelValue.value);
   configData.value = res;
@@ -62,12 +70,13 @@ const fetchConfig = async () => {
   formApi.setState((_) => {
     return {
       schema: res.flatMap((item) => {
+        const defaultValue = getDefaultValue(item.inputType, item.value);
         const configData = item.configData ?? {};
         const componentProps = Object.assign(
           {},
           {
             placeholder: '请输入',
-            defaultValue: item.value,
+            defaultValue,
           },
           configData,
         );
@@ -77,7 +86,7 @@ const fetchConfig = async () => {
           help: item.key,
           fieldName: item.key,
           label: item.name,
-          value: item.value ?? '',
+          value: defaultValue,
         };
       }),
     };
