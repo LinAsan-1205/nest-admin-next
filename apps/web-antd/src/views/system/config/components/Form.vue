@@ -71,6 +71,14 @@ const [Form, formApi] = useVbenForm({
       component: 'Select',
       componentProps: {
         placeholder: '请选择组件类型',
+        onChange(_: Event, values: any) {
+          formApi.updateSchema([
+            {
+              fieldName: 'configData',
+              value: JSON.stringify(values.configData ?? {}) as any,
+            },
+          ]);
+        },
         options: [
           {
             label: '文本框',
@@ -103,6 +111,11 @@ const [Form, formApi] = useVbenForm({
           {
             label: '日期选择器',
             value: 'datePicker',
+            configData: {
+              format: 'YYYY-MM-DD HH:mm:ss',
+              'show-time': true,
+              valueFormat: 'YYYY-MM-DD HH:mm:ss',
+            },
           },
           {
             label: '日期范围选择器',
@@ -146,7 +159,6 @@ const [Form, formApi] = useVbenForm({
   ],
   wrapperClass: 'grid-cols-1',
 });
-
 const fetch = () => {
   getConfigGroupList().then((res) => {
     formApi.updateSchema([

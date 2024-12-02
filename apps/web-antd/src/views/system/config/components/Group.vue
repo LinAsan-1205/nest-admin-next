@@ -57,6 +57,9 @@ const fetch = async () => {
 };
 
 const getDefaultValue = (inputType: string, value: string) => {
+  if (!value) {
+    return null;
+  }
   if (inputType === 'datePicker') {
     return dayjs(value);
   }
