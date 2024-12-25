@@ -149,7 +149,7 @@ export type ComponentType =
   | 'TimePicker'
   | 'TreeSelect'
   | 'Upload'
-  | 'IconPicker';
+  | 'IconPicker'
   | BaseFormComponentType;
 
 async function initComponentAdapter() {

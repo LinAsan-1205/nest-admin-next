@@ -37,7 +37,6 @@ import {
 } from 'ant-design-vue';
 
 import DictData from '#/components/Api/DictData.vue';
-import IconPicker from '#/components/IconPicker/index.vue';
 import MdEditor from '#/components/MdEditor/MdEditor.vue';
 import MonacoEditor from '#/components/MonacoEditor/MonacoEditor.vue';
 import UploadFile from '#/components/Upload/UploadFile.vue';
@@ -159,7 +158,6 @@ async function initComponentAdapter() {
     Upload,
     DictData,
     MonacoEditor,
-    IconPicker,
     UploadFile,
     MdEditor,
   };
