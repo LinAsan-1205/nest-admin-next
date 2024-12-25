@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { useRouter } from 'vue-router';
+
 import { Page, useVbenModal } from '@vben/common-ui';
 
 import { Card } from 'ant-design-vue';
@@ -7,6 +9,8 @@ import { useVbenForm } from '#/adapter/form';
 import { $t } from '#/locales';
 
 import FormModel from './components/FormModel.vue';
+
+const router = useRouter();
 
 const [Form] = useVbenForm({
   commonConfig: {
@@ -51,6 +55,10 @@ function onSubmit(values: Record<string, any>) {
   });
   formModalApi.open();
 }
+
+function onRefresh() {
+  router.push('/cms/posts/create');
+}
 </script>
 
 <template>
@@ -64,6 +72,6 @@ function onSubmit(values: Record<string, any>) {
       <!--      </template>-->
       <Form />
     </Card>
-    <FormModal />
+    <FormModal @refresh="onRefresh" />
   </Page>
 </template>
