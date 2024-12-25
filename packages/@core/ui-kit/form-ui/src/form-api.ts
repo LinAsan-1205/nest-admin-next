@@ -14,6 +14,8 @@ import { Store } from '@vben-core/shared/store';
 import {
   bindMethods,
   createMerge,
+  isDate,
+  isDayjsObject,
   isFunction,
   isObject,
   mergeWithArrayOverride,
@@ -126,6 +128,11 @@ export class FormApi {
   async getValues() {
     const form = await this.getForm();
     return form.values;
+  }
+
+  async isFieldValid(fieldName: string) {
+    const form = await this.getForm();
+    return form.isFieldValid(fieldName);
   }
 
   merge(formApi: FormApi) {
@@ -252,10 +259,19 @@ export class FormApi {
       return;
     }
 
+    /**
+     * 合并算法有待改进，目前的算法不支持object类型的值。
+     * antd的日期时间相关组件的值类型为dayjs对象
+     * element-plus的日期时间相关组件的值类型可能为Date对象
+     * 以上两种类型需要排除深度合并
+     */
     const fieldMergeFn = createMerge((obj, key, value) => {
       if (key in obj) {
         obj[key] =
-          !Array.isArray(obj[key]) && isObject(obj[key])
+          !Array.isArray(obj[key]) &&
+          isObject(obj[key]) &&
+          !isDayjsObject(obj[key]) &&
+          !isDate(obj[key])
             ? fieldMergeFn(obj[key], value)
             : value;
       }
@@ -336,5 +352,15 @@ export class FormApi {
       return;
     }
     return await this.submitForm();
+  }
+
+  async validateField(fieldName: string, opts?: Partial<ValidationOptions>) {
+    const form = await this.getForm();
+    const validateResult = await form.validateField(fieldName, opts);
+
+    if (Object.keys(validateResult?.errors ?? {}).length > 0) {
+      console.error('validate error', validateResult?.errors);
+    }
+    return validateResult;
   }
 }
