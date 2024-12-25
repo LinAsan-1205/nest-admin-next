@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import { h, onMounted, ref } from 'vue';
 
 import { useVbenModal } from '@vben/common-ui';
 
-import { message } from 'ant-design-vue';
+import { Input, message } from 'ant-design-vue';
 
 import { useVbenForm } from '#/adapter/form';
 import {
@@ -71,6 +71,8 @@ const [Form, formApi] = useVbenForm({
       component: 'IconPicker',
       componentProps: {
         placeholder: '请输入',
+        iconSlot: 'addonAfter',
+        inputComponent: h(Input),
       },
       dependencies: {
         show(values) {
