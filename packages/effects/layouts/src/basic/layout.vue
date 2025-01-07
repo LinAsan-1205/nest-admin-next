@@ -1,7 +1,9 @@
 <script lang="ts" setup>
+import type { SetupContext } from 'vue';
+
 import type { MenuRecordRaw } from '@vben/types';
 
-import { computed, type SetupContext, useSlots, watch } from 'vue';
+import { computed, useSlots, watch } from 'vue';
 
 import { useRefresh } from '@vben/hooks';
 import { $t } from '@vben/locales';
@@ -12,6 +14,7 @@ import {
 } from '@vben/preferences';
 import { useLockStore } from '@vben/stores';
 import { cloneDeep, mapTree } from '@vben/utils';
+
 import { VbenAdminLayout } from '@vben-core/layout-ui';
 import { VbenBackTop, VbenLogo } from '@vben-core/shadcn-ui';
 
@@ -40,6 +43,7 @@ const {
   isMobile,
   isSideMixedNav,
   isHeaderMixedNav,
+  isHeaderSidebarNav,
   layout,
   preferencesButtonPosition,
   sidebarCollapsed,
@@ -81,7 +85,7 @@ const logoCollapsed = computed(() => {
   if (isMobile.value && sidebarCollapsed.value) {
     return true;
   }
-  if (isHeaderNav.value || isMixedNav.value) {
+  if (isHeaderNav.value || isMixedNav.value || isHeaderSidebarNav.value) {
     return false;
   }
   return (
