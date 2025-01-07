@@ -57,7 +57,7 @@ function onSubmit(values: Record<string, any>) {
 }
 
 function onRefresh() {
-  router.push('/cms/posts/create');
+  router.push('/cms/posts');
 }
 </script>
 
