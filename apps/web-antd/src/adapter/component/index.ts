@@ -4,13 +4,14 @@
  */
 
 import type { BaseFormComponentType } from '@vben/common-ui';
-
 import type { Component, SetupContext } from 'vue';
-import { h } from 'vue';
 
+import DictData from '#/components/Api/DictData.vue';
+import MdEditor from '#/components/MdEditor/MdEditor.vue';
+import MonacoEditor from '#/components/MonacoEditor/MonacoEditor.vue';
+import UploadFile from '#/components/Upload/UploadFile.vue';
 import { ApiComponent, globalShareState, IconPicker } from '@vben/common-ui';
 import { $t } from '@vben/locales';
-
 import {
   AutoComplete,
   Button,
@@ -35,11 +36,7 @@ import {
   TreeSelect,
   Upload,
 } from 'ant-design-vue';
-
-import DictData from '#/components/Api/DictData.vue';
-import MdEditor from '#/components/MdEditor/MdEditor.vue';
-import MonacoEditor from '#/components/MonacoEditor/MonacoEditor.vue';
-import UploadFile from '#/components/Upload/UploadFile.vue';
+import { h } from 'vue';
 
 const withDefaultPlaceholder = <T extends Component>(
   component: T,
