@@ -55,6 +55,16 @@ const routes: RouteRecordRaw[] = [
           order: 99,
         },
       },
+      {
+        name: 'CmsLink',
+        path: '/cms/link',
+        component: () => import('#/views/cms/links/index.vue'),
+        meta: {
+          icon: 'ant-design:paper-clip-outlined',
+          title: $t('cms_link.title'),
+          order: 99,
+        },
+      },
     ],
   },
 ];

@@ -1,0 +1,13 @@
+{
+  "title": "朋友管理",
+  "linksName": "名称",
+  "url": "链接",
+  "icon": "图标",
+  "type": "类型",
+  "status": "状态",
+  "orderNum": "排序",
+  "desc": "描述",
+  "createLinks": "创建",
+  "selectLinks": "请选择",
+  "updateLinks": "更新"
+}
