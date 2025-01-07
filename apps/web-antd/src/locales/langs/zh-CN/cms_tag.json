@@ -1,3 +1,10 @@
 {
-  "title": "标签管理"
+  "title": "标签管理",
+  "tagName": "标签名称",
+  "status": "状态",
+  "orderNum": "排序",
+  "desc": "描述",
+  "createTags": "创建标签",
+  "selectTags": "请选择标签",
+  "updateTags": "更新标签"
 }
