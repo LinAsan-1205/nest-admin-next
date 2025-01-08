@@ -1,6 +1,7 @@
 {
   "title": "朋友管理",
   "linksName": "名称",
+  "iconType": "图标类型",
   "url": "链接",
   "icon": "图标",
   "type": "类型",

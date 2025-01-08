@@ -79,8 +79,10 @@ const gridOptions: VxeGridProps<RowType> = {
   ],
   proxyConfig: {
     ajax: {
-      query: async (_, formValues) => {
+      query: async ({ page }, formValues) => {
         return await getTagList({
+          page: page.currentPage,
+          pageSize: page.pageSize,
           ...formValues,
         });
       },

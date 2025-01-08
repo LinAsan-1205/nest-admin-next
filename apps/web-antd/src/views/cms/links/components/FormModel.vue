@@ -30,12 +30,53 @@ const [Form, formApi] = useVbenForm({
   handleSubmit: onSubmit,
   schema: [
     {
+      component: 'Select',
+      componentProps: {
+        placeholder: '请输入',
+        options: [
+          {
+            label: '本地上传',
+            value: '1',
+          },
+          {
+            label: '外链地址',
+            value: '2',
+          },
+        ],
+      },
+      fieldName: 'iconType',
+      label: $t('cms_link.iconType'),
+      rules: 'required',
+      defaultValue: '1',
+    },
+    {
       component: 'UploadFile',
       componentProps: {
         placeholder: '请输入',
       },
       formItemClass: 'col-span-2',
       fieldName: 'icon',
+      dependencies: {
+        show(values) {
+          return values.iconType === '1';
+        },
+        triggerFields: ['iconType'],
+      },
+      label: $t('cms_link.icon'),
+    },
+    {
+      component: 'Input',
+      componentProps: {
+        placeholder: '请输入',
+      },
+      formItemClass: 'col-span-2',
+      fieldName: 'icon',
+      dependencies: {
+        show(values) {
+          return values.iconType === '2';
+        },
+        triggerFields: ['iconType'],
+      },
       label: $t('cms_link.icon'),
     },
     {
@@ -131,7 +172,10 @@ const [Modal, modalApi] = useVbenModal({
         linksId: id,
       } = modalApi.getData<Record<string, any>>();
       if (values) {
-        formApi.setValues(values);
+        formApi.setValues({
+          ...values,
+          iconType: '1',
+        });
       }
       updateTheStatus.value = update;
       linksId.value = update ? id : '';

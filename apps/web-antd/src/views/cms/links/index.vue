@@ -116,8 +116,10 @@ const gridOptions: VxeGridProps<RowType> = {
   ],
   proxyConfig: {
     ajax: {
-      query: async (_, formValues) => {
+      query: async ({ page }, formValues) => {
         return await getLinkList({
+          page: page.currentPage,
+          pageSize: page.pageSize,
           ...formValues,
         });
       },
@@ -163,7 +165,7 @@ const onRemove = async (ids?: RowType[]) => {
   });
 };
 const onUpdate = (row: RowType) => {
-  formModalApi.setState({ title: $t('cms_link.updateTag') });
+  formModalApi.setState({ title: $t('cms_link.updateLinks') });
   formModalApi.setData({
     values: row,
     update: true,

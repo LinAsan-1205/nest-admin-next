@@ -1,20 +1,14 @@
 <script lang="ts" setup>
 import type { VbenFormProps } from '#/adapter/form';
 import type { VxeGridProps } from '#/adapter/vxe-table';
-
-import { Page } from '@vben/common-ui';
-import { $t } from '@vben/locales';
-
-import { message, Modal } from 'ant-design-vue';
+import type { PostsApi } from '#/api/cms/posts';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
-import {
-  changeStatus,
-  deletePosts,
-  getPostsList,
-  type PostsApi,
-} from '#/api/cms/posts';
+import { changeStatus, deletePosts, getPostsList } from '#/api/cms/posts';
 import { router } from '#/router';
+import { Page } from '@vben/common-ui';
+import { $t } from '@vben/locales';
+import { message, Modal } from 'ant-design-vue';
 
 interface RowType extends PostsApi.View {}
 
@@ -26,7 +20,15 @@ const formOptions: VbenFormProps = {
       fieldName: 'title',
       label: $t('cms_posts.title'),
     },
-
+    {
+      component: 'DictData',
+      componentProps: {
+        dictType: 'posts_template',
+        placeholder: '请选择模板',
+      },
+      fieldName: 'template',
+      label: $t('cms_posts.template'),
+    },
     {
       component: 'DictData',
       componentProps: {
@@ -123,8 +125,10 @@ const gridOptions: VxeGridProps<RowType> = {
   ],
   proxyConfig: {
     ajax: {
-      query: async (_, formValues) => {
+      query: async ({ page }, formValues) => {
         return await getPostsList({
+          page: page.currentPage,
+          pageSize: page.pageSize,
           ...formValues,
         });
       },

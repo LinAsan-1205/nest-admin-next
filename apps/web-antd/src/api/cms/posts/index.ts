@@ -1,8 +1,8 @@
 import type { ChangeStatus } from '#/api/types';
 
-import { requestClient } from '#/api/core/request';
+import type { PostsApi } from './model';
 
-import { type PostsApi } from './model';
+import { requestClient } from '#/api/core/request';
 
 export function getPostsList(params?: PostsApi.ListParams) {
   return requestClient.get<PostsApi.List>('/cms/posts', { params });

@@ -1,15 +1,17 @@
 <script lang="ts" setup>
 import type { VbenFormProps } from '#/adapter/form';
 import type { VxeGridProps } from '#/adapter/vxe-table';
-
-import { Page, useVbenModal } from '@vben/common-ui';
-import { $t } from '@vben/locales';
-
-import { message, Modal } from 'ant-design-vue';
+import type { CategoryApi } from '#/api/cms/category';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
-import { type CategoryApi, getCategoryList } from '#/api/cms/category';
-import { changeStatus, deleteCategory } from '#/api/cms/category';
+import {
+  changeStatus,
+  deleteCategory,
+  getCategoryList,
+} from '#/api/cms/category';
+import { Page, useVbenModal } from '@vben/common-ui';
+import { $t } from '@vben/locales';
+import { message, Modal } from 'ant-design-vue';
 
 import FormModel from './components/FormModel.vue';
 
@@ -86,8 +88,10 @@ const gridOptions: VxeGridProps<RowType> = {
   ],
   proxyConfig: {
     ajax: {
-      query: async (_, formValues) => {
+      query: async ({ page }, formValues) => {
         return await getCategoryList({
+          page: page.currentPage,
+          pageSize: page.pageSize,
           ...formValues,
         });
       },

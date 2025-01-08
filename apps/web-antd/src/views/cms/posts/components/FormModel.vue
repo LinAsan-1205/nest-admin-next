@@ -1,14 +1,13 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
-
-import { useVbenModal, z } from '@vben/common-ui';
-
-import { message } from 'ant-design-vue';
+import type { PostsApi } from '#/api/cms/posts';
 
 import { useVbenForm } from '#/adapter/form';
 import { queryAllList } from '#/api/cms/category';
-import { createPosts, type PostsApi, updatePosts } from '#/api/cms/posts';
+import { createPosts, updatePosts } from '#/api/cms/posts';
 import { $t } from '#/locales';
+import { useVbenModal, z } from '@vben/common-ui';
+import { message } from 'ant-design-vue';
+import { onMounted, ref } from 'vue';
 
 defineOptions({
   name: 'CmsCategoryFormModel',
@@ -43,6 +42,12 @@ const [Form, formApi] = useVbenForm({
       label: $t('cms_posts.cover'),
       rules: 'required',
       formItemClass: 'col-span-2',
+      dependencies: {
+        show(values) {
+          return values.template === 'article';
+        },
+        triggerFields: ['template'],
+      },
     },
     {
       component: 'Input',
@@ -53,6 +58,12 @@ const [Form, formApi] = useVbenForm({
       label: $t('cms_posts.title'),
       rules: 'required',
       formItemClass: 'col-span-2',
+      dependencies: {
+        show(values) {
+          return values.template === 'article';
+        },
+        triggerFields: ['template'],
+      },
     },
     {
       component: 'Input',
@@ -90,6 +101,12 @@ const [Form, formApi] = useVbenForm({
       label: $t('cms_posts.category'),
       rules: 'required',
       formItemClass: 'col-span-2',
+      dependencies: {
+        show(values) {
+          return values.template === 'article';
+        },
+        triggerFields: ['template'],
+      },
     },
     {
       component: 'DictData',
@@ -124,6 +141,12 @@ const [Form, formApi] = useVbenForm({
       defaultValue: '1',
       fieldName: 'pinnedOrNot',
       label: $t('cms_posts.pinnedOrNot'),
+      dependencies: {
+        show(values) {
+          return values.template === 'article';
+        },
+        triggerFields: ['template'],
+      },
     },
     {
       component: 'DictData',
@@ -156,6 +179,12 @@ const [Form, formApi] = useVbenForm({
       label: $t('cms_posts.publicationTime'),
       rules: 'required',
       formItemClass: 'col-span-2',
+      dependencies: {
+        show(values) {
+          return values.template === 'article';
+        },
+        triggerFields: ['template'],
+      },
     },
   ],
   showDefaultActions: false,
