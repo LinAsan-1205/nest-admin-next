@@ -8,6 +8,10 @@ export function getPostsList(params?: PostsApi.ListParams) {
   return requestClient.get<PostsApi.List>('/cms/posts', { params });
 }
 
+export function getPostsDetails(poostId: string) {
+  return requestClient.get<PostsApi.View>(`/cms/posts/${poostId}`, {});
+}
+
 export function createPosts(data: PostsApi.CreateParams) {
   return requestClient.post<PostsApi.View>('/cms/posts', data);
 }

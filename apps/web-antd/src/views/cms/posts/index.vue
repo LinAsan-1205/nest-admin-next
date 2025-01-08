@@ -162,7 +162,9 @@ const onRemove = async (ids?: RowType[]) => {
     },
   });
 };
-const onUpdate = () => {};
+const onUpdate = (row: RowType) => {
+  router.push({ path: `/cms/posts/update/${row.postsId}` });
+};
 
 const toolbarActionList = [
   {

@@ -16,5 +16,6 @@
   "publicationTime": "发表时间",
   "category": "所属分类",
   "userId": "发布者id",
-  "create_title": "创建文章"
+  "create_title": "创建文章",
+  "update_title": "编辑文章"
 }

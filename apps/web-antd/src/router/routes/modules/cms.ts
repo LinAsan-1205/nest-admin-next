@@ -46,6 +46,17 @@ const routes: RouteRecordRaw[] = [
         },
       },
       {
+        name: 'CmsPostsUpdate',
+        path: '/cms/posts/update/:id',
+        component: () => import('#/views/cms/posts/form.vue'),
+        meta: {
+          icon: 'ant-design:form-outlined',
+          title: $t('cms_posts.update_title'),
+          order: 3,
+          hideInMenu: true,
+        },
+      },
+      {
         name: 'CmsTag',
         path: '/cms/tag',
         component: () => import('#/views/cms/tag/index.vue'),

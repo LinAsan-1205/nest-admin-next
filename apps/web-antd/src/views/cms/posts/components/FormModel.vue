@@ -210,7 +210,11 @@ const [Modal, modalApi] = useVbenModal({
       } = modalApi.getData<Record<string, any>>();
       if (values) {
         content.value = values.content;
-        formApi.setValues(values);
+        const { commentsAreAllowed } = values;
+        formApi.setValues({
+          ...values,
+          commentsAreAllowed: commentsAreAllowed.toString(),
+        });
       }
       updateTheStatus.value = update;
       id.value = update ? postsId : '';
