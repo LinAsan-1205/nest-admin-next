@@ -1,25 +1,29 @@
 /**
  * 该文件可自行根据业务逻辑进行调整
  */
-import type { HttpResponse } from '@vben/request';
+import type { RequestClientOptions } from '@vben/request';
 
-import { useAuthStore } from '#/store';
 import { useAppConfig } from '@vben/hooks';
 import { preferences } from '@vben/preferences';
 import {
   authenticateResponseInterceptor,
+  defaultResponseInterceptor,
   errorMessageResponseInterceptor,
   RequestClient,
 } from '@vben/request';
 import { useAccessStore } from '@vben/stores';
+
 import { message } from 'ant-design-vue';
 
-import { refreshTokenApi } from './core';
+import { useAuthStore } from '#/store';
+
+import { refreshTokenApi } from './';
 
 const { apiURL } = useAppConfig(import.meta.env, import.meta.env.PROD);
 
-function createRequestClient(baseURL: string) {
+function createRequestClient(baseURL: string, options?: RequestClientOptions) {
   const client = new RequestClient({
+    ...options,
     baseURL,
   });
 
@@ -67,23 +71,12 @@ function createRequestClient(baseURL: string) {
     },
   });
 
-  // response数据解构
-  client.addResponseInterceptor<HttpResponse>({
-    fulfilled: (response) => {
-      const { data: responseData, status } = response;
-      const { code, data } = responseData;
-      if (code === 10_000 || (status >= 200 && status < 400 && code === 0)) {
-        return data;
-      }
-      throw Object.assign({}, response, { response });
-    },
-  });
   // 处理返回的响应数据格式
   client.addResponseInterceptor(
     defaultResponseInterceptor({
       codeField: 'code',
       dataField: 'data',
-      successCode: 0,
+      successCode: 10_000,
     }),
   );
 
@@ -119,8 +112,4 @@ export const requestClient = createRequestClient(apiURL, {
 
 export const baseRequestClient = new RequestClient({ baseURL: apiURL });
 
-export interface PageFetchParams {
-  [key: string]: any;
-  pageNo?: number;
-  pageSize?: number;
-}
+export { apiURL };

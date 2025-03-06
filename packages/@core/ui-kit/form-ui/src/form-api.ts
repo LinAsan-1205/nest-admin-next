@@ -5,7 +5,11 @@ import type {
   ValidationOptions,
 } from 'vee-validate';
 
+import type { Recordable } from '@vben-core/typings';
+
 import type { FormActions, FormSchema, VbenFormProps } from './types';
+
+import { toRaw } from 'vue';
 
 import { Store } from '@vben-core/shared/store';
 import {
@@ -19,7 +23,6 @@ import {
   mergeWithArrayOverride,
   StateHandler,
 } from '@vben-core/shared/utils';
-import { toRaw } from 'vue';
 
 function getDefaultState(): VbenFormProps {
   return {
@@ -44,68 +47,19 @@ function getDefaultState(): VbenFormProps {
 }
 
 export class FormApi {
-  private handleRangeTimeValue = (originValues: Record<string, any>) => {
-    const values = { ...originValues };
-    const fieldMappingTime = this.state?.fieldMappingTime;
+  // private api: Pick<VbenFormProps, 'handleReset' | 'handleSubmit'>;
+  public form = {} as FormActions;
+  isMounted = false;
 
-    if (!fieldMappingTime || !Array.isArray(fieldMappingTime)) {
-      return values;
-    }
+  public state: null | VbenFormProps = null;
+  stateHandler: StateHandler;
 
-    fieldMappingTime.forEach(
-      ([field, [startTimeKey, endTimeKey], format = 'YYYY-MM-DD']) => {
-        if (startTimeKey && endTimeKey && values[field] === null) {
-          Reflect.deleteProperty(values, startTimeKey);
-          Reflect.deleteProperty(values, endTimeKey);
-          // delete values[startTimeKey];
-          // delete values[endTimeKey];
-        }
+  public store: Store<VbenFormProps>;
 
-        if (!values[field]) {
-          Reflect.deleteProperty(values, field);
-          // delete values[field];
-          return;
-        }
-
-        const [startTime, endTime] = values[field];
-        if (format === null) {
-          values[startTimeKey] = startTime;
-          values[endTimeKey] = endTime;
-        } else if (isFunction(format)) {
-          values[startTimeKey] = format(startTime, startTimeKey);
-          values[endTimeKey] = format(endTime, endTimeKey);
-        } else {
-          const [startTimeFormat, endTimeFormat] = Array.isArray(format)
-            ? format
-            : [format, format];
-
-          values[startTimeKey] = startTime
-            ? formatDate(startTime, startTimeFormat)
-            : undefined;
-          values[endTimeKey] = endTime
-            ? formatDate(endTime, endTimeFormat)
-            : undefined;
-        }
-        // delete values[field];
-        Reflect.deleteProperty(values, field);
-      },
-    );
-    return values;
-  };
   // 最后一次点击提交时的表单值
   private latestSubmissionValues: null | Recordable<any> = null;
 
   private prevState: null | VbenFormProps = null;
-  // private api: Pick<VbenFormProps, 'handleReset' | 'handleSubmit'>;
-  public form = {} as FormActions;
-
-  isMounted = false;
-
-  public state: null | VbenFormProps = null;
-
-  stateHandler: StateHandler;
-
-  public store: Store<VbenFormProps>;
 
   constructor(options: VbenFormProps = {}) {
     const { ...storeState } = options;
@@ -129,63 +83,6 @@ export class FormApi {
     this.state = this.store.state;
     this.stateHandler = new StateHandler();
     bindMethods(this);
-  }
-
-  private async getForm() {
-    if (!this.isMounted) {
-      // 等待form挂载
-      await this.stateHandler.waitForCondition();
-    }
-    if (!this.form?.meta) {
-      throw new Error('<VbenForm /> is not mounted');
-    }
-    return this.form;
-  }
-
-  private async getForm() {
-    if (!this.isMounted) {
-      // 等待form挂载
-      await this.stateHandler.waitForCondition();
-    }
-    if (!this.form?.meta) {
-      throw new Error('<VbenForm /> is not mounted');
-    }
-    return this.form;
-  }
-
-  private updateState() {
-    const currentSchema = this.state?.schema ?? [];
-    const prevSchema = this.prevState?.schema ?? [];
-    // 进行了删除schema操作
-    if (currentSchema.length < prevSchema.length) {
-      const currentFields = new Set(
-        currentSchema.map((item) => item.fieldName),
-      );
-      const deletedSchema = prevSchema.filter(
-        (item) => !currentFields.has(item.fieldName),
-      );
-
-      for (const schema of deletedSchema) {
-        this.form?.setFieldValue(schema.fieldName, undefined);
-      }
-    }
-  }
-
-  private updateState() {
-    const currentSchema = this.state?.schema ?? [];
-    const prevSchema = this.prevState?.schema ?? [];
-    // 进行了删除schema操作
-    if (currentSchema.length < prevSchema.length) {
-      const currentFields = new Set(
-        currentSchema.map((item) => item.fieldName),
-      );
-      const deletedSchema = prevSchema.filter(
-        (item) => !currentFields.has(item.fieldName),
-      );
-      for (const schema of deletedSchema) {
-        this.form?.setFieldValue?.(schema.fieldName, undefined);
-      }
-    }
   }
 
   getLatestSubmissionValues() {
@@ -358,7 +255,7 @@ export class FormApi {
     e?.stopPropagation();
     const form = await this.getForm();
     await form.submitForm();
-    const rawValues = toRaw(form.values || {});
+    const rawValues = toRaw(await this.getValues());
     await this.state?.handleSubmit?.(rawValues);
 
     return rawValues;
@@ -434,5 +331,82 @@ export class FormApi {
       console.error('validate error', validateResult?.errors);
     }
     return validateResult;
+  }
+
+  private async getForm() {
+    if (!this.isMounted) {
+      // 等待form挂载
+      await this.stateHandler.waitForCondition();
+    }
+    if (!this.form?.meta) {
+      throw new Error('<VbenForm /> is not mounted');
+    }
+    return this.form;
+  }
+
+  private handleRangeTimeValue = (originValues: Record<string, any>) => {
+    const values = { ...originValues };
+    const fieldMappingTime = this.state?.fieldMappingTime;
+
+    if (!fieldMappingTime || !Array.isArray(fieldMappingTime)) {
+      return values;
+    }
+
+    fieldMappingTime.forEach(
+      ([field, [startTimeKey, endTimeKey], format = 'YYYY-MM-DD']) => {
+        if (startTimeKey && endTimeKey && values[field] === null) {
+          Reflect.deleteProperty(values, startTimeKey);
+          Reflect.deleteProperty(values, endTimeKey);
+          // delete values[startTimeKey];
+          // delete values[endTimeKey];
+        }
+
+        if (!values[field]) {
+          Reflect.deleteProperty(values, field);
+          // delete values[field];
+          return;
+        }
+
+        const [startTime, endTime] = values[field];
+        if (format === null) {
+          values[startTimeKey] = startTime;
+          values[endTimeKey] = endTime;
+        } else if (isFunction(format)) {
+          values[startTimeKey] = format(startTime, startTimeKey);
+          values[endTimeKey] = format(endTime, endTimeKey);
+        } else {
+          const [startTimeFormat, endTimeFormat] = Array.isArray(format)
+            ? format
+            : [format, format];
+
+          values[startTimeKey] = startTime
+            ? formatDate(startTime, startTimeFormat)
+            : undefined;
+          values[endTimeKey] = endTime
+            ? formatDate(endTime, endTimeFormat)
+            : undefined;
+        }
+        // delete values[field];
+        Reflect.deleteProperty(values, field);
+      },
+    );
+    return values;
+  };
+
+  private updateState() {
+    const currentSchema = this.state?.schema ?? [];
+    const prevSchema = this.prevState?.schema ?? [];
+    // 进行了删除schema操作
+    if (currentSchema.length < prevSchema.length) {
+      const currentFields = new Set(
+        currentSchema.map((item) => item.fieldName),
+      );
+      const deletedSchema = prevSchema.filter(
+        (item) => !currentFields.has(item.fieldName),
+      );
+      for (const schema of deletedSchema) {
+        this.form?.setFieldValue?.(schema.fieldName, undefined);
+      }
+    }
   }
 }
