@@ -316,11 +316,17 @@ useVbenForm 返回的第二个参数，是一个对象，包含了一些表单�
 | collapsed | 是否折叠，在`showCollapseButton`为`true`时生效 | `boolean` | `false` |
 | collapseTriggerResize | 折叠时，触发`resize`事件 | `boolean` | `false` |
 | collapsedRows | 折叠时保持的行数 | `number` | `1` |
-| fieldMappingTime | 用于将表单内时间区域组件的数组值映射成 2 个字段 | `[string, [string, string], string?][]` | - |
+| fieldMappingTime | 用于将表单内的数组值值映射成 2 个字段 | `[string, [string, string],Nullable<string>\|[string,string]\|((any,string)=>any)?][]` | - |
 | commonConfig | 表单项的通用配置，每个配置都会传递到每个表单项，表单项可覆盖 | `FormCommonConfig` | - |
 | schema | 表单项的每一项配置 | `FormSchema[]` | - |
 | submitOnEnter | 按下回车健时提交表单 | `boolean` | false |
 | submitOnChange | 字段值改变时提交表单(内部防抖，这个属性一般用于表格的搜索表单) | `boolean` | false |
+
+::: tip fieldMappingTime
+
+此属性用于将表单内的数组值映射成 2 个字段，它应当传入一个数组，数组的每一项是一个映射规则，规则的第一个成员是一个字符串，表示需要映射的字段名，第二个成员是一个数组，表示映射后的字段名，第三个成员是一个可选的格式掩码，用于格式化日期时间字段；也可以提供一个格式化函数（参数分别为当前值和当前字段名，返回格式化后的值）。如果明确地将格式掩码设为null，则原值映射而不进行格式化（适用于非日期时间字段）。例如：`[['timeRange', ['startTime', 'endTime'], 'YYYY-MM-DD']]`，`timeRange`应当是一个至少具有2个成员的数组类型的值。Form会将`timeRange`的值前两个值分别按照格式掩码`YYYY-MM-DD`格式化后映射到`startTime`和`endTime`字段上。每一项的第三个参数是一个可选的格式掩码，
+
+:::
 
 ### TS 类型说明
 
@@ -341,7 +347,7 @@ export interface ActionButtonOptions {
   /** 是否显示 */
   show?: boolean;
   /** 按钮文本 */
-  text?: string;
+  content?: string;
   /** 任意属性 */
   [key: string]: any;
 }
@@ -407,6 +413,11 @@ export interface FormCommonConfig {
    */
   labelWidth?: number;
   /**
+   * 所有表单项的model属性名。使用自定义组件时可通过此配置指定组件的model属性名。已经在modelPropNameMap中注册的组件不受此配置影响
+   * @default "modelValue"
+   */
+  modelPropName?: string;
+  /**
    * 所有表单项的wrapper样式
    */
   wrapperClass?: string;
@@ -434,9 +445,9 @@ export interface FormSchema<
   /** 字段名，也作为自定义插槽的名称 */
   fieldName: string;
   /** 帮助信息 */
-  help?: string;
-  /** 表单项 */
-  label?: string;
+  help?: CustomRenderType;
+  /** 表单的标签（如果是一个string，会用于默认必选规则的消息提示） */
+  label?: CustomRenderType;
   /** 自定义组件内部渲染  */
   renderComponentContent?: RenderComponentContentType;
   /** 字段规则 */
@@ -507,20 +518,25 @@ import { z } from '#/adapter/form';
 
 // 可选(可以是undefined)，并且携带默认值。注意zod的optional不包括空字符串''
 {
-   rules: z.string().default('默认值').optional(),
+  rules: z.string().default('默认值').optional();
 }
 
-// 可以是空字符串、undefined或者一个邮箱地址
+// 可以是空字符串、undefined或者一个邮箱地址(两种不同的用法)
 {
-  rules: z.union(z.string().email().optional(), z.literal(""))
+  rules: z.union([z.string().email().optional(), z.literal('')]);
+}
+
+{
+  rules: z.string().email().or(z.literal('')).optional();
 }
 
 // 复杂校验
 {
-   z.string().min(1, { message: "请输入" })
-            .refine((value) => value === "123", {
-              message: "值必须为123",
-            });
+  z.string()
+    .min(1, { message: '请输入' })
+    .refine((value) => value === '123', {
+      message: '值必须为123',
+    });
 }
 ```
 

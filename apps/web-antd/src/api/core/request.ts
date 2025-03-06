@@ -3,6 +3,8 @@
  */
 import type { HttpResponse } from '@vben/request';
 
+import { useAuthStore } from '#/store';
+import { useAppConfig } from '@vben/hooks';
 import { preferences } from '@vben/preferences';
 import {
   authenticateResponseInterceptor,
@@ -10,13 +12,11 @@ import {
   RequestClient,
 } from '@vben/request';
 import { useAccessStore } from '@vben/stores';
-
 import { message } from 'ant-design-vue';
 
-import { refreshTokenApi } from '#/api';
-import { useAuthStore } from '#/store';
+import { refreshTokenApi } from './core';
 
-// const { apiURL } = useAppConfig(import.meta.env, import.meta.env.PROD);
+const { apiURL } = useAppConfig(import.meta.env, import.meta.env.PROD);
 
 function createRequestClient(baseURL: string) {
   const client = new RequestClient({
@@ -78,6 +78,14 @@ function createRequestClient(baseURL: string) {
       throw Object.assign({}, response, { response });
     },
   });
+  // 处理返回的响应数据格式
+  client.addResponseInterceptor(
+    defaultResponseInterceptor({
+      codeField: 'code',
+      dataField: 'data',
+      successCode: 0,
+    }),
+  );
 
   // token过期的处理
   client.addResponseInterceptor(
@@ -105,8 +113,14 @@ function createRequestClient(baseURL: string) {
   return client;
 }
 
-export const apiURL = 'http://127.0.0.1:7002';
-
-export const requestClient = createRequestClient(apiURL);
+export const requestClient = createRequestClient(apiURL, {
+  responseReturn: 'data',
+});
 
 export const baseRequestClient = new RequestClient({ baseURL: apiURL });
+
+export interface PageFetchParams {
+  [key: string]: any;
+  pageNo?: number;
+  pageSize?: number;
+}

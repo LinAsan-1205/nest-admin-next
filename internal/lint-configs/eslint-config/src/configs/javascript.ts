@@ -175,7 +175,7 @@ export async function javascript(): Promise<Linter.Config[]> {
         'no-use-before-define': 'off',
         'no-use-before-define': [
           'error',
-          { classes: false, functions: false, variables: true },
+          { classes: false, functions: false, variables: false },
         ],
         'no-useless-backreference': 'error',
         'no-useless-call': 'error',
