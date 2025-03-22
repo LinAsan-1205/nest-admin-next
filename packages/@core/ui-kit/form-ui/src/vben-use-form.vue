@@ -7,6 +7,7 @@ import { nextTick, onMounted, watch } from 'vue';
 
 import { useForwardPriorityValues } from '@vben-core/composables';
 import { cloneDeep } from '@vben-core/shared/utils';
+
 import { useDebounceFn } from '@vueuse/core';
 
 import FormActions from './components/form-actions.vue';
@@ -16,7 +17,11 @@ import {
   DEFAULT_FORM_COMMON_CONFIG,
 } from './config';
 import { Form } from './form-render';
-import { provideFormProps, useFormInitial } from './use-form-context';
+import {
+  provideComponentRefMap,
+  provideFormProps,
+  useFormInitial,
+} from './use-form-context';
 // 通过 extends 会导致热更新卡死，所以重复写了一遍
 interface Props extends VbenFormProps {
   formApi: ExtendedFormApi;
@@ -28,11 +33,14 @@ const state = props.formApi?.useStore?.();
 
 const forward = useForwardPriorityValues(props, state);
 
+const componentRefMap = new Map<string, unknown>();
+
 const { delegatedSlots, form } = useFormInitial(forward);
 
 provideFormProps([forward, form]);
+provideComponentRefMap(componentRefMap);
 
-props.formApi?.mount?.(form);
+props.formApi?.mount?.(form, componentRefMap);
 
 const handleUpdateCollapsed = (value: boolean) => {
   props.formApi?.setState({ collapsed: !!value });
