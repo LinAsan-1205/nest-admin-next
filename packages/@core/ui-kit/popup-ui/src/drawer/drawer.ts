@@ -1,5 +1,6 @@
-import type { ClassType } from '@vben-core/typings';
 import type { Component, Ref } from 'vue';
+
+import type { ClassType, MaybePromise } from '@vben-core/typings';
 
 import type { DrawerApi } from './drawer-api';
 
@@ -51,6 +52,10 @@ export interface DrawerProps {
    * 弹窗描述
    */
   description?: string;
+  /**
+   * 在关闭时销毁抽屉
+   */
+  destroyOnClose?: boolean;
   /**
    * 是否显示底部
    * @default true
@@ -131,11 +136,11 @@ export interface DrawerState extends DrawerProps {
   sharedData?: Record<string, any>;
 }
 
-export type ExtendedDrawerApi = {
+export type ExtendedDrawerApi = DrawerApi & {
   useStore: <T = NoInfer<DrawerState>>(
     selector?: (state: NoInfer<DrawerState>) => T,
   ) => Readonly<Ref<T>>;
-} & DrawerApi;
+};
 
 export interface DrawerApiOptions extends DrawerState {
   /**
@@ -143,14 +148,10 @@ export interface DrawerApiOptions extends DrawerState {
    */
   connectedComponent?: Component;
   /**
-   * 在关闭时销毁抽屉。仅在使用 connectedComponent 时有效
-   */
-  destroyOnClose?: boolean;
-  /**
    * 关闭前的回调，返回 false 可以阻止关闭
    * @returns
    */
-  onBeforeClose?: () => void;
+  onBeforeClose?: () => MaybePromise<boolean | undefined>;
   /**
    * 点击取消按钮的回调
    */

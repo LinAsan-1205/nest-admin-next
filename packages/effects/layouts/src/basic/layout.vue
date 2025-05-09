@@ -9,7 +9,7 @@ import {
   updatePreferences,
   usePreferences,
 } from '@vben/preferences';
-import { useLockStore } from '@vben/stores';
+import { useAccessStore } from '@vben/stores';
 import { cloneDeep, mapTree } from '@vben/utils';
 import { VbenAdminLayout } from '@vben-core/layout-ui';
 import { VbenBackTop, VbenLogo } from '@vben-core/shadcn-ui';
@@ -31,7 +31,7 @@ import { LayoutTabbar } from './tabbar';
 
 defineOptions({ name: 'BasicLayout' });
 
-const emit = defineEmits<{ clearPreferencesAndLogout: [] }>();
+const emit = defineEmits<{ clearPreferencesAndLogout: []; clickLogo: [] }>();
 
 const {
   isDark,
@@ -46,7 +46,7 @@ const {
   sidebarCollapsed,
   theme,
 } = usePreferences();
-const lockStore = useLockStore();
+const accessStore = useAccessStore();
 const { refresh } = useRefresh();
 
 const sidebarTheme = computed(() => {
@@ -146,6 +146,10 @@ function clearPreferencesAndLogout() {
   emit('clearPreferencesAndLogout');
 }
 
+function clickLogo() {
+  emit('clickLogo');
+}
+
 watch(
   () => preferences.app.layout,
   async (val) => {
@@ -185,6 +189,8 @@ const headerSlots = computed(() => {
     :sidebar-collapse="preferences.sidebar.collapsed"
     :sidebar-collapse-show-title="preferences.sidebar.collapsedShowTitle"
     :sidebar-enable="sidebarVisible"
+    :sidebar-collapsed-button="preferences.sidebar.collapsedButton"
+    :sidebar-fixed-button="preferences.sidebar.fixedButton"
     :sidebar-expand-on-hover="preferences.sidebar.expandOnHover"
     :sidebar-extra-collapse="preferences.sidebar.extraCollapse"
     :sidebar-hidden="preferences.sidebar.hidden"
@@ -218,7 +224,12 @@ const headerSlots = computed(() => {
         :src="preferences.logo.source"
         :text="preferences.app.name"
         :theme="showHeaderNav ? headerTheme : theme"
-      />
+        @click="clickLogo"
+      >
+        <template v-if="$slots['logo-text']" #text>
+          <slot name="logo-text"></slot>
+        </template>
+      </VbenLogo>
     </template>
     <!-- 头部区域 -->
     <template #header>
@@ -300,7 +311,11 @@ const headerSlots = computed(() => {
         v-if="preferences.logo.enable"
         :text="preferences.app.name"
         :theme="theme"
-      />
+      >
+        <template v-if="$slots['logo-text']" #text>
+          <slot name="logo-text"></slot>
+        </template>
+      </VbenLogo>
     </template>
 
     <template #tabbar>
@@ -338,7 +353,7 @@ const headerSlots = computed(() => {
       />
 
       <Transition v-if="preferences.widget.lockScreen" name="slide-up">
-        <slot v-if="lockStore.isLockScreen" name="lock-screen"></slot>
+        <slot v-if="accessStore.isLockScreen" name="lock-screen"></slot>
       </Transition>
 
       <template v-if="preferencesButtonPosition.fixed">

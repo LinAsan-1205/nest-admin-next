@@ -32,7 +32,7 @@ async function generateRoutesByBackend(
     return routes;
   } catch (error) {
     console.error(error);
-    return [];
+    throw error;
   }
 }
 
@@ -62,6 +62,7 @@ function convertRoutes(
         route.component = pageMap[pageKey];
       } else {
         console.error(`route component is invalid: ${pageKey}`, route);
+        route.component = pageMap['/_core/fallback/not-found.vue'];
       }
     }
 
